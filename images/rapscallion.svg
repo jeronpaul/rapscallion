@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Abstract figure representing a playful entrepreneur -->
+    <path d="M100 160 C100 120 140 120 140 160" stroke="#111111" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M90 100 C120 80 150 100 120 140" stroke="#111111" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <circle cx="120" cy="80" r="30" stroke="#111111" stroke-width="2" stroke-dasharray="2 4" fill="none"/>
+    <!-- Playful hat -->
+    <path d="M100 60 Q120 40 140 60" stroke="#111111" stroke-width="2" stroke-linecap="round" fill="none"/>
+</svg>

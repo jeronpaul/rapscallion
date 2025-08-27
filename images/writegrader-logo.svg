@@ -1,0 +1,15 @@
+<svg width="160" height="40" viewBox="0 0 160 40" xmlns="http://www.w3.org/2000/svg">
+  <!-- Top coral arc -->
+  <path d="M 5 8 Q 25 2 45 8" stroke="#FF6B6B" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Teal star -->
+  <g transform="translate(35, 5)">
+    <polygon points="0,-4 1,-1 4,0 1,1 0,4 -1,1 -4,0 -1,-1" fill="#20B2AA"/>
+  </g>
+  
+  <!-- Bottom coral arc -->
+  <path d="M 25 32 Q 45 38 65 32" stroke="#FF6B6B" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- writegrader text -->
+  <text x="10" y="28" font-family="Plus Jakarta Sans, sans-serif" font-size="20" font-weight="700" fill="#333" text-transform="lowercase">writegrader</text>
+</svg>

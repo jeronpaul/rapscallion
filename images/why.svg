@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Abstract smiling face with stars -->
+    <circle cx="120" cy="120" r="60" stroke="#111111" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <path d="M90 110 L90 130 M150 110 L150 130" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+    <path d="M90 150 Q120 180 150 150" stroke="#111111" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <!-- Stars -->
+    <path d="M60 60 L65 65 M55 65 L65 55" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+    <path d="M180 60 L185 65 M175 65 L185 55" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+    <path d="M120 30 L125 35 M115 35 L125 25" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+</svg>

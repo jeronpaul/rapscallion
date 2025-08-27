@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Tree structure representing taxonomy -->
+    <path d="M120 40 L120 80 M120 80 L60 120 M120 80 L180 120 M60 120 L30 160 M60 120 L90 160 M180 120 L150 160 M180 120 L210 160" 
+        stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 3"/>
+    <!-- Circles at connection points -->
+    <circle cx="120" cy="40" r="4" stroke="#111111" stroke-width="2" fill="none"/>
+    <circle cx="60" cy="120" r="4" stroke="#111111" stroke-width="2" fill="none"/>
+    <circle cx="180" cy="120" r="4" stroke="#111111" stroke-width="2" fill="none"/>
+    <circle cx="30" cy="160" r="4" stroke="#111111" stroke-width="2" fill="none"/>
+    <circle cx="90" cy="160" r="4" stroke="#111111" stroke-width="2" fill="none"/>
+    <circle cx="150" cy="160" r="4" stroke="#111111" stroke-width="2" fill="none"/>
+    <circle cx="210" cy="160" r="4" stroke="#111111" stroke-width="2" fill="none"/>
+</svg>
