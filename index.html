@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rapscallion</title>
-    <link rel="stylesheet" href="styles.css?v=147">
+    <link rel="stylesheet" href="styles.css?v=149">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -111,20 +111,19 @@
                     </div>
 
                     <!-- Quote Block 8 -->
-                    <div class="main-block">
-                        <div class="main-artwork">
-                            <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="30" cy="30" r="20" stroke="#2EA3F2" stroke-width="2" fill="none"/>
-                                <path d="M20 30C20 24.4772 24.4772 20 30 20C35.5228 20 40 24.4772 40 30C40 35.5228 35.5228 40 30 40C24.4772 40 20 35.5228 20 30Z" fill="#2EA3F2" opacity="0.1"/>
-                                <path d="M25 25L35 35M35 25L25 35" stroke="#2EA3F2" stroke-width="1.5" stroke-linecap="round"/>
-                                <circle cx="30" cy="30" r="5" fill="#2EA3F2" opacity="0.3"/>
-                            </svg>
+                    <div class="main-block image-underlay-block">
+                        <div class="background-image">
+                            <img src="images/las-meninas.jpg" alt="Las Meninas painting" class="underlay-image">
                         </div>
-                        <div class="main-text">
+                        <div class="overlay-content">
                             <blockquote>
-                                "It does not matter how slowly you go as long as you do not stop."
+                                "A thing of beauty is a joy for ever:
+                                Its loveliness increases; it will never
+                                Pass into nothingness; but still will keep
+                                A bower quiet for us, and a sleep
+                                Full of sweet dreams, and health, and quiet breathing."
                             </blockquote>
-                            <cite>— Confucius</cite>
+                            <cite>— John Keats</cite>
                         </div>
                     </div>
 
@@ -148,11 +147,13 @@
             <div class="container">
                 <h2>JOIN OUR MAILING LIST</h2>
                 <p class="mailing-list-text">Stay in touch with <br>Rapscallion.</p>
-                <form class="signup-form" action="#" method="POST">
+                <form class="signup-form" action="https://formspree.io/f/xeoleakq" method="POST">
                     <div class="form-group">
-                        <input type="email" placeholder="Email Address" required>
+                        <input type="email" name="email" placeholder="Email Address" required>
                         <button type="submit">Submit</button>
                     </div>
+                    <input type="hidden" name="_subject" value="New Rapscallion Newsletter Signup">
+                    <input type="hidden" name="_next" value="https://rapscallion.com/thank-you">
                 </form>
             </div>
         </section>

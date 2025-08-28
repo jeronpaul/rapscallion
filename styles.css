@@ -1701,6 +1701,24 @@ footer {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
+/* Keats quote block specific styling */
+.image-underlay-block:nth-child(8) .overlay-content blockquote {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin: 0 0 calc(var(--spacing-unit) * 1) 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.image-underlay-block:nth-child(8) .overlay-content cite {
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    font-style: normal;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
 .image-underlay-block .background-image {
     position: absolute;
     top: 0;
