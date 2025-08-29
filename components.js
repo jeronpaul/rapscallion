@@ -65,4 +65,38 @@ document.addEventListener('DOMContentLoaded', function() {
             yearElement.textContent = currentYear;
         }
     }, 200);
+    
+    // Initialize hamburger menu after header loads
+    setTimeout(() => {
+        initializeHamburgerMenu();
+    }, 300);
 });
+
+// Hamburger menu functionality
+function initializeHamburgerMenu() {
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const navLinks = document.getElementById('nav-links');
+    
+    if (hamburgerMenu && navLinks) {
+        hamburgerMenu.addEventListener('click', function() {
+            hamburgerMenu.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!hamburgerMenu.contains(event.target) && !navLinks.contains(event.target)) {
+                hamburgerMenu.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+        
+        // Close menu when clicking on a link
+        navLinks.addEventListener('click', function(event) {
+            if (event.target.tagName === 'A') {
+                hamburgerMenu.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+    }
+}
