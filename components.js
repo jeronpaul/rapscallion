@@ -22,6 +22,11 @@ async function loadComponent(elementId, componentPath) {
         
         // Set active states based on current page
         setActiveStates();
+        
+        // Initialize hamburger menu if loading header
+        if (componentPath === 'header.html') {
+            initializeHamburgerMenu();
+        }
     } catch (error) {
         console.error(`Error loading ${componentPath}:`, error);
     }
@@ -66,22 +71,30 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 200);
     
-    // Initialize hamburger menu after header loads
-    setTimeout(() => {
-        initializeHamburgerMenu();
-    }, 300);
+    // Note: Auto-resize functionality removed in favor of CSS line-clamp
 });
+
+
 
 // Hamburger menu functionality
 function initializeHamburgerMenu() {
     const hamburgerMenu = document.getElementById('hamburger-menu');
     const navLinks = document.getElementById('nav-links');
+    const mobileCloseBtn = document.getElementById('mobile-close-btn');
     
     if (hamburgerMenu && navLinks) {
         hamburgerMenu.addEventListener('click', function() {
             hamburgerMenu.classList.toggle('active');
             navLinks.classList.toggle('active');
         });
+        
+        // Close menu with close button
+        if (mobileCloseBtn) {
+            mobileCloseBtn.addEventListener('click', function() {
+                hamburgerMenu.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        }
         
         // Close menu when clicking outside
         document.addEventListener('click', function(event) {
@@ -91,25 +104,27 @@ function initializeHamburgerMenu() {
             }
         });
         
-        // Close menu when clicking on a link
+        // Use event delegation for all nav-links interactions
         navLinks.addEventListener('click', function(event) {
-            if (event.target.tagName === 'A') {
+            const target = event.target;
+            
+            // Handle dropdown toggle
+            if (target.classList.contains('dropdown-toggle')) {
+                if (window.innerWidth <= 768) {
+                    event.preventDefault();
+                    const dropdown = target.closest('.dropdown');
+                    if (dropdown) {
+                        dropdown.classList.toggle('active');
+                    }
+                }
+                return;
+            }
+            
+            // Close menu when clicking on regular links
+            if (target.tagName === 'A' && !target.classList.contains('dropdown-toggle')) {
                 hamburgerMenu.classList.remove('active');
                 navLinks.classList.remove('active');
             }
         });
-        
-        // Handle dropdown toggle on mobile
-        const dropdownToggle = document.querySelector('.dropdown-toggle');
-        const dropdown = document.querySelector('.dropdown');
-        
-        if (dropdownToggle && dropdown) {
-            dropdownToggle.addEventListener('click', function(event) {
-                if (window.innerWidth <= 768) {
-                    event.preventDefault();
-                    dropdown.classList.toggle('active');
-                }
-            });
-        }
     }
 }

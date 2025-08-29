@@ -4,6 +4,29 @@
     --bg-color: #FFFFFF;
     --accent-color: #D4A373;
     --spacing-unit: clamp(1rem, 2vw, 2rem);
+    
+    /* Enhanced responsive spacing system */
+    --spacing-xs: clamp(0.5rem, 1vw, 0.75rem);
+    --spacing-sm: clamp(1rem, 2vw, 1.5rem);
+    --spacing-md: clamp(1.5rem, 3vw, 2.5rem);
+    --spacing-lg: clamp(2rem, 4vw, 3.5rem);
+    --spacing-xl: clamp(3rem, 6vw, 5rem);
+    
+    /* Fluid typography system */
+    --font-size-xs: clamp(0.75rem, 2vw, 0.875rem);
+    --font-size-sm: clamp(0.875rem, 2.5vw, 1rem);
+    --font-size-base: clamp(1rem, 3vw, 1.125rem);
+    --font-size-lg: clamp(1.125rem, 3.5vw, 1.25rem);
+    --font-size-xl: clamp(1.25rem, 4vw, 1.5rem);
+    --font-size-2xl: clamp(1.5rem, 5vw, 2rem);
+    --font-size-3xl: clamp(2rem, 6vw, 2.5rem);
+    --font-size-4xl: clamp(2.5rem, 8vw, 3.5rem);
+    
+    /* Container max-widths */
+    --container-sm: 640px;
+    --container-md: 768px;
+    --container-lg: 1024px;
+    --container-xl: 1280px;
 }
 
 /* Global strong tag styling */
@@ -27,7 +50,7 @@ body {
     line-height: 1.6;
     color: var(--primary-color);
     background-color: var(--bg-color);
-    font-size: 18px;
+    font-size: var(--font-size-base);
 }
 
 /* Navigation */
@@ -75,6 +98,11 @@ nav {
     gap: 4px;
     z-index: 1001;
     position: relative;
+}
+
+/* Mobile Close Button - Hidden on Desktop */
+.mobile-close-btn {
+    display: none;
 }
 
 .nav-container {
@@ -345,9 +373,38 @@ h1 strong {
 }
 
 .container {
-    max-width: 1400px;
+    max-width: var(--container-xl);
     margin: 0 auto;
-    padding: 0 var(--spacing-unit);
+    padding: 0 var(--spacing-sm);
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .container {
+        max-width: var(--container-sm);
+        padding: 0 var(--spacing-md);
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: var(--container-md);
+        padding: 0 var(--spacing-lg);
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: var(--container-lg);
+        padding: 0 var(--spacing-xl);
+    }
+}
+
+@media (min-width: 1280px) {
+    .container {
+        max-width: var(--container-xl);
+        padding: 0 var(--spacing-xl);
+    }
 }
 
 h2 {
@@ -559,11 +616,13 @@ h2 {
 
 .form-group input {
     flex: 1;
-    padding: 0.75rem 1rem;
-    border: 1px solid #E0E0E0;
-    border-radius: 4px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: 100px;
     font-family: inherit;
-    font-size: 1rem;
+    font-size: var(--font-size-base);
+    background: transparent;
+    min-width: 0;
 }
 
 .form-group input:focus {
@@ -572,15 +631,18 @@ h2 {
 }
 
 .form-group button {
-    padding: 0.75rem 1.5rem;
+    padding: var(--spacing-sm) var(--spacing-lg);
     background-color: var(--accent-color);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 100px;
     font-family: inherit;
-    font-size: 1rem;
+    font-size: var(--font-size-base);
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    min-width: fit-content;
 }
 
 .form-group button:hover {
@@ -627,17 +689,19 @@ h2 {
 }
 
 .signup-form {
-    max-width: 600px;
+    max-width: min(600px, 90vw);
     margin: 0 auto;
+    width: 100%;
 }
 
 .form-group {
     display: flex;
-    gap: 1rem;
+    gap: var(--spacing-sm);
     background: white;
     border-radius: 100px;
     padding: 0.5rem;
     border: 1px solid #E0E0E0;
+    width: 100%;
 }
 
 .form-group input {
@@ -714,6 +778,10 @@ footer {
         display: flex;
     }
     
+    .mobile-close-btn {
+    display: none;
+}
+    
     .nav-links {
         position: fixed;
         top: 0;
@@ -723,7 +791,7 @@ footer {
         background: white;
         box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
         flex-direction: column;
-        padding: calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 2);
+        padding: calc(var(--spacing-unit) * 6) calc(var(--spacing-unit) * 3);
         transition: right 0.3s ease;
         z-index: 1000;
         overflow-y: auto;
@@ -736,9 +804,18 @@ footer {
     
     .nav-links a {
         margin: 0;
-        padding: calc(var(--spacing-unit) * 1) 0;
-        font-size: 1.1rem;
+        padding: calc(var(--spacing-unit) * 1.5) 0;
+        font-size: 1.2rem;
         border-bottom: 1px solid #f0f0f0;
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        color: var(--secondary-color);
+        transition: color 0.2s ease;
+    }
+    
+    .nav-links a:hover {
+        color: var(--primary-color);
     }
     
     .nav-links a:last-child {
@@ -752,8 +829,21 @@ footer {
     
     .dropdown-toggle {
         margin: 0;
-        padding: calc(var(--spacing-unit) * 1) 0;
+        padding: calc(var(--spacing-unit) * 1.5) 0;
         border-bottom: 1px solid #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .dropdown-toggle::after {
+        content: '▾';
+        font-size: 1rem;
+        transition: transform 0.2s ease;
+    }
+    
+    .dropdown.active .dropdown-toggle::after {
+        transform: rotate(180deg);
     }
     
     .dropdown-menu {
@@ -764,9 +854,10 @@ footer {
         box-shadow: none;
         border: none;
         background: #f8f8f8;
-        margin: 0;
-        padding: 0 calc(var(--spacing-unit) * 1);
+        margin: calc(var(--spacing-unit) * 0.5) 0;
+        padding: calc(var(--spacing-unit) * 1) calc(var(--spacing-unit) * 2);
         display: none;
+        border-radius: 8px;
     }
     
     .dropdown.active .dropdown-menu {
@@ -774,9 +865,35 @@ footer {
     }
     
     .dropdown-menu a {
-        padding: calc(var(--spacing-unit) * 0.5) 0;
-        font-size: 1rem;
+        padding: calc(var(--spacing-unit) * 1) 0;
+        font-size: 1.1rem;
         color: var(--secondary-color);
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .dropdown-menu a:last-child {
+        border-bottom: none;
+    }
+    
+    /* Mobile Close Button */
+.mobile-close-btn {
+    position: absolute;
+    top: calc(var(--spacing-unit) * 2);
+    right: calc(var(--spacing-unit) * 2);
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+    display: none;
+}
+    
+    .mobile-close-btn:hover {
+        background-color: #f0f0f0;
+        color: var(--primary-color);
     }
     
     /* Logo scaling */
@@ -1142,8 +1259,16 @@ footer {
     flex-direction: column;
 }
 
+.quote-image {
+    flex: 1;
+    overflow: hidden;
+    min-height: 450px;
+    max-height: 500px;
+    background: white;
+}
+
 .profile-quote-box h3 {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: var(--primary-color);
     margin: 0;
@@ -1169,6 +1294,10 @@ footer {
     padding: calc(var(--spacing-unit) * 2);
     border-top: 1px solid #E0E0E0;
     flex-shrink: 0;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .quote-text blockquote {
@@ -1177,13 +1306,13 @@ footer {
     font-weight: 500;
     line-height: 1.5;
     margin: 0 0 calc(var(--spacing-unit) * 0.5) 0;
-    font-style: italic;
 }
 
 .quote-text cite {
     color: var(--accent-color);
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-style: normal;
+    margin-top: calc(var(--spacing-unit) * 0.5);
 }
 
 .profile-image {
@@ -1191,49 +1320,6 @@ footer {
     height: 400px;
     border-radius: 12px;
     object-fit: cover;
-}
-
-.profile-info h1 {
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
-    font-weight: 600;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.02em;
-}
-
-.profile-role {
-    font-size: 1.25rem;
-    color: var(--accent-color);
-    font-weight: 500;
-    margin-bottom: calc(var(--spacing-unit) * 1.5);
-}
-
-.profile-links {
-    display: flex;
-    gap: var(--spacing-unit);
-    flex-wrap: wrap;
-}
-
-.profile-link {
-    color: var(--accent-color);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.profile-link:hover {
-    color: var(--primary-color);
-}
-
-.profile-link svg {
-    transition: transform 0.2s ease;
-}
-
-.profile-link:hover svg {
-    transform: scale(1.1);
 }
 
 .profile-content {
@@ -1278,7 +1364,6 @@ footer {
 
 .profile-quote blockquote {
     font-size: 1.5rem;
-    font-style: italic;
     color: var(--primary-color);
     font-weight: 500;
     text-align: center;
@@ -1328,7 +1413,6 @@ footer {
     font-weight: 500;
     line-height: 1.5;
     margin: 0 0 calc(var(--spacing-unit) * 1) 0;
-    font-style: italic;
 }
 
 .profile-quote cite {
@@ -1354,6 +1438,21 @@ footer {
     
     .profile-quote {
         position: static;
+    }
+    
+    .profile-quote-box {
+        height: 700px;
+    }
+    
+    .quote-image {
+        min-height: 400px;
+        max-height: 450px;
+    }
+    
+    .quote-bg-image {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
     }
 }
 
@@ -1479,7 +1578,18 @@ footer {
     }
     
     .profile-quote-box {
-        height: 500px;
+        height: 600px;
+    }
+    
+    .quote-image {
+        min-height: 350px;
+        max-height: 400px;
+    }
+    
+    .quote-bg-image {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
     }
     
     .personal-lore-section h2 {
@@ -1548,23 +1658,27 @@ footer {
     width: 100%;
 }
 
-.main-block {
-    background: #fff;
-    border: 1px solid #e5e5e5;
+.title-center,
+.title-bottom,
+.quotation {
+    position: relative;
+    overflow: hidden;
     border-radius: 12px;
-    padding: calc(var(--spacing-unit) * 4);
     transition: all 0.3s ease;
-    display: flex;
-    align-items: flex-start;
-    gap: calc(var(--spacing-unit) * 2);
-    height: 450px; /* Much taller like Sequoia Capital */
+    min-height: 450px; /* Minimum height instead of fixed */
+    max-height: 600px; /* Maximum height to prevent excessive growth */
+    height: auto; /* Allow dynamic height */
     box-sizing: border-box;
+    background: none;
+    border: none;
+    padding: 0;
 }
 
-.main-block:hover {
-    border-color: #2EA3F2;
-    box-shadow: 0 4px 20px rgba(46, 163, 242, 0.1);
+.title-center:hover,
+.title-bottom:hover,
+.quotation:hover {
     transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .main-artwork {
@@ -1588,7 +1702,6 @@ footer {
     line-height: 1.6;
     color: #333;
     margin: 0 0 calc(var(--spacing-unit) * 1.5) 0;
-    font-style: italic;
     font-weight: 400;
 }
 
@@ -1606,21 +1719,15 @@ footer {
         gap: calc(var(--spacing-unit) * 1.5);
     }
     
-    .main-block {
-        height: 400px;
+    .title-center,
+    .title-bottom,
+    .quotation {
+        min-height: 400px;
+        max-height: 500px;
+        height: auto;
     }
     
-    .startup-ceo-block {
-        height: 400px;
-    }
-    
-    .image-underlay-block {
-        height: 400px;
-    }
-    
-    .burnham-quote-block {
-        height: 500px;
-    }
+
 }
 
 @media (max-width: 768px) {
@@ -1630,35 +1737,71 @@ footer {
         margin-top: calc(var(--spacing-unit) * 1.5);
     }
     
-    .main-block {
+    .title-center,
+    .title-bottom,
+    .quotation {
         flex-direction: column;
         text-align: center;
         padding: calc(var(--spacing-unit) * 2);
-        height: 350px; /* Taller on mobile too */
+        min-height: 350px; /* Minimum height on mobile */
+        max-height: 450px; /* Maximum height on mobile */
+        height: auto; /* Allow dynamic height */
     }
     
-    .startup-ceo-block {
-        height: 350px; /* Match mobile height */
-    }
-    
-    .image-underlay-block {
-        height: 350px; /* Match mobile height */
-    }
-    
-    .burnham-quote-block {
-        height: 450px;
-    }
-    
-    .image-underlay-block .overlay-content {
+    .title-center > div,
+    .title-bottom > div,
+    .quotation > div {
         padding: calc(var(--spacing-unit) * 2);
     }
     
-    .image-underlay-block .overlay-content h3 {
+    .title-center > div h3,
+    .title-bottom > div h3,
+    .quotation > div h3 {
         font-size: 1.5rem;
     }
     
-    .image-underlay-block .overlay-content p {
+    .title-center > div cite,
+    .title-bottom > div cite,
+    .quotation > div cite {
         font-size: 1rem;
+    }
+    
+    .title-center > div p,
+    .title-bottom > div p {
+        font-size: 1rem;
+    }
+    
+    /* Mobile: Fluid text display with strategic overflow */
+    .quotation > div blockquote {
+        font-size: clamp(1rem, 2.5vw, 1.6rem); /* Smaller font size for mobile */
+        max-height: 70%; /* Higher max-height on mobile to reduce scrollbar frequency */
+        overflow-y: auto; /* Vertical scrollbar when needed */
+        overflow-x: hidden; /* Prevent horizontal scrollbars */
+    }
+    
+
+    
+    .quotation > div cite {
+        font-size: clamp(1rem, 2.2vw, 1.3rem); /* Smaller citation for mobile */
+    }
+    
+    /* Custom scrollbar for quote blocks on mobile */
+    .quotation > div blockquote::-webkit-scrollbar {
+        width: 4px;
+    }
+    
+    .quotation > div blockquote::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+    }
+    
+    .quotation > div blockquote::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 2px;
+    }
+    
+    .quotation > div blockquote::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
     }
     
     .main-artwork {
@@ -1672,23 +1815,47 @@ footer {
     }
 }
 
-/* Startup CEO block styles */
-.main-block-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.title-center > img,
+.title-bottom > img,
+.quotation > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
-/* Image underlay block styles */
-.image-underlay-block {
-    position: relative;
-    overflow: hidden;
-    padding: 0;
-    background: none;
-    border: none;
+.title-center:hover > img,
+.title-bottom:hover > img,
+.quotation:hover > img {
+    transform: scale(1.05);
 }
 
-.image-underlay-block .overlay-content {
+/* ===== QUOTE BOX SYSTEM ===== */
+
+/* Base overlay styles for all layout types */
+.title-center > div,
+.title-bottom > div,
+.quotation > div {
     position: absolute;
     top: 0;
     left: 0;
@@ -1698,513 +1865,182 @@ footer {
     padding: calc(var(--spacing-unit) * 3);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 30%, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0.8) 100%);
+    background: rgba(0, 0, 0, 0.6);
 }
 
-/* Picasso quote block styles */
-.picasso-quote-block {
-    position: relative;
-    overflow: hidden;
-    padding: 0;
-    background: none;
-    border: none;
+/* Modifier class to remove darkening overlay */
+.no-overlay > div {
+    background: none !important;
 }
 
-.picasso-quote-block .background-image {
+/* Link arrow positioning using pseudo-elements */
+.title-center > div::after,
+.title-bottom > div::after {
+    content: attr(data-link-text);
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.picasso-quote-block .underlay-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.picasso-quote-block:hover .underlay-image {
-    transform: scale(1.05);
-}
-
-.picasso-quote-block .overlay-content {
-    position: relative;
-    z-index: 2;
-    padding: calc(var(--spacing-unit) * 3);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.7) 100%);
-}
-
-.picasso-quote-block .overlay-content blockquote {
-    color: white;
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin: 0 0 calc(var(--spacing-unit) * 1) 0;
-    line-height: 1.3;
-    font-style: italic;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.picasso-quote-block .overlay-content cite {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1rem;
-    font-weight: 500;
-    font-style: normal;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-/* Shakespeare quote block styles */
-.shakespeare-quote-block {
-    position: relative;
-    overflow: hidden;
-    padding: 0;
-    background: none;
-    border: none;
-}
-
-.shakespeare-quote-block .background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.shakespeare-quote-block .underlay-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.shakespeare-quote-block:hover .underlay-image {
-    transform: scale(1.05);
-}
-
-.shakespeare-quote-block .overlay-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-    padding: calc(var(--spacing-unit) * 2.5);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 30%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.9) 100%);
-}
-
-.shakespeare-quote-block .overlay-content blockquote {
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin: 0 0 calc(var(--spacing-unit) * 1) 0;
-    line-height: 1.4;
-    font-style: italic;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
-}
-
-.shakespeare-quote-block .overlay-content cite {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1rem;
-    font-weight: 500;
-    font-style: normal;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-/* Playlist block styles */
-.playlist-block {
-    background: linear-gradient(135deg, #FF0000 0%, #CC0000 100%);
-    border: 1px solid #FF0000;
-    transition: all 0.3s ease;
-}
-
-.playlist-block:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.2);
-    border-color: #FF3333;
-}
-
-.playlist-block .main-text blockquote {
-    color: white;
-    font-size: 1.6rem;
-    font-weight: 600;
-    margin: 0 0 calc(var(--spacing-unit) * 1) 0;
-    line-height: 1.3;
-    font-style: normal;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.playlist-block .main-text cite {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1rem;
-    font-weight: 500;
-    font-style: normal;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-/* Sinatra playlist block styles */
-.sinatra-playlist-block {
-    position: relative;
-    overflow: hidden;
-    padding: 0;
-    background: none;
-    border: none;
-    transition: all 0.3s ease;
-}
-
-.sinatra-playlist-block:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
-
-.sinatra-playlist-block .background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.sinatra-playlist-block .underlay-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.sinatra-playlist-block:hover .underlay-image {
-    transform: scale(1.05);
-}
-
-.sinatra-playlist-block .overlay-content {
-    position: relative;
-    z-index: 2;
-    padding: calc(var(--spacing-unit) * 2.5);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.7) 100%);
-}
-
-.sinatra-playlist-block .overlay-content blockquote {
-    color: white;
-    font-size: 1.6rem;
-    font-weight: 600;
-    margin: 0 0 calc(var(--spacing-unit) * 1) 0;
-    line-height: 1.3;
-    font-style: normal;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-}
-
-.sinatra-playlist-block .overlay-content cite {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1rem;
-    font-weight: 500;
-    font-style: normal;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-/* Jesus quote block styles */
-.jesus-quote-block {
-    position: relative;
-    overflow: hidden;
-    padding: 0;
-    background: none;
-    border: none;
-}
-
-.jesus-quote-block .background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.jesus-quote-block .underlay-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.jesus-quote-block:hover .underlay-image {
-    transform: scale(1.05);
-}
-
-.jesus-quote-block .overlay-content {
-    position: relative;
-    z-index: 2;
-    padding: calc(var(--spacing-unit) * 3);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.7) 100%);
-}
-
-.jesus-quote-block .overlay-content blockquote {
-    color: white;
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin: 0 0 calc(var(--spacing-unit) * 1) 0;
-    line-height: 1.3;
-    font-style: italic;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-}
-
-.jesus-quote-block .overlay-content cite {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1rem;
-    font-weight: 500;
-    font-style: normal;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-/* Goethe quote block styles */
-.goethe-quote-block {
-    position: relative;
-    overflow: hidden;
-    padding: 0;
-    background: none;
-    border: none;
-}
-
-.goethe-quote-block .background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.goethe-quote-block .underlay-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.goethe-quote-block:hover .underlay-image {
-    transform: scale(1.05);
-}
-
-.goethe-quote-block .overlay-content {
-    position: relative;
-    z-index: 2;
-    padding: calc(var(--spacing-unit) * 2);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 30%, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0.8) 100%);
-}
-
-.goethe-quote-block .overlay-content blockquote {
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin: 0;
-    line-height: 1.5;
-    font-style: italic;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    max-width: 90%;
-    max-height: calc(100% - 60px);
-    overflow-y: auto;
-    padding-right: 10px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
-}
-
-.goethe-quote-block .overlay-content blockquote::-webkit-scrollbar {
-    width: 8px;
-    background: transparent;
-}
-
-.goethe-quote-block .overlay-content blockquote::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.goethe-quote-block .overlay-content blockquote::-webkit-scrollbar-thumb {
-    background: transparent;
-    border-radius: 4px;
-}
-
-.goethe-quote-block:hover .overlay-content blockquote {
-    scrollbar-color: rgba(255, 255, 255, 0.7) transparent;
-}
-
-.goethe-quote-block:hover .overlay-content blockquote::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.7);
-}
-
-.goethe-quote-block:hover .overlay-content blockquote::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.9);
-}
-
-.goethe-quote-block .overlay-content cite {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1rem;
-    font-weight: 500;
-    font-style: normal;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-/* Keats quote block specific styling */
-.keats-quote-block .overlay-content blockquote {
+    top: calc(var(--spacing-unit) * 1.5);
+    right: calc(var(--spacing-unit) * 1.5);
+    font-size: 0.9rem;
     color: white !important;
-    font-size: 1.4rem;
     font-weight: 500;
+    z-index: 3;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    line-height: 1;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    opacity: 1;
+    pointer-events: none;
+}
+
+/* Base typography styles - shared by all layout types */
+.title-center > div h3,
+.title-bottom > div h3,
+.quotation > div h3 {
+    color: white;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.3;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.title-center > div cite,
+.title-bottom > div cite,
+.quotation > div cite {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.3;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-style: normal;
+}
+
+/* Ensure <p> tags have consistent white color across all devices */
+.title-center > div p,
+.title-bottom > div p {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.3;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-style: normal;
+}
+
+/* Base typography for blockquote - color and styling only */
+.title-center > div blockquote,
+.title-bottom > div blockquote,
+.quotation > div blockquote {
+    color: white;
+    font-weight: 500;
+    margin: 0 0 calc(var(--spacing-unit) * 1) 0;
     line-height: 1.5;
-    margin: 0 0 calc(var(--spacing-unit) * 1) 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.keats-quote-block .overlay-content cite {
-    color: white !important;
-    font-size: 1rem;
-    font-weight: 500;
+/* Base typography for cite - color and styling only */
+.title-center > div cite,
+.title-bottom > div cite,
+.quotation > div cite {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
     font-style: normal;
-}
-
-/* Burnham quote block specific styling */
-.burnham-quote-block {
-    background: white;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    position: relative;
-}
-
-.burnham-quote-block .background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.burnham-quote-block .underlay-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.burnham-quote-block:hover .underlay-image {
-    transform: scale(1.05);
-}
-
-.burnham-quote-block .overlay-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 30%, rgba(0, 0, 0, 0.1) 60%, transparent 100%);
-    padding: calc(var(--spacing-unit) * 3);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    z-index: 2;
-}
-
-.burnham-quote-block .overlay-content blockquote {
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 500;
-    line-height: 1.6;
-    margin: 0 0 calc(var(--spacing-unit) * 1) 0;
-    font-style: italic;
-}
-
-.burnham-quote-block .overlay-content cite {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1rem;
-    font-weight: 500;
-    font-style: normal;
-}
-
-.image-underlay-block .background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.image-underlay-block .underlay-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.image-underlay-block:hover .underlay-image {
-    transform: scale(1.05);
-}
-
-.image-underlay-block .overlay-content {
-    position: relative;
-    z-index: 2;
-    padding: calc(var(--spacing-unit) * 3);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 30%, rgba(0, 0, 0, 0.1) 60%, transparent 100%);
-}
-
-.image-underlay-block .overlay-content h3 {
-    color: white;
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin: 0 0 calc(var(--spacing-unit) * 1) 0;
-    line-height: 1.3;
-}
-
-.image-underlay-block .overlay-content p {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1rem;
     margin: 0;
+    line-height: 1.3;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== LAYOUT TYPE OVERRIDES ===== */
+
+/* Title Center: Title and cite centered vertically in middle */
+.title-center > div {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: calc(var(--spacing-unit) * 1);
+}
+
+.title-center > div h3 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    margin: 0;
+}
+
+.title-center > div cite {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    margin: 0;
+}
+
+.title-center > div p {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    margin: 0;
+}
+
+/* Title Bottom: Title and cite at bottom with padding */
+.title-bottom > div {
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+    padding-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.title-bottom > div h3 {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    margin: 0 0 calc(var(--spacing-unit) * 0.5) 0;
+    line-height: 1.2;
+}
+
+.title-bottom > div cite {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+    margin: 0;
+}
+
+.title-bottom > div p {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+    margin: 0;
+}
+
+/* Quotation: Left-justified quote with citation */
+.quotation > div {
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 2.5);
+    /* Container query fallback for text scaling */
+    container-type: inline-size;
+}
+
+.quotation > div blockquote {
+    /* Responsive font scaling with fluid text display */
+    font-size: clamp(0.9rem, 2.2vw, 1.3rem);
     line-height: 1.4;
+    margin: 0 0 calc(var(--spacing-unit) * 1) 0;
+    /* Fluid text wrapping with strategic overflow handling */
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    width: 100%;
+    max-height: 75%; /* Show scrollbar for very long quotes */
+    overflow-y: auto; /* Vertical scrollbar when needed */
+    overflow-x: hidden; /* Prevent horizontal scrollbars */
 }
 
-/* Playlist block specific styles */
-.image-underlay-block .overlay-content cite {
-    color: white;
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin: 0;
+.quotation > div cite {
+    /* Responsive font scaling for citation */
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
     line-height: 1.3;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin: 0;
+    /* Fluid text wrapping for citation */
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    width: 100%;
 }
+
+
+
+
 
 /* Article styling additions */
 .article-body blockquote {
@@ -2240,115 +2076,27 @@ footer {
     margin-top: -20px; /* Compensates for the padding to maintain layout */
 }
 
-.main-block-link:hover {
-    text-decoration: none;
-    color: inherit;
-}
 
-.startup-ceo-block {
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    flex-direction: column;
-    padding: 0;
-    background: none;
-    height: 450px; /* Match other blocks */
-    box-sizing: border-box;
-}
 
-.startup-ceo-block:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
 
-.startup-ceo-block .main-artwork {
-    position: relative;
-    height: 100%; /* Fill the entire block */
-    overflow: hidden;
-    width: 100%;
-    border-radius: 12px;
-    border: none;
-    background: none;
-}
-
-.startup-ceo-block .background-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-}
-
-.startup-ceo-block:hover .background-image {
-    opacity: 1;
-}
-
-.startup-ceo-block .main-text {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: calc(var(--spacing-unit) * 0.75); /* Reduced padding */
-    background: rgba(0, 0, 0, 0.8); /* Darker background for better contrast */
-    backdrop-filter: blur(5px);
-    border-radius: 0 0 12px 12px;
-}
-
-.startup-ceo-block h3 {
-    margin: 0;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: white;
-    display: inline;
-}
-
-.startup-ceo-block .author {
-    margin: 0 0 0 calc(var(--spacing-unit) * 0.5);
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.9);
-    font-style: italic;
-    display: inline;
-}
-
-@media (max-width: 768px) {
-    .startup-ceo-block .main-artwork {
-        height: 100%; /* Fill the entire block */
+    
+    .image-underlay-block .underlay-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
     
-    .startup-ceo-block h3 {
-        font-size: 1.1rem;
-    }
-    
-    .startup-ceo-block .author {
-        font-size: 0.8rem;
+    .image-underlay-block .overlay-content {
+        padding: calc(var(--spacing-unit) * 2);
+        background: rgba(0, 0, 0, 0.6);
     }
 }
 
-/* Link arrow styles */
-.link-arrow {
-    position: absolute;
-    top: calc(var(--spacing-unit) * 1.5);
-    right: calc(var(--spacing-unit) * 1.5);
-    font-size: 0.9rem;
-    color: white;
-    font-weight: 400;
-    transition: all 0.3s ease;
-    z-index: 3;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    line-height: 1;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    opacity: 0.9;
-}
-
-.startup-ceo-block:hover .link-arrow,
-.image-underlay-block:hover .link-arrow,
-.sinatra-playlist-block:hover .link-arrow {
-    color: white;
+/* Hover effects for link arrows */
+.title-center:hover > div::after,
+.title-bottom:hover > div::after {
     transform: translateX(3px);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    opacity: 1;
+    transition: transform 0.3s ease;
 }
 
 /* Long-form article styles */
@@ -2447,8 +2195,16 @@ footer {
         padding: 0 calc(var(--spacing-unit) * 1.5);
     }
     
+    .signup-form {
+        max-width: min(500px, 80vw);
+    }
+    
+    .form-group {
+        gap: var(--spacing-xs);
+    }
+    
     .hero h1 {
-        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-size: var(--font-size-4xl);
     }
     
     .hero p {
@@ -2480,7 +2236,7 @@ footer {
     }
     
     .hero h1 {
-        font-size: clamp(2rem, 6vw, 2.5rem);
+        font-size: var(--font-size-3xl);
     }
     
     .hero p {
@@ -2522,28 +2278,34 @@ footer {
     }
     
     .signup-form {
-        flex-direction: column;
-        gap: var(--spacing-unit);
+        max-width: 100%;
+        padding: 0 var(--spacing-sm);
     }
     
     .form-group {
         flex-direction: column;
-        gap: var(--spacing-unit);
+        gap: var(--spacing-sm);
+        border-radius: 12px;
+        padding: var(--spacing-sm);
     }
     
     .form-group input {
         width: 100%;
+        border-radius: 8px;
+        border: 1px solid #E0E0E0;
+        background: white;
     }
     
     .form-group button {
         width: 100%;
+        border-radius: 8px;
     }
 }
 
 @media (max-width: 480px) {
     /* Small Mobile Styles */
     .hero h1 {
-        font-size: 1.8rem;
+        font-size: var(--font-size-2xl);
     }
     
     .hero p {
@@ -2555,16 +2317,18 @@ footer {
         height: 300px;
     }
     
-    .startup-ceo-block {
-        height: 300px;
-    }
-    
     .image-underlay-block {
         height: 300px;
     }
     
-    .burnham-quote-block {
-        height: 400px;
+    .image-underlay-block .underlay-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .image-underlay-block .overlay-content {
+        background: rgba(0, 0, 0, 0.6);
     }
     
     .profile-image {
@@ -2573,18 +2337,44 @@ footer {
     }
     
     .profile-quote-box {
-        height: 300px;
+        height: 550px;
     }
     
-    .link-arrow {
+    .quote-image {
+        min-height: 350px;
+        max-height: 400px;
+    }
+    
+    .quote-bg-image {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .quote-text {
+        padding: calc(var(--spacing-unit) * 1.5);
+        min-height: 140px;
+    }
+    
+    .quote-text blockquote {
         font-size: 1rem;
     }
     
-    .overlay-content h3 {
-        font-size: 1.3rem;
+    /* Mobile: Fluid text display with strategic overflow - moved after desktop rules */
+    .quotation > div blockquote {
+        font-size: clamp(0.9rem, 2.2vw, 1.4rem) !important; /* Smaller for better fit on small mobile */
+        max-height: 70%; /* Show scrollbar for very long quotes */
+        overflow-y: auto; /* Vertical scrollbar when needed */
+        overflow-x: hidden; /* Prevent horizontal scrollbars */
     }
     
-    .overlay-content p {
-        font-size: 0.9rem;
+    .quotation > div cite {
+        font-size: clamp(1.2rem, 3vw, 1.5rem) !important; /* Larger citation for mobile */
     }
+    
+    
+
+    
+
 }
+
