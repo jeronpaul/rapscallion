@@ -1091,9 +1091,9 @@ footer {
 
 .team-image {
     width: 200px;
-    height: 250px;
+    height: auto;
     border-radius: 12px;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .team-tile-link {
@@ -2157,8 +2157,6 @@ footer {
     color: #444;
     font-size: 1.1rem;
 }
-
-
 
 @media (max-width: 768px) {
     .article-content {
