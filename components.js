@@ -98,5 +98,18 @@ function initializeHamburgerMenu() {
                 navLinks.classList.remove('active');
             }
         });
+        
+        // Handle dropdown toggle on mobile
+        const dropdownToggle = document.querySelector('.dropdown-toggle');
+        const dropdown = document.querySelector('.dropdown');
+        
+        if (dropdownToggle && dropdown) {
+            dropdownToggle.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768) {
+                    event.preventDefault();
+                    dropdown.classList.toggle('active');
+                }
+            });
+        }
     }
 }

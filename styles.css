@@ -74,6 +74,14 @@ nav {
     padding: 0.5rem;
     gap: 4px;
     z-index: 1001;
+    position: relative;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .hamburger-menu span {
@@ -719,6 +727,7 @@ footer {
         transition: right 0.3s ease;
         z-index: 1000;
         overflow-y: auto;
+        display: flex;
     }
     
     .nav-links.active {
@@ -757,6 +766,11 @@ footer {
         background: #f8f8f8;
         margin: 0;
         padding: 0 calc(var(--spacing-unit) * 1);
+        display: none;
+    }
+    
+    .dropdown.active .dropdown-menu {
+        display: block;
     }
     
     .dropdown-menu a {
