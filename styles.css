@@ -521,6 +521,14 @@ h2 {
     border-radius: 4px;
 }
 
+/* Shakespeare quote specific styling */
+.quotation.shakespeare-quote > div blockquote {
+    font-size: clamp(0.8rem, 2vw, 1.0rem);
+}
+
+.quotation.shakespeare-quote > div cite {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+}
 
 .company-logo-placeholder {
     width: 100%;
@@ -1259,6 +1267,7 @@ footer {
     flex-shrink: 0;
 }
 
+/* ===== STANDARDIZED QUOTE BOX COMPONENT ===== */
 .profile-quote-box {
     background: white;
     border-radius: 12px;
@@ -1269,60 +1278,114 @@ footer {
     flex-direction: column;
 }
 
-.quote-image {
-    flex: 1;
-    overflow: hidden;
-    min-height: 450px;
-    max-height: 500px;
-    background: white;
+/* Tablet responsive adjustments */
+@media (max-width: 1024px) {
+    .profile-quote-box {
+        height: 650px;
+    }
+    
+    .quote-image {
+        min-height: 250px;
+        max-height: 300px;
+    }
+    
+    .quote-text {
+        min-height: 250px;
+    }
+}
+
+/* Medium mobile adjustments */
+@media (max-width: 768px) {
+    .profile-quote-box {
+        height: 620px;
+    }
+    
+    .quote-image {
+        min-height: 220px;
+        max-height: 260px;
+    }
+    
+    .quote-text {
+        min-height: 220px;
+    }
 }
 
 .profile-quote-box h3 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 600;
     color: var(--primary-color);
     margin: 0;
-    padding: calc(var(--spacing-unit) * 1.5);
+    padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 2);
     background: white;
-    border-bottom: 1px solid #E0E0E0;
     flex-shrink: 0;
+    letter-spacing: -0.01em;
 }
 
 .quote-image {
-    flex: 1;
+    flex: 0 0 auto;
     overflow: hidden;
+    min-height: 250px;
+    max-height: 300px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--spacing-unit) * 1);
+    /* Match the image's natural aspect ratio (416x500 = 0.832) */
+    aspect-ratio: 5 / 6;
 }
 
 .quote-bg-image {
+    /* Image fills the container that matches its aspect ratio */
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
 
 .quote-text {
     background: white;
     padding: calc(var(--spacing-unit) * 2);
-    border-top: 1px solid #E0E0E0;
-    flex-shrink: 0;
-    min-height: 200px;
+    flex: 1;
+    min-height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow-y: auto;
 }
 
 .quote-text blockquote {
+    /* Responsive font scaling with fluid text display - consistent with index page */
+    font-size: clamp(0.9rem, 2.2vw, 1.3rem);
+    line-height: 1.4;
+    margin: 0 0 calc(var(--spacing-unit) * 1) 0;
+    /* Fluid text wrapping with strategic overflow handling */
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    width: 100%;
     color: var(--primary-color);
-    font-size: 1.1rem;
     font-weight: 500;
-    line-height: 1.5;
-    margin: 0 0 calc(var(--spacing-unit) * 0.5) 0;
+    text-align: center;
 }
 
 .quote-text cite {
-    color: var(--accent-color);
-    font-size: 1rem;
+    /* Responsive font scaling for citation - consistent with index page */
+    font-size: clamp(0.7rem, 1.6vw, 1rem);
+    line-height: 1.3;
+    margin: 0;
+    /* Fluid text wrapping for citation */
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    width: 100%;
+    color: var(--secondary-color);
+    font-weight: 400;
     font-style: normal;
-    margin-top: calc(var(--spacing-unit) * 0.5);
+    text-align: center;
 }
 
 .profile-image {
@@ -2345,44 +2408,61 @@ footer {
     }
     
     .profile-quote-box {
-        height: 550px;
+        height: 600px;
     }
     
     .quote-image {
-        min-height: 350px;
-        max-height: 400px;
-    }
-    
-    .quote-bg-image {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
+        min-height: 180px;
+        max-height: 220px;
+        /* Match the image's natural aspect ratio */
+        aspect-ratio: 5 / 6;
     }
     
     .quote-text {
         padding: calc(var(--spacing-unit) * 1.5);
-        min-height: 140px;
+        min-height: 200px;
     }
     
     .quote-text blockquote {
-        font-size: 1rem;
+        font-size: clamp(1.2rem, 3vw, 1.6rem);
+        line-height: 1.4;
+    }
+    
+    .quote-text cite {
+        font-size: clamp(1.0rem, 2.5vw, 1.3rem);
+        line-height: 1.3;
     }
     
     /* Mobile: Fluid text display with strategic overflow - moved after desktop rules */
-    .quotation > div blockquote {
-        font-size: clamp(0.9rem, 2.2vw, 1.4rem) !important; /* Smaller for better fit on small mobile */
+    .quotation:not(.shakespeare-quote) > div blockquote {
+        font-size: clamp(1.2rem, 2.9vw, 1.8rem); /* Increased by ~30% for better mobile readability */
         max-height: 70%; /* Show scrollbar for very long quotes */
         overflow-y: auto; /* Vertical scrollbar when needed */
         overflow-x: hidden; /* Prevent horizontal scrollbars */
     }
     
-    .quotation > div cite {
-        font-size: clamp(0.9rem, 2vw, 1.2rem); /* Even larger citation for mobile */
+    .quotation:not(.shakespeare-quote) > div cite {
+        font-size: clamp(1.0rem, 2.2vw, 1.3rem); /* Reduced proportionally to maintain hierarchy */
+    }
+}
+
+/* Shakespeare quote specific styling - placed at end for highest priority */
+.quotation.shakespeare-quote > div blockquote {
+    font-size: clamp(0.8rem, 2vw, 1.0rem);
+}
+
+.quotation.shakespeare-quote > div cite {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+}
+
+/* Mobile-specific Shakespeare quote styling */
+@media (max-width: 768px) {
+    .quotation.shakespeare-quote > div blockquote {
+        font-size: clamp(0.8rem, 1.8vw, 1.0rem);
     }
     
-    
-
-    
-
+    .quotation.shakespeare-quote > div cite {
+        font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+    }
 }
 
