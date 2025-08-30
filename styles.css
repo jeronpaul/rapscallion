@@ -1151,7 +1151,7 @@ footer {
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--primary-color);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.1rem;
     letter-spacing: -0.01em;
 }
 
@@ -1160,6 +1160,10 @@ footer {
     line-height: 1.5;
     margin-bottom: 0;
     font-size: 1rem;
+}
+
+.team-content p:not(.team-role) {
+    margin-top: 1.5rem;
 }
 
 .team-info h3 {
@@ -1174,7 +1178,7 @@ footer {
     font-size: 1.125rem;
     color: var(--accent-color);
     font-weight: 500;
-    margin-bottom: var(--spacing-unit);
+    margin-bottom: 0.1rem;
 }
 
 .team-description {
