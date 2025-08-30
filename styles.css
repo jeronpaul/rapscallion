@@ -2295,6 +2295,15 @@ footer {
     }
 }
 
+/* Social links container */
+.social-links-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem 0;
+    gap: 10px;
+}
+
 /* LinkedIn icon styling */
 .linkedin-icon {
     cursor: pointer;
