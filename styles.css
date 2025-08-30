@@ -1081,6 +1081,7 @@ footer {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: calc(var(--spacing-unit) * 2);
     padding: 0 calc(var(--spacing-unit) * 2);
+    justify-items: center;
 }
 
 /* Mobile: single column */
