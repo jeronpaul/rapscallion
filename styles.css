@@ -1120,7 +1120,7 @@ footer {
     align-items: center;
     text-align: center;
     /* Increased height for better content fit */
-    height: 400px;
+    height: 450px;
     /* Smooth card hover effects */
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
@@ -1215,6 +1215,8 @@ footer {
 .team-link:hover svg {
     transform: scale(1.1);
 }
+
+
 
 /* Responsive adjustments for Team page */
 @media (max-width: 768px) {
