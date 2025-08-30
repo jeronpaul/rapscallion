@@ -1133,10 +1133,11 @@ footer {
 
 /* Team image */
 .team-image {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     border-radius: 12px;
     object-fit: cover;
+    object-position: top center;
     margin-bottom: 1rem;
 }
 
