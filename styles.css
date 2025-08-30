@@ -2309,6 +2309,20 @@ footer {
     filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
 }
 
+/* GitHub icon styling */
+.github-icon {
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
+    opacity: 0.7;
+    filter: brightness(0) saturate(100%) invert(67%) sepia(15%) saturate(1234%) hue-rotate(359deg) brightness(89%) contrast(86%);
+}
+
+.github-icon:hover {
+    transform: scale(1.1);
+    opacity: 1;
+    filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+}
+
 /* Comprehensive Tablet and Mobile Responsive Design */
 @media (max-width: 1024px) {
     /* Tablet Styles */
