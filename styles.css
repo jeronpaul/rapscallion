@@ -1073,65 +1073,92 @@ footer {
     background-color: #F8F8F8;
 }
 
+/* ===== TEAM TILES - SIMPLE WORKING VERSION ===== */
 .team-tiles {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
-}
-
-.team-tile {
-    background: white;
-    border-radius: 12px;
-    padding: calc(var(--spacing-unit) * 3);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    border: 1px solid #E0E0E0;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: calc(var(--spacing-unit) * 2);
-    align-items: flex-start;
+    padding: 0 calc(var(--spacing-unit) * 2);
 }
 
-.team-photo {
-    flex-shrink: 0;
+/* Mobile: single column */
+@media (max-width: 768px) {
+    .team-tiles {
+        grid-template-columns: 1fr;
+        gap: calc(var(--spacing-unit) * 1.5);
+        padding: 0 calc(var(--spacing-unit) * 1);
+    }
 }
 
-.placeholder-photo {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 2rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-}
-
-.team-image {
-    width: 200px;
-    height: auto;
-    border-radius: 12px;
-    object-fit: contain;
-}
-
+/* Clickable team tile container */
 .team-tile-link {
     text-decoration: none;
     color: inherit;
     display: block;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
+    /* Smooth hover movement */
+    transition: transform 0.2s ease;
 }
 
 .team-tile-link:hover {
+    /* Lift the entire tile on hover */
     transform: translateY(-4px);
 }
 
-.team-tile-link:hover .team-tile {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+/* Team tile content */
+.team-tile {
+    background: white;
+    border-radius: 12px;
+    padding: calc(var(--spacing-unit) * 2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #E0E0E0;
+    /* Vertical layout: image on top, content below */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* Increased height for better content fit */
+    height: 400px;
+    /* Smooth card hover effects */
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.team-info {
-    flex: 1;
+.team-tile-link:hover .team-tile {
+    /* Enhanced shadow and accent border on hover */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: var(--accent-color);
+}
+
+/* Team image */
+.team-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+/* Team content */
+.team-content {
+    padding: 0;
+    width: 100%;
+}
+
+.team-content h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+}
+
+.team-content p {
+    color: var(--text-color);
+    line-height: 1.5;
+    margin-bottom: 0;
+    font-size: 1rem;
 }
 
 .team-info h3 {
@@ -1158,6 +1185,8 @@ footer {
 .team-links {
     display: flex;
     gap: var(--spacing-unit);
+    /* Re-enable pointer events for social links */
+    pointer-events: auto;
 }
 
 .team-link {
