@@ -68,9 +68,29 @@ nav {
     max-width: 1400px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding: 0 var(--spacing-unit);
+    position: relative;
+}
+
+/* Right-side icon container */
+.nav-icons {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Reduce horizontal padding on mobile for tighter icon grouping */
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0 0.5rem;
+    }
+    
+    .nav-icons {
+        gap: 0.8rem;
+    }
 }
 
 .logo {
@@ -87,6 +107,14 @@ nav {
     margin: calc(var(--spacing-unit) * -0.5) 0;
 }
 
+/* Mobile logo sizing */
+@media (max-width: 768px) {
+    .logo-image {
+        height: 45px;
+        margin: calc(var(--spacing-unit) * -0.25) 0;
+    }
+}
+
 /* Hamburger Menu Styles */
 .hamburger-menu {
     display: none;
@@ -94,7 +122,7 @@ nav {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.25rem;
     gap: 4px;
     z-index: 1001;
     position: relative;
@@ -130,6 +158,13 @@ nav {
 
 .hamburger-menu.active span:nth-child(3) {
     transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Desktop Navigation */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0;
 }
 
 .nav-links a {
@@ -784,11 +819,6 @@ footer {
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
-    .logo-image {
-        height: 60px;
-    }
-}
 
 @media (max-width: 768px) {
     /* Mobile Navigation */
@@ -814,6 +844,7 @@ footer {
         z-index: 1000;
         overflow-y: auto;
         display: flex;
+        align-items: flex-start;
     }
     
     .nav-links.active {
@@ -914,10 +945,7 @@ footer {
         color: var(--primary-color);
     }
     
-    /* Logo scaling */
-    .logo-image {
-        height: 50px;
-    }
+
     
     .hero {
         padding: calc(var(--spacing-unit) * 2);
@@ -940,7 +968,7 @@ footer {
 
 @media (max-width: 480px) {
     .logo-image {
-        height: 45px;
+        height: 38px;
     }
     
     .nav-links {
@@ -2537,6 +2565,86 @@ footer {
     
     .quotation.shakespeare-quote > div cite {
         font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+    }
+}
+
+/* ===== SEARCH ICON ===== */
+.search-icon {
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Mobile search icon - override base padding */
+@media (max-width: 768px) {
+    .search-icon {
+        padding: 0.1rem;
+    }
+}
+
+/* Desktop Search Icon */
+.search-icon-desktop {
+    margin-left: 1.5rem;
+}
+
+/* Mobile Search Icon */
+.search-icon-mobile {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0.1rem;
+}
+
+.search-icon:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.05);
+}
+
+.search-icon:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.search-icon svg {
+    width: 20px;
+    height: 20px;
+    filter: none;
+}
+
+/* Mobile responsive for search icon */
+@media (max-width: 768px) {
+    .search-icon-desktop {
+        display: none;
+    }
+    
+    .search-icon-mobile {
+        display: flex;
+    }
+    
+    .search-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (min-width: 769px) {
+    .search-icon-desktop {
+        display: flex;
+    }
+    
+    .search-icon-mobile {
+        display: none;
     }
 }
 

@@ -26,6 +26,7 @@ async function loadComponent(elementId, componentPath) {
         // Initialize hamburger menu if loading header
         if (componentPath === 'header.html') {
             initializeHamburgerMenu();
+            initializeSearchIcon();
         }
     } catch (error) {
         console.error(`Error loading ${componentPath}:`, error);
@@ -77,6 +78,30 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+// Search icon functionality (first step - non-functional)
+function initializeSearchIcon() {
+    const searchIconDesktop = document.getElementById('search-icon-desktop');
+    const searchIconMobile = document.getElementById('search-icon-mobile');
+    
+    function handleSearchClick() {
+        // For now, just log that search was clicked
+        console.log('🔍 Search icon clicked - search functionality coming soon!');
+        
+        // TODO: In future steps, this will:
+        // 1. Show/hide search input field
+        // 2. Handle search queries
+        // 3. Display search results
+    }
+    
+    if (searchIconDesktop) {
+        searchIconDesktop.addEventListener('click', handleSearchClick);
+    }
+    
+    if (searchIconMobile) {
+        searchIconMobile.addEventListener('click', handleSearchClick);
+    }
+}
 
 // Hamburger menu functionality
 function initializeHamburgerMenu() {
