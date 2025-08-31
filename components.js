@@ -49,8 +49,8 @@ function setActiveStates() {
         document.querySelector('.dropdown-toggle').classList.add('active');
         document.querySelector('.dropdown-menu a[href="about.html"]').classList.add('active');
     } else if (currentPage === 'way-of-openness.html') {
-        document.querySelector('.dropdown-toggle').classList.add('active');
-        document.querySelector('.dropdown-menu a[href="way-of-openness.html"]').classList.add('active');
+    document.querySelector('.dropdown-toggle').classList.add('active');
+            document.querySelector('.dropdown-menu a[href="content/way-of-openness.html"]').classList.add('active');
     } else if (currentPage === 'lore.html') {
         document.querySelector('.nav-links a[href="lore.html"]').classList.add('active');
     } else if (currentPage === 'heists.html') {
@@ -79,28 +79,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-// Search icon functionality (first step - non-functional)
+// Search icon functionality is now handled by search.js
 function initializeSearchIcon() {
-    const searchIconDesktop = document.getElementById('search-icon-desktop');
-    const searchIconMobile = document.getElementById('search-icon-mobile');
-    
-    function handleSearchClick() {
-        // For now, just log that search was clicked
-        console.log('🔍 Search icon clicked - search functionality coming soon!');
-        
-        // TODO: In future steps, this will:
-        // 1. Show/hide search input field
-        // 2. Handle search queries
-        // 3. Display search results
-    }
-    
-    if (searchIconDesktop) {
-        searchIconDesktop.addEventListener('click', handleSearchClick);
-    }
-    
-    if (searchIconMobile) {
-        searchIconMobile.addEventListener('click', handleSearchClick);
-    }
+    // Search functionality moved to search.js with Pagefind integration
+    console.log('🔍 Search functionality initialized via search.js');
 }
 
 // Hamburger menu functionality
