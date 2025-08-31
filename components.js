@@ -44,9 +44,9 @@ function setActiveStates() {
     // Set active state based on current page
     if (currentPage === 'index.html' || currentPage === '') {
         // Home page - no active nav items
-    } else if (currentPage === 'lore.html') {
+    } else if (currentPage === 'about.html') {
         document.querySelector('.dropdown-toggle').classList.add('active');
-        document.querySelector('.dropdown-menu a[href="lore.html"]').classList.add('active');
+        document.querySelector('.dropdown-menu a[href="about.html"]').classList.add('active');
     } else if (currentPage === 'way-of-openness.html') {
         document.querySelector('.dropdown-toggle').classList.add('active');
         document.querySelector('.dropdown-menu a[href="way-of-openness.html"]').classList.add('active');
