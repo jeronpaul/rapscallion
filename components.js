@@ -50,8 +50,10 @@ function setActiveStates() {
     } else if (currentPage === 'way-of-openness.html') {
         document.querySelector('.dropdown-toggle').classList.add('active');
         document.querySelector('.dropdown-menu a[href="way-of-openness.html"]').classList.add('active');
-               } else if (currentPage === 'heists.html') {
-               document.querySelector('.nav-links a[href="heists.html"]').classList.add('active');
+    } else if (currentPage === 'lore.html') {
+        document.querySelector('.nav-links a[href="lore.html"]').classList.add('active');
+    } else if (currentPage === 'heists.html') {
+        document.querySelector('.nav-links a[href="heists.html"]').classList.add('active');
     } else if (currentPage === 'gang.html') {
         document.querySelector('.nav-links a[href="gang.html"]').classList.add('active');
     }
