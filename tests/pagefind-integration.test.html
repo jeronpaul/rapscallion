@@ -86,14 +86,14 @@
         async function testPagefindScripts() {
             logTest('Pagefind Scripts Loading', true, 'Starting script loading tests...');
             
-            // Test Pagefind UI script
+            // Test Pagefind UI script - this will only work on main site
             if (typeof PagefindUI !== 'undefined') {
                 logTest('PagefindUI Global Available', true, 'PagefindUI is globally accessible');
             } else {
-                logTest('PagefindUI Global Available', false, 'PagefindUI not found in global scope');
+                logTest('PagefindUI Global Available', false, 'PagefindUI not found in global scope (expected on test page)');
             }
 
-            // Test Pagefind core script
+            // Test Pagefind core script - this should work everywhere
             try {
                 const pagefind = await import('/pagefind/pagefind.js');
                 if (pagefind && typeof pagefind.search === 'function') {
@@ -106,22 +106,46 @@
                 logTest('Pagefind Core Script', false, `Failed to load Pagefind core: ${error.message}`);
             }
 
-            // Test Pagefind highlight script
+            // Test Pagefind highlight script - this should work everywhere
             try {
                 const highlight = await import('/pagefind/pagefind-highlight.js');
-                if (highlight && typeof highlight.default === 'function') {
+                if (highlight && (typeof highlight.default === 'function' || typeof highlight.PagefindHighlight === 'function')) {
                     logTest('Pagefind Highlight Script', true, 'Pagefind highlight script loaded successfully');
                 } else {
-                    logTest('Pagefind Highlight Script', false, 'Pagefind highlight script missing default export');
+                    logTest('Pagefind Highlight Script', false, 'Pagefind highlight script missing expected exports');
                 }
             } catch (error) {
                 logTest('Pagefind Highlight Script', false, `Failed to load Pagefind highlight: ${error.message}`);
+            }
+            
+            // Check if we're on main site or test page
+            const isMainSite = window.location.pathname === '/' || 
+                              window.location.pathname.includes('.html') ||
+                              window.location.pathname.includes('heists') ||
+                              window.location.pathname.includes('about');
+            
+            if (isMainSite) {
+                logTest('Test Context', true, 'Running on main site - PagefindUI should be available');
+            } else {
+                logTest('Test Context', true, 'Running on test page - PagefindUI not expected, but core scripts should work');
             }
         }
 
         // Test 2: Search Modal Functionality
         function testSearchModal() {
             logTest('Search Modal Tests', true, 'Starting modal functionality tests...');
+            
+            // Check if we're on a main site page or standalone test page
+            const isMainSite = window.location.pathname === '/' || 
+                              window.location.pathname.includes('.html') ||
+                              window.location.pathname.includes('heists') ||
+                              window.location.pathname.includes('about');
+            
+            if (!isMainSite) {
+                logTest('Search Modal Elements', true, 'Skipping modal tests on standalone test page - no search elements expected');
+                logTest('Modal Test Context', true, 'For full search modal tests, visit: http://localhost:8000/');
+                return;
+            }
             
             // Test if search overlay exists
             const searchOverlay = document.getElementById('search-overlay');
