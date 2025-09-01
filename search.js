@@ -1,26 +1,22 @@
-// Pagefind Search Integration
-class SearchManager {
-    constructor() {
-        console.log('🔍 SearchManager constructor called');
-        
-        this.searchOverlay = document.getElementById('search-overlay');
-        this.searchInput = document.getElementById('search-input');
-        this.searchResults = document.getElementById('search-results');
-        this.searchClose = document.getElementById('search-close');
-        this.searchIcons = document.querySelectorAll('.search-icon');
-        
-        console.log('🔍 Elements found:', {
-            searchOverlay: !!this.searchOverlay,
-            searchInput: !!this.searchInput,
-            searchResults: !!this.searchResults,
-            searchClose: !!this.searchClose,
-            searchIcons: this.searchIcons.length
-        });
-        
-        this.pagefind = null;
-        this.isInitialized = false;
-        
-        this.init();
+// Advanced Search functionality for Rapscallion site - v21 (With Anchor Links)
+// This file handles the search interface and results display with comprehensive content crawling
+
+// DOM elements
+let searchInput, searchButton, searchModal, searchResults, searchQueryDisplay, searchCloseBtn;
+
+// Initialize search functionality
+function initSearch() {
+    // Get DOM elements
+    searchInput = document.getElementById('search-input');
+    searchButton = document.getElementById('search-button');
+    searchModal = document.getElementById('search-modal');
+    searchResults = document.getElementById('search-results');
+    searchQueryDisplay = document.getElementById('search-query-display');
+    searchCloseBtn = document.getElementById('search-close-btn');
+
+    if (!searchInput || !searchButton || !searchModal || !searchResults || !searchQueryDisplay || !searchCloseBtn) {
+        console.error('Search elements not found');
+        return;
     }
     
     async init() {
@@ -65,7 +61,17 @@ class SearchManager {
         
         // Search input
         if (this.searchInput) {
-            this.searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
+            this.searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.trim();
+                console.log('🔍 Input event, query:', query, 'length:', query.length);
+                if (query.length > 2) {
+                    console.log('🔍 Triggering search for:', query);
+                    this.handleSearch(query);
+                } else {
+                    console.log('🔍 Clearing results (query too short)');
+                    this.searchResults.innerHTML = '';
+                }
+            });
             this.searchInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     this.closeSearch();
@@ -107,30 +113,82 @@ class SearchManager {
         this.searchInput.blur();
     }
     
-    async handleSearch(query) {
+        async handleSearch(query) {
+        console.log('🔍 handleSearch called with query:', query);
+        console.log('🔍 isInitialized:', this.isInitialized);
+        console.log('🔍 pagefind instance:', this.pagefind);
+        
         if (!this.isInitialized || !query.trim()) {
+            console.log('🔍 Search not initialized or empty query');
             this.searchResults.innerHTML = '';
             return;
         }
         
         try {
+            console.log('🔍 Calling pagefind.search...');
             const search = await this.pagefind.search(query);
+            console.log('🔍 Search response:', search);
+            console.log('🔍 Number of results:', search.results?.length || 0);
+            
+            // Debug the structure of the first result
+            if (search.results && search.results.length > 0) {
+                console.log('🔍 First result structure:', {
+                    url: search.results[0].url,
+                    score: search.results[0].score,
+                    keys: Object.keys(search.results[0])
+                });
+            }
+            
+            if (!search.results || search.results.length === 0) {
+                console.log('🔍 No results found');
+                this.displayResults([], query);
+                return;
+            }
+            
             const results = await Promise.all(
                 search.results.slice(0, 10).map(async (result) => {
-                    const data = await result.data();
-                    return {
-                        url: result.url,
-                        title: data.meta?.title || 'Untitled',
-                        excerpt: data.excerpt || 'No excerpt available',
-                        score: result.score
-                    };
+                    try {
+                        const data = await result.data();
+                        console.log('🔍 Search result data:', {
+                            url: result.url,
+                            title: data.meta?.title,
+                            excerpt: data.excerpt?.substring(0, 100),
+                            meta: data.meta,
+                            excerpt_full: data.excerpt
+                        });
+                        
+                        // Check if we have a URL in the result
+                        let resultUrl = result.url;
+                        if (!resultUrl && data.meta?.url) {
+                            resultUrl = data.meta.url;
+                            console.log('🔍 Using URL from meta:', resultUrl);
+                        }
+                        
+                        return {
+                            url: resultUrl,
+                            title: data.meta?.title || 'Untitled',
+                            excerpt: data.excerpt || 'No excerpt available',
+                            score: result.score,
+                            meta: data.meta
+                        };
+                    } catch (resultError) {
+                        console.error('❌ Error processing result:', resultError);
+                        return {
+                            url: result.url,
+                            title: 'Error loading result',
+                            excerpt: 'Could not load this result',
+                            score: result.score
+                        };
+                    }
                 })
             );
             
+            console.log('🔍 Processed results:', results);
             this.displayResults(results, query);
         } catch (error) {
             console.error('❌ Search error:', error);
-            this.showError('Search failed. Please try again.');
+            console.error('❌ Error stack:', error.stack);
+            this.showError(`Search failed: ${error.message}`);
         }
     }
     
@@ -145,15 +203,72 @@ class SearchManager {
             return;
         }
         
-        const resultsHTML = results.map(result => `
-            <div class="search-result">
-                <a href="${result.url}" class="result-link">
-                    <h4 class="result-title">${this.highlightText(result.title, query)}</h4>
-                    <p class="result-excerpt">${this.highlightText(result.excerpt, query)}</p>
-                    <span class="result-url">${result.url}</span>
-                </a>
-            </div>
-        `).join('');
+        const resultsHTML = results.map(result => {
+            // Handle Pagefind URLs properly
+            let fixedUrl = result.url;
+            
+            // Safety check for undefined URLs
+            if (!fixedUrl) {
+                console.error('❌ Result has no URL:', result);
+                console.log('🔍 Full result object:', result);
+                
+                // Try to extract URL from meta data if available
+                if (result.meta && result.meta.url) {
+                    fixedUrl = result.meta.url;
+                    console.log('🔍 Found URL in meta:', fixedUrl);
+                } else {
+                    // Generate fallback URL based on title
+                    fixedUrl = this.generateFallbackUrl(result.title);
+                    console.log('🔍 Generated fallback URL:', fixedUrl);
+                }
+            }
+            
+            // Remove leading slash if present
+            if (fixedUrl.startsWith('/')) {
+                fixedUrl = fixedUrl.substring(1);
+            }
+            
+            // Handle the new content folder structure
+            // Pagefind might be generating URLs like "content/filename.html" or just "filename.html"
+            console.log('🔍 Processing URL:', result.url, '→', fixedUrl);
+            
+            // Map of old file names to new content paths
+            const filePathMap = {
+                'startup-ideas.html': 'content/startup-ideas.html',
+                'essential-reading.html': 'content/essential-reading.html',
+                'getting-to-profitability.html': 'content/getting-to-profitability.html',
+                'way-of-openness.html': 'content/way-of-openness.html',
+                // Also handle potential content/ prefixed versions
+                'content/startup-ideas.html': 'content/startup-ideas.html',
+                'content/essential-reading.html': 'content/essential-reading.html',
+                'content/getting-to-profitability.html': 'content/getting-to-profitability.html',
+                'content/way-of-openness.html': 'content/way-of-openness.html'
+            };
+            
+            // Check if we have a mapped path for this file
+            if (filePathMap[fixedUrl]) {
+                fixedUrl = filePathMap[fixedUrl];
+                console.log('🔍 Mapped URL:', result.url, '→', fixedUrl);
+            } else if (fixedUrl.startsWith('content/')) {
+                // URL already has content/ prefix, use as is
+                console.log('🔍 URL already has content prefix:', fixedUrl);
+            } else {
+                console.log('🔍 Using URL as is:', fixedUrl);
+            }
+            
+            // Final URL validation
+            console.log('🔍 Final URL for link:', fixedUrl);
+            
+            return `
+                <div class="search-result">
+                    <a href="${fixedUrl}" class="result-link">
+                        <h4 class="result-title">${this.highlightText(result.title, query)}</h4>
+                        <p class="result-excerpt">${this.highlightText(result.excerpt, query)}</p>
+                        <span class="result-url">${fixedUrl}</span>
+                    </a>
+                </div>
+            `;
+        }).join('');
         
         this.searchResults.innerHTML = `
             <div class="results-header">
@@ -175,6 +290,22 @@ class SearchManager {
                 <p>${message}</p>
             </div>
         `;
+    }
+    
+    generateFallbackUrl(title) {
+        // Map titles to their actual file paths
+        const titleToPath = {
+            'Startup Ideas: How the Best Founders Get Them and Why Novelty Is Overrated': 'content/startup-ideas.html',
+            'Essential Reading': 'content/essential-reading.html',
+            'Getting to Profitability without Cutting Bone [Checklist Included]': 'content/getting-to-profitability.html',
+            'The Way of Openness': 'content/way-of-openness.html',
+            'Heists (Our Portfolio)': 'heists.html',
+            'Lore': 'lore.html',
+            'Jeron Paul': 'about.html',
+            'Angel capital for the audacious.': 'index.html'
+        };
+        
+        return titleToPath[title] || '#';
     }
 }
 

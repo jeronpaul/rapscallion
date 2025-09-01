@@ -4,11 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Way of Openness - Rapscallion</title>
-    <link rel="icon" type="image/png" href="images/rapscallion-favicon.png">
-    <link rel="stylesheet" href="styles.css?v=166">
+    <link rel="icon" type="image/png" href="../images/rapscallion-favicon.png">
+    <link rel="stylesheet" href="../styles.css?v=263">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        console.log('🔍 Way of Openness Debug: Page loaded');
+        console.log('🔍 Way of Openness Debug: Current location:', window.location.href);
+        console.log('🔍 Way of Openness Debug: Current pathname:', window.location.pathname);
+        console.log('🔍 Way of Openness Debug: CSS link href:', document.querySelector('link[rel="stylesheet"]').href);
+        
+        // Check if CSS loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔍 Way of Openness Debug: DOM loaded');
+            
+            // Check if CSS is actually loaded
+            const styles = getComputedStyle(document.body);
+            console.log('🔍 Way of Openness Debug: Body font-family:', styles.fontFamily);
+            console.log('🔍 Way of Openness Debug: Body background-color:', styles.backgroundColor);
+            console.log('🔍 Way of Openness Debug: Body color:', styles.color);
+            console.log('🔍 Way of Openness Debug: Body margin:', styles.margin);
+            console.log('🔍 Way of Openness Debug: Body padding:', styles.padding);
+            
+            // Check if header/footer elements exist
+            const header = document.getElementById('header');
+            const footer = document.getElementById('footer');
+            console.log('🔍 Way of Openness Debug: Header element:', header);
+            console.log('🔍 Way of Openness Debug: Footer element:', footer);
+            console.log('🔍 Way of Openness Debug: Header innerHTML length:', header ? header.innerHTML.length : 'N/A');
+            console.log('🔍 Way of Openness Debug: Footer innerHTML length:', footer ? footer.innerHTML.length : 'N/A');
+            
+            // Check CSS loading status
+            const cssLink = document.querySelector('link[rel="stylesheet"]');
+            console.log('🔍 Way of Openness Debug: CSS link element:', cssLink);
+            console.log('🔍 Way of Openness Debug: CSS link href:', cssLink.href);
+            console.log('🔍 Way of Openness Debug: CSS link disabled:', cssLink.disabled);
+            console.log('🔍 Way of Openness Debug: CSS link media:', cssLink.media);
+            
+            // Check if any styles are actually applied
+            const testElement = document.createElement('div');
+            testElement.style.position = 'absolute';
+            testElement.style.left = '-9999px';
+            testElement.textContent = 'Test element for CSS debugging';
+            document.body.appendChild(testElement);
+            
+            const testStyles = getComputedStyle(testElement);
+            console.log('🔍 Way of Openness Debug: Test element font-family:', testStyles.fontFamily);
+            console.log('🔍 Way of Openness Debug: Test element color:', testStyles.color);
+            
+            document.body.removeChild(testElement);
+        });
+        
+        // Check CSS loading errors
+        window.addEventListener('error', function(e) {
+            if (e.target.tagName === 'LINK') {
+                console.error('🔍 Way of Openness Debug: CSS loading error:', e);
+            }
+        });
+    </script>
 </head>
 <body>
     <div id="header"></div>
@@ -89,6 +143,6 @@
 
     <div id="footer"></div>
 
-    <script src="components.js?v=100"></script>
+    <script src="../components.js?v=109"></script>
 </body>
 </html>

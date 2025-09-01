@@ -4,11 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Startup Ideas: How the Best Founders Get Them and Why Novelty Is Overrated - Rapscallion</title>
-    <link rel="icon" type="image/png" href="images/rapscallion-favicon.png">
-    <link rel="stylesheet" href="styles.css?v=166">
+    <link rel="icon" type="image/png" href="../images/rapscallion-favicon.png">
+    <link rel="stylesheet" href="../styles.css?v=263">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        console.log('🔍 Debug: Page loaded');
+        console.log('🔍 Debug: Current location:', window.location.href);
+        console.log('🔍 Debug: Current pathname:', window.location.pathname);
+        console.log('🔍 Debug: CSS link href:', document.querySelector('link[rel="stylesheet"]').href);
+        
+        // Check if CSS loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔍 Debug: DOM loaded');
+            
+            // Check if CSS is actually loaded
+            const styles = getComputedStyle(document.body);
+            console.log('🔍 Debug: Body font-family:', styles.fontFamily);
+            console.log('🔍 Debug: Body background-color:', styles.backgroundColor);
+            console.log('🔍 Debug: Body color:', styles.color);
+            console.log('🔍 Debug: Body margin:', styles.margin);
+            console.log('🔍 Debug: Body padding:', styles.padding);
+            
+            // Check if header/footer elements exist
+            const header = document.getElementById('header');
+            const footer = document.getElementById('footer');
+            console.log('🔍 Debug: Header element:', header);
+            console.log('🔍 Debug: Footer element:', footer);
+            console.log('🔍 Debug: Header innerHTML length:', header ? header.innerHTML.length : 'N/A');
+            console.log('🔍 Debug: Footer innerHTML length:', footer ? footer.innerHTML.length : 'N/A');
+            
+            // Check CSS loading status
+            const cssLink = document.querySelector('link[rel="stylesheet"]');
+            console.log('🔍 Debug: CSS link element:', cssLink);
+            console.log('🔍 Debug: CSS link href:', cssLink.href);
+            console.log('🔍 Debug: CSS link disabled:', cssLink.disabled);
+            console.log('🔍 Debug: CSS link media:', cssLink.media);
+            
+            // Check if any styles are actually applied
+            const testElement = document.createElement('div');
+            testElement.style.position = 'absolute';
+            testElement.style.left = '-9999px';
+            testElement.textContent = 'Test element for CSS debugging';
+            document.body.appendChild(testElement);
+            
+            const testStyles = getComputedStyle(testElement);
+            console.log('🔍 Debug: Test element font-family:', testStyles.fontFamily);
+            console.log('🔍 Debug: Test element color:', testStyles.color);
+            
+            document.body.removeChild(testElement);
+        });
+        
+        // Check CSS loading errors
+        window.addEventListener('error', function(e) {
+            if (e.target.tagName === 'LINK') {
+                console.error('🔍 Debug: CSS loading error:', e);
+            }
+        });
+    </script>
 </head>
 <body>
     <div id="header"></div>
@@ -211,7 +265,7 @@
 
                         <p>Evolution is an interesting metaphor for brainstorming because it generally involves relatively small and incremental innovations and proceeds slowly. For example, while having three arms may provide an evolutionary advantage, nature hasn't made that particular adjustment yet. I'm still waiting for the day when I can type and eat a sandwich at the same time...</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image24.png" alt="Evolution metaphor for brainstorming" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image24.png" alt="Evolution metaphor for brainstorming" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <p>BVSR has two parts: blind variation and selective retention. Blind variation is just another word for novelty and selective retention is just another word for usefulness. Evolution and BVSR processes lead to useful novelty.</p>
 
@@ -235,7 +289,7 @@
                             I have coined the term 'bisociation' in order to make a distinction between the routine skills of thinking on a single 'plane,' as it were, and the creative act, which ... always operates on more than one plane. The former can be called single-minded, the latter double-minded, transitory state of unstable equilibrium where the balance of both emotion and thought is disturbed.
                         </blockquote>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image26.jpg" alt="Bisociation concept diagram" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image26.jpg" alt="Bisociation concept diagram" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <p>The basic idea of bisociation is mixing conceptual frameworks and finding important similarities and differences between them.</p>
 
@@ -283,7 +337,7 @@
 
                         <p>It's probably an oversimplification, but we can divide startup ideas into four basic categories:</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image3.png" alt="Novelty-Utility Matrix" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image3.png" alt="Novelty-Utility Matrix" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <div class="highlight-box">
                             <p><strong>In reality, nothing is as cut-and-dried as this chart. Some ideas hover near the boundaries and some ideas move from one category to another; they seem strange at first but become paradigm-shifting. Others seem incremental at first but become revolutionary.</strong></p>
@@ -351,7 +405,7 @@
 
                         <p>I have often felt that "recognizing" great ideas is one of the central challenges of creativity. For example, I recently googled the term "best painting ever." Here's what I saw.</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image15.png" alt="Las Meninas by Velazquez" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image15.png" alt="Las Meninas by Velazquez" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <p>With apologies to my art historian wife, I was surprised to see a painting called Las Meninas by Velazquez at the top of the list.</p>
 
@@ -425,7 +479,7 @@
 
                         <p>Here's what I found:</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image27.png" alt="Novelty analysis results chart" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image27.png" alt="Novelty analysis results chart" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <div class="highlight-box">
                             <p><strong>Download my list and see if you agree with my categorizations or do your own analysis here.</strong></p>
@@ -455,7 +509,7 @@
 
                         <p>The path of a startup with a novel idea will look something like this:</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image25.png" alt="Startup novelty path chart" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image25.png" alt="Startup novelty path chart" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <p>This seems consistent with startup EMH, but there is a crucial difference. The market doesn't start out totally efficient (i.e., competitive), it moves toward efficiency.</p>
 
@@ -554,7 +608,7 @@
 
                         <p>In fact, this is exactly what happened to Uber. Local startups in several geographies sprang up to meet the local demand, like Ola in India and Didi Chuxing in China. They took advantage of a market inefficiency—the time it would take for Uber to roll out its service to every potential buyer. So if you can take advantage of the market inefficiencies like this one, you could potentially see startup success.</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image7.png" alt="Market inefficiencies chart" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image7.png" alt="Market inefficiencies chart" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <h3 id="no-competition">Winning Through Little Or No Competition</h3>
 
@@ -588,7 +642,7 @@
 
                         <p>The percentages below represent the frequency of a given approach as a percent of the total number of observed approaches.</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image17.png" alt="How Unicorn founders got their ideas" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image17.png" alt="How Unicorn founders got their ideas" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <div class="highlight-box">
                             <p><strong>Download my list and see if you agree with my categorizations or do your own analysis here.</strong></p>
@@ -605,13 +659,13 @@
 
                         <p>For instance, who knew that 11% of founders were basically copycats? It's an unanticipated fact that goes against a lot of conventional wisdom about avoiding competition. But, about half of the 11% avoided competition by taking an idea that was already working in the US and transplanting a copycat idea to a foreign country. Incredible.</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image16.png" alt="Copycat startups chart" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image16.png" alt="Copycat startups chart" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <p>I also noticed that serial entrepreneurs founded 30% of the Unicorn companies in our data set. For this exercise, I defined serial entrepreneurs as having at least one successful previous exit. Most serial entrepreneurs in our data set had made millions before founding their Unicorn company.</p>
 
                         <p>After discovering this pool of serial entrepreneurs, I decided to separate them out in the next chart to see if new ideas would surface from this subset. Here is what I found:</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image14.png" alt="Serial entrepreneurs vs first-time founders" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image14.png" alt="Serial entrepreneurs vs first-time founders" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <p>The biggest difference was that serial entrepreneurs were much more likely to leverage their industry expertise to find their startup idea.</p>
 
@@ -656,7 +710,7 @@
 
                         <p>Here is a picture of the E-M algorithm homing in on the two modes of eruption for the Old Faithful geyser.</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image6.png" alt="E-M algorithm Old Faithful geyser" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image6.png" alt="E-M algorithm Old Faithful geyser" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <p>The basic idea of the E-M algorithm is that if you can rapidly guess, test for accuracy, and then use the results to make a better guess, you can become smart really fast. This is the concept of iterative experimentation. It turns out, many believe that iterative experimentation is one of the most powerful ways to think about startup ideas.</p>
 
@@ -678,7 +732,7 @@
 
                         <p>The Pivot Pyramid is a way to mix and match various aspects of a startup idea until all the components create a solid startup plan. If the idea doesn't work initially, you change the elements starting at the top of the pyramid, which are easiest (lowest cost) to change. If it still doesn't work, you keep moving on down the pyramid and iterating until it does.</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image22.jpg" alt="Pivot Pyramid framework" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image22.jpg" alt="Pivot Pyramid framework" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <p>Hypothetically, if you can just pivot and experiment fast enough, your startup idea will eventually click into place, kind of like solving a Rubix Cube. Pick any starting point, iterate, then go where the biggest opportunity emerges.</p>
 
@@ -739,7 +793,7 @@
 
                         <p>These hedgehog companies focus on three elements, and create a business based on the common element (as seen in the graph below).</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image13.png" alt="Hedgehog Concept diagram" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image13.png" alt="Hedgehog Concept diagram" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <div class="highlight-box">
                             <p><strong>Based on Collins' research, a successful startup idea can be uncovered by asking yourself these three questions: What am I passionate about? What can I be the best in the world at doing? What could I do that would make me enough money?</strong></p>
@@ -809,7 +863,7 @@
 
                         <p>If you don't think this happens in real life, check out this graph of Bitcoin prices.</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image9.gif" alt="Bitcoin price chart" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image9.gif" alt="Bitcoin price chart" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <p>Joseph Schumpeter talked about entrepreneurship in terms of <a href="https://en.wikipedia.org/wiki/Creative_destruction" target="_blank">creative destruction</a>. This is a poetic way of describing the process of new innovation that constantly makes old approaches obsolete.</p>
 
@@ -868,7 +922,7 @@
 
                         <p>Eric takes a set of startup themes and puts them across the horizontal axis of a matrix with industry sectors on the vertical axis.</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image12.png" alt="Startup Idea Matrix" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image12.png" alt="Startup Idea Matrix" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <p>We can expand on this idea a lot and build several different startup idea matrices:</p>
 
@@ -902,7 +956,7 @@
 
                         <p>Here is a list of Unicorns with "obvious" ideas—many of which fit this description:</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image21.png" alt="List of Unicorns with obvious ideas" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image21.png" alt="List of Unicorns with obvious ideas" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <ul>
                             <li>Didi Chuxing (Uber in China)</li>
@@ -1019,7 +1073,7 @@
 
                         <p>Another way to find effective surprise is to think about startups using analogies.</p>
 
-                        <img src="articles/Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image20.png" alt="Analogical reasoning examples" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
+                        <img src="Final Startup Ideas_ How the Best Founders Get Them and Why Novelty Is Overrated/images/image20.png" alt="Analogical reasoning examples" style="width: 100%; max-width: 624px; height: auto; margin: 2rem 0;">
 
                         <p>From my experience, analogical reasoning is one of the most common ways founders get ideas. After all, who hasn't had a conversation with a founder that went something like this:</p>
 
@@ -1068,6 +1122,6 @@
 
     <div id="footer"></div>
 
-    <script src="components.js?v=100"></script>
+    <script src="../components.js?v=109"></script>
 </body>
 </html>
