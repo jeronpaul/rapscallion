@@ -2758,6 +2758,46 @@ footer {
     padding: 0;
 }
 
+/* Search Results Header */
+.search-modal .search-results-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.search-modal .results-count {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 1.5rem 0;
+    font-family: Arial, sans-serif;
+}
+
+.search-modal .results-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.search-modal .section-title {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.search-modal .section-line {
+    width: 50px;
+    height: 1px;
+    background-color: #666;
+}
+
 .search-modal .search-result {
     border-bottom: 1px solid #e5e5e5;
     margin-bottom: 1.5rem;

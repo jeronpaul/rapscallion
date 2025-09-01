@@ -312,6 +312,19 @@ function initializeSearchIcon() {
             async function displaySearchResults(results) {
                 console.log('🔍 Displaying search results:', results);
                 
+                // Add results count header
+                const resultsCount = results.length;
+                const searchTerm = document.getElementById('search-input').value;
+                const resultsHeader = `
+                    <div class="search-results-header">
+                        <h3 class="results-count">${resultsCount} RESULT${resultsCount !== 1 ? 'S' : ''} FOR '${searchTerm.toUpperCase()}'</h3>
+                        <div class="results-section">
+                            <h4 class="section-title">STORIES</h4>
+                            <div class="section-line"></div>
+                        </div>
+                    </div>
+                `;
+                
                 const resultsHTML = await Promise.all(results.map(async (result) => {
                     console.log('🔍 Individual result:', result);
                     
@@ -359,7 +372,7 @@ function initializeSearchIcon() {
                     `;
                 }));
 
-                searchResults.innerHTML = resultsHTML.join('');
+                searchResults.innerHTML = resultsHeader + resultsHTML.join('');
             }
 
             console.log('✅ Custom search modal initialized');
