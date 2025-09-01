@@ -2814,6 +2814,17 @@ footer {
     color: #333 !important;
 }
 
+.search-modal .search-result-anchor {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: var(--accent-color);
+    background: rgba(3, 74, 216, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    margin-top: 0.5rem;
+    font-weight: 500;
+}
+
 .search-modal .search-result-title {
     font-size: 1.4rem;
     font-weight: 400;

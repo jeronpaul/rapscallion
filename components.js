@@ -345,11 +345,11 @@ function initializeSearchIcon() {
                                  'Untitled';
                     
                     // Extract URL from various possible locations
-                    const url = resultData.url || 
-                               resultData.meta?.url || 
-                               result.meta?.url || 
-                               result.url || 
-                               '#';
+                    let url = resultData.url || 
+                              resultData.meta?.url || 
+                              result.meta?.url || 
+                              result.url || 
+                              '#';
                     
                     // Extract excerpt from various possible locations
                     const excerpt = resultData.excerpt || 
@@ -358,13 +358,30 @@ function initializeSearchIcon() {
                                    result.content?.substring(0, 150) + '...' || 
                                    '';
                     
-                    console.log('🔍 Processed result:', { title, url, excerpt });
+                    // Check if this result has anchor information (paragraph-level result)
+                    let anchorInfo = '';
+                    let anchorUrl = url;
+                    
+                    if (result.anchor) {
+                        // This is a paragraph-level result with anchor
+                        anchorInfo = `<span class="search-result-anchor">📎 ${result.anchor.title || 'Paragraph'}</span>`;
+                        
+                        // Add anchor to URL if it's not already there
+                        if (!url.includes('#')) {
+                            anchorUrl = `${url}#${result.anchor.id}`;
+                        }
+                        
+                        console.log('🔍 Found anchor:', result.anchor);
+                    }
+                    
+                    console.log('🔍 Processed result:', { title, url: anchorUrl, excerpt, anchorInfo });
                     
                     return `
                         <div class="search-result">
-                            <a href="${url}" class="search-result-link">
+                            <a href="${anchorUrl}" class="search-result-link">
                                 <h3 class="search-result-title">${title}</h3>
                                 <p class="search-result-excerpt">${excerpt}</p>
+                                ${anchorInfo}
                             </a>
                         </div>
                     `;
