@@ -265,6 +265,7 @@ function initializeSearchIcon() {
                 console.log('🔍 Search input:', searchInput);
                 
                 searchOverlay.style.display = 'block';
+                searchOverlay.classList.add('active');
                 
                 // Wait a moment for the modal to render, then focus
                 setTimeout(() => {
@@ -281,6 +282,7 @@ function initializeSearchIcon() {
 
             function closeSearchModal() {
                 searchOverlay.style.display = 'none';
+                searchOverlay.classList.remove('active');
                 searchInput.value = '';
                 searchResults.innerHTML = '';
                 console.log('✅ Search modal closed');
@@ -318,10 +320,6 @@ function initializeSearchIcon() {
                 const resultsHeader = `
                     <div class="search-results-header">
                         <h3 class="results-count">${resultsCount} RESULT${resultsCount !== 1 ? 'S' : ''} FOR '${searchTerm.toUpperCase()}'</h3>
-                        <div class="results-section">
-                            <h4 class="section-title">STORIES</h4>
-                            <div class="section-line"></div>
-                        </div>
                     </div>
                 `;
                 
