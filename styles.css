@@ -2755,6 +2755,9 @@ footer {
     max-height: 800px;
     overflow-y: auto;
     padding: 0 0 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 /* Search Results Header */
@@ -2776,23 +2779,24 @@ footer {
 
 
 .search-modal .search-results .search-result {
-    border-bottom: 1px solid #e5e5e5 !important;
-    margin-bottom: 3rem !important;
-    padding-bottom: 3rem !important;
+    background: white;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    margin-bottom: 2rem !important;
+    padding: 2rem !important;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .search-modal .search-results .search-result:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    border-bottom-color: #333 !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent-color);
 }
 
 .search-modal .search-results .search-result:last-child {
-    border-bottom: none !important;
     margin-bottom: 0 !important;
-    padding-bottom: 1rem !important;
 }
 
 .search-modal .search-result-link {
