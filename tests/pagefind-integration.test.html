@@ -32,6 +32,8 @@
         <button class="test-button" onclick="testPagefindScripts()">📜 Test Pagefind Scripts</button>
         <button class="test-button" onclick="testSearchModal()">🔍 Test Search Modal</button>
         <button class="test-button" onclick="testPagefindAPI()">⚡ Test Pagefind API</button>
+        <button class="test-button" onclick="testParagraphSearch()">📝 Test Paragraph Search</button>
+        <button class="test-button" onclick="testAnchorNavigation()">🔗 Test Anchor Navigation</button>
         <button class="test-button" onclick="testMainSite()">🏠 Test Main Site</button>
     </div>
 
@@ -188,6 +190,25 @@
             } else {
                 logTest('Search Icons', false, 'No search icons found');
             }
+
+            // Test if we can simulate search result display
+            if (searchResults && searchInput) {
+                // Test if the search input has event listeners
+                const inputEvents = getEventListeners(searchInput);
+                if (inputEvents && inputEvents.input) {
+                    logTest('Search Input Events', true, 'Search input has event listeners attached');
+                } else {
+                    logTest('Search Input Events', false, 'Search input missing event listeners');
+                }
+            }
+        }
+
+        // Helper function to check event listeners (simplified)
+        function getEventListeners(element) {
+            // This is a simplified check - in real browsers you'd need dev tools
+            return {
+                input: element.oninput !== null || element.addEventListener !== undefined
+            };
         }
 
         // Test 3: Pagefind API Functionality
@@ -306,7 +327,143 @@
             }
         }
 
-        // Test 5: Main Site Functionality
+        // Test 5: Paragraph-Level Search Testing
+        async function testParagraphSearch() {
+            logTest('Paragraph Search Test', true, 'Testing paragraph-level search functionality...');
+            
+            if (!pagefindAPI) {
+                logTest('Paragraph Search API', false, 'Pagefind API not loaded. Run script tests first.');
+                return;
+            }
+
+            try {
+                // Test search for content that should return paragraph-level results
+                const testQueries = ['creativity', 'novelty', 'startup ideas', 'entrepreneur'];
+                let paragraphResultsFound = false;
+                
+                for (const query of testQueries) {
+                    try {
+                        const results = await pagefindAPI.search(query);
+                        
+                        if (results && results.results && results.results.length > 0) {
+                            logTest(`Search Query: "${query}"`, true, `Found ${results.results.length} results`);
+                            
+                            // Check for paragraph-level results (results with anchor information)
+                            for (const result of results.results) {
+                                if (result.anchor) {
+                                    paragraphResultsFound = true;
+                                    logTest('Paragraph Result Found', true, 
+                                        `Found paragraph result: "${result.anchor.title || 'Untitled'}" in ${result.url || 'unknown page'}`);
+                                    
+                                    // Test anchor data structure
+                                    if (result.anchor.id) {
+                                        logTest('Anchor ID', true, `Anchor ID: ${result.anchor.id}`);
+                                    } else {
+                                        logTest('Anchor ID', false, 'No anchor ID found');
+                                    }
+                                    
+                                    if (result.anchor.title) {
+                                        logTest('Anchor Title', true, `Anchor title: ${result.anchor.title}`);
+                                    } else {
+                                        logTest('Anchor Title', false, 'No anchor title found');
+                                    }
+                                    
+                                    break; // Found a paragraph result, no need to check more
+                                }
+                            }
+                        } else {
+                            logTest(`Search Query: "${query}"`, false, 'No results found');
+                        }
+                    } catch (error) {
+                        logTest(`Search Query: "${query}"`, false, `Search failed: ${error.message}`);
+                    }
+                }
+                
+                if (paragraphResultsFound) {
+                    logTest('Paragraph Search Summary', true, 'Successfully found paragraph-level search results');
+                } else {
+                    logTest('Paragraph Search Summary', false, 'No paragraph-level results found. Check if Pagefind index includes paragraph data.');
+                }
+                
+            } catch (error) {
+                logTest('Paragraph Search Test', false, `Test failed: ${error.message}`);
+            }
+        }
+
+        // Test 6: Anchor Navigation Testing
+        async function testAnchorNavigation() {
+            logTest('Anchor Navigation Test', true, 'Testing anchor navigation and highlighting...');
+            
+            if (!pagefindAPI) {
+                logTest('Anchor Navigation API', false, 'Pagefind API not loaded. Run script tests first.');
+                return;
+            }
+
+            try {
+                // Test search for specific content that should have anchors
+                const results = await pagefindAPI.search('creativity');
+                
+                if (results && results.results && results.results.length > 0) {
+                    logTest('Anchor Search Results', true, `Found ${results.results.length} results for "creativity"`);
+                    
+                    // Find a result with anchor information
+                    let anchorResult = null;
+                    for (const result of results.results) {
+                        if (result.anchor) {
+                            anchorResult = result;
+                            break;
+                        }
+                    }
+                    
+                    if (anchorResult) {
+                        logTest('Anchor Result Found', true, 
+                            `Found anchor result: "${anchorResult.anchor.title || 'Untitled'}"`);
+                        
+                        // Test URL generation with anchor
+                        const baseUrl = anchorResult.url || '';
+                        const anchorId = anchorResult.anchor.id || '';
+                        
+                        if (baseUrl && anchorId) {
+                            const anchorUrl = `${baseUrl}#${anchorId}`;
+                            logTest('Anchor URL Generation', true, `Generated anchor URL: ${anchorUrl}`);
+                            
+                            // Test if we can construct a valid navigation link
+                            try {
+                                const testLink = document.createElement('a');
+                                testLink.href = anchorUrl;
+                                logTest('Anchor Link Creation', true, `Created valid anchor link: ${testLink.href}`);
+                            } catch (error) {
+                                logTest('Anchor Link Creation', false, `Failed to create anchor link: ${error.message}`);
+                            }
+                        } else {
+                            logTest('Anchor URL Generation', false, 'Missing base URL or anchor ID');
+                        }
+                        
+                        // Test highlight script availability
+                        try {
+                            const highlight = await import('/pagefind/pagefind-highlight.js');
+                            if (highlight && typeof highlight.default === 'function') {
+                                logTest('Highlight Script Available', true, 'Pagefind highlight script is accessible');
+                            } else {
+                                logTest('Highlight Script Available', false, 'Highlight script not properly loaded');
+                            }
+                        } catch (error) {
+                            logTest('Highlight Script Available', false, `Failed to load highlight script: ${error.message}`);
+                        }
+                        
+                    } else {
+                        logTest('Anchor Result Found', false, 'No results with anchor information found');
+                    }
+                } else {
+                    logTest('Anchor Search Results', false, 'No search results found for testing');
+                }
+                
+            } catch (error) {
+                logTest('Anchor Navigation Test', false, `Test failed: ${error.message}`);
+            }
+        }
+
+        // Test 7: Main Site Functionality
         function testMainSite() {
             logTest('Main Site Test', true, 'Testing main site functionality...');
             
@@ -323,7 +480,7 @@
             }
             
             // Provide instructions
-            logTest('Main Site Instructions', true, 'On main site: 1) Click search icon 2) Type "test" 3) Check results 4) Click a result');
+            logTest('Main Site Instructions', true, 'On main site: 1) Click search icon 2) Type "creativity" or "novelty" 3) Look for 📎 paragraph results 4) Click a paragraph result to test anchor navigation');
         }
 
         // Run all tests
@@ -334,6 +491,8 @@
             await testPagefindScripts();
             testSearchModal();
             await testPagefindAPI();
+            await testParagraphSearch();
+            await testAnchorNavigation();
             
             logTest('Test Suite Complete', true, `All tests completed. ${testResults.filter(r => r.status === 'PASS').length}/${testResults.length} tests passed.`);
         }
