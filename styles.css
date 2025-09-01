@@ -2752,9 +2752,9 @@ footer {
 
 /* Custom Search Results */
 .search-modal .search-results {
-    max-height: 600px;
+    max-height: 700px;
     overflow-y: auto;
-    padding: 0;
+    padding: 0 0 1rem 0;
 }
 
 /* Search Results Header */
@@ -2777,8 +2777,8 @@ footer {
 
 .search-modal .search-result {
     border-bottom: 1px solid #e5e5e5;
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
 }
 
 .search-modal .search-result:last-child {
