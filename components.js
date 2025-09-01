@@ -1,23 +1,13 @@
 // Load header and footer components
 async function loadComponent(elementId, componentPath) {
     try {
-        console.log(`🔍 Debug: Loading component ${elementId} from ${componentPath}`);
-        console.log(`🔍 Debug: Current location: ${window.location.href}`);
-        console.log(`🔍 Debug: Current pathname: ${window.location.pathname}`);
-        console.log(`🔍 Debug: Full URL being fetched: ${new URL(componentPath, window.location.href).href}`);
-        
         const response = await fetch(componentPath);
-        console.log(`🔍 Debug: Response status: ${response.status}`);
-        console.log(`🔍 Debug: Response ok: ${response.ok}`);
-        console.log(`🔍 Debug: Response url: ${response.url}`);
         
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
         
         let html = await response.text();
-        console.log(`🔍 Debug: Component HTML length: ${html.length}`);
-        console.log(`🔍 Debug: Component HTML preview: ${html.substring(0, 200)}...`);
         
         // Update copyright year if loading footer
         if (componentPath === 'footer.html') {
@@ -34,27 +24,11 @@ async function loadComponent(elementId, componentPath) {
         }
         
         const targetElement = document.getElementById(elementId);
-        console.log(`🔍 Debug: Target element ${elementId}:`, targetElement);
         
         if (targetElement) {
             targetElement.innerHTML = html;
-            console.log(`🔍 Debug: Component ${elementId} loaded successfully`);
-            console.log(`🔍 Debug: Component ${elementId} innerHTML length: ${targetElement.innerHTML.length}`);
-            
-            // Check if logo image is present after loading header
-            if (elementId === 'header') {
-                setTimeout(() => {
-                    const logoImg = targetElement.querySelector('.logo-image');
-                    console.log(`🔍 Debug: Logo image element:`, logoImg);
-                    if (logoImg) {
-                        console.log(`🔍 Debug: Logo src: ${logoImg.src}`);
-                        console.log(`🔍 Debug: Logo naturalWidth: ${logoImg.naturalWidth}`);
-                        console.log(`🔍 Debug: Logo naturalHeight: ${logoImg.naturalHeight}`);
-                    }
-                }, 100);
-            }
         } else {
-            console.error(`🔍 Debug: Target element ${elementId} not found`);
+            console.error(`❌ Target element ${elementId} not found`);
         }
         
         // Set active states based on current page
@@ -66,15 +40,7 @@ async function loadComponent(elementId, componentPath) {
             initializeSearchIcon();
         }
     } catch (error) {
-        console.error(`🔍 Debug: Error loading ${componentPath}:`, error);
-        console.error(`🔍 Debug: Error details:`, {
-            message: error.message,
-            stack: error.stack,
-            componentPath,
-            elementId,
-            currentLocation: window.location.href,
-            currentPathname: window.location.pathname
-        });
+        console.error(`❌ Error loading ${componentPath}:`, error);
     }
 }
 
@@ -141,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // Search icon functionality is now handled by search.js
 function initializeSearchIcon() {
     // Search functionality moved to search.js with Pagefind integration
-    console.log('🔍 Search functionality initialized via search.js');
 }
 
 // Hamburger menu functionality

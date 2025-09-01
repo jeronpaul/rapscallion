@@ -1,7 +1,7 @@
 <!-- Header v1.0.1 - Updated: 2025-09-01 -->
 <nav>
     <div class="nav-container">
-        <a href="/" class="logo">
+        <a href="/" class="logo" onclick="if (window.location.hash) { window.location.hash = ''; }">
             <img src="/images/logo.svg?v=103" alt="Rapscallion" class="logo-image">
         </a>
         
@@ -49,21 +49,32 @@
             <a href="/heists.html">Heists</a>
             <a href="/gang.html">Gang</a>
             <a href="/lore.html">Lore</a>
-                                <div class="dropdown">
-                        <a href="/about.html" class="dropdown-toggle">About</a>
-                        <div class="dropdown-menu">
-                            <a href="/about.html">About Us</a>
-                            <a href="/content/way-of-openness.html">Way of Openness</a>
-                        </div>
-                    </div>
-                    
-                    <!-- Search Icon - Desktop -->
-                    <button class="search-icon search-icon-desktop" id="search-icon-desktop" aria-label="Search">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" fill="none"/>
-                            <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
+            <div class="dropdown">
+                <a href="/about.html" class="dropdown-toggle">About</a>
+                <div class="dropdown-menu">
+                    <a href="/about.html">About Us</a>
+                    <a href="/content/way-of-openness.html">Way of Openness</a>
                 </div>
             </div>
-        </nav>
+            
+            <!-- Search Icon - Desktop -->
+            <button class="search-icon search-icon-desktop" id="search-icon-desktop" aria-label="Search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" fill="none"/>
+                    <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Pagefind Highlight Script - Enables highlighting of search terms when navigating from search results -->
+<script type="module">
+    try {
+        await import('/pagefind/pagefind-highlight.js');
+        new PagefindHighlight({ highlightParam: "highlight" });
+        console.log('✅ Pagefind highlight script loaded successfully');
+    } catch (error) {
+        console.warn('⚠️ Pagefind highlight script failed to load:', error);
+    }
+</script>
