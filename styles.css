@@ -2779,15 +2779,14 @@ footer {
     border-bottom: 1px solid #e5e5e5 !important;
     margin-bottom: 3rem !important;
     padding-bottom: 3rem !important;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
 }
 
 .search-modal .search-results .search-result:hover {
-    background-color: #f8f8f8 !important;
-    transform: translateX(4px);
-    border-left: 3px solid #333 !important;
-    padding-left: 1rem !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    border-bottom-color: #333 !important;
 }
 
 .search-modal .search-results .search-result:last-child {
@@ -2808,7 +2807,7 @@ footer {
 }
 
 .search-modal .search-result-link:hover .search-result-title {
-    color: #000 !important;
+    color: #333 !important;
 }
 
 .search-modal .search-result-title {
