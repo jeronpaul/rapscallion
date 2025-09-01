@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagefind Integration Test Suite</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 3px; }
+        .pass { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .fail { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .test-button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 3px; cursor: pointer; margin: 5px; }
+        .test-button:hover { background: #0056b3; }
+        .test-button:disabled { background: #6c757d; cursor: not-allowed; }
+        #test-output { margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px; }
+        .search-test { margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 5px; }
+        .search-input { width: 300px; padding: 8px; margin: 10px 0; border: 1px solid #ddd; border-radius: 3px; }
+        .search-results { margin: 10px 0; padding: 10px; background: white; border: 1px solid #ddd; border-radius: 3px; min-height: 100px; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Pagefind Integration Test Suite</h1>
+    <p>This test suite validates our Pagefind search integration functionality.</p>
+
+    <div class="test-section">
+        <h2>🧪 Test Controls</h2>
+        <button class="test-button" onclick="runAllTests()">🚀 Run All Tests</button>
+        <button class="test-button" onclick="clearResults()">🧹 Clear Results</button>
+        <button class="test-button" onclick="testPagefindScripts()">📜 Test Pagefind Scripts</button>
+        <button class="test-button" onclick="testSearchModal()">🔍 Test Search Modal</button>
+        <button class="test-button" onclick="testPagefindAPI()">⚡ Test Pagefind API</button>
+    </div>
+
+    <div class="search-test">
+        <h3>🔍 Live Search Test</h3>
+        <input type="text" class="search-input" id="live-search-input" placeholder="Type to test search..." oninput="testLiveSearch(this.value)">
+        <div class="search-results" id="live-search-results">
+            <em>Type above to test live search functionality...</em>
+        </div>
+    </div>
+
+    <div id="test-output"></div>
+
+    <script>
+        let testResults = [];
+        let pagefindAPI = null;
+
+        // Test result logging
+        function logTest(testName, result, details = '') {
+            const status = result ? 'PASS' : 'FAIL';
+            const cssClass = result ? 'pass' : 'fail';
+            
+            const testResult = {
+                name: testName,
+                status: status,
+                details: details,
+                timestamp: new Date().toISOString()
+            };
+            
+            testResults.push(testResult);
+            
+            const output = document.getElementById('test-output');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${cssClass}`;
+            resultDiv.innerHTML = `
+                <strong>${status}:</strong> ${testName}
+                ${details ? `<br><small>${details}</small>` : ''}
+                <br><small>${testResult.timestamp}</small>
+            `;
+            output.appendChild(resultDiv);
+            
+            console.log(`${status}: ${testName}`, details);
+        }
+
+        // Clear test results
+        function clearResults() {
+            document.getElementById('test-output').innerHTML = '';
+            testResults = [];
+            console.log('🧹 Test results cleared');
+        }
+
+        // Test 1: Pagefind Scripts Loading
+        async function testPagefindScripts() {
+            logTest('Pagefind Scripts Loading', true, 'Starting script loading tests...');
+            
+            // Test Pagefind UI script
+            if (typeof PagefindUI !== 'undefined') {
+                logTest('PagefindUI Global Available', true, 'PagefindUI is globally accessible');
+            } else {
+                logTest('PagefindUI Global Available', false, 'PagefindUI not found in global scope');
+            }
+
+            // Test Pagefind core script
+            try {
+                const pagefind = await import('/pagefind/pagefind.js');
+                if (pagefind && typeof pagefind.search === 'function') {
+                    logTest('Pagefind Core Script', true, 'Pagefind core script loaded successfully');
+                    pagefindAPI = pagefind;
+                } else {
+                    logTest('Pagefind Core Script', false, 'Pagefind core script missing search function');
+                }
+            } catch (error) {
+                logTest('Pagefind Core Script', false, `Failed to load Pagefind core: ${error.message}`);
+            }
+
+            // Test Pagefind highlight script
+            try {
+                const highlight = await import('/pagefind/pagefind-highlight.js');
+                if (highlight && typeof highlight.default === 'function') {
+                    logTest('Pagefind Highlight Script', true, 'Pagefind highlight script loaded successfully');
+                } else {
+                    logTest('Pagefind Highlight Script', false, 'Pagefind highlight script missing default export');
+                }
+            } catch (error) {
+                logTest('Pagefind Highlight Script', false, `Failed to load Pagefind highlight: ${error.message}`);
+            }
+        }
+
+        // Test 2: Search Modal Functionality
+        function testSearchModal() {
+            logTest('Search Modal Tests', true, 'Starting modal functionality tests...');
+            
+            // Test if search overlay exists
+            const searchOverlay = document.getElementById('search-overlay');
+            if (searchOverlay) {
+                logTest('Search Overlay Element', true, 'Search overlay element found');
+            } else {
+                logTest('Search Overlay Element', false, 'Search overlay element not found');
+            }
+
+            // Test if search input exists
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                logTest('Search Input Element', true, 'Search input element found');
+            } else {
+                logTest('Search Input Element', false, 'Search input element not found');
+            }
+
+            // Test if search close button exists
+            const searchClose = document.getElementById('search-close');
+            if (searchClose) {
+                logTest('Search Close Button', true, 'Search close button found');
+            } else {
+                logTest('Search Close Button', false, 'Search close button not found');
+            }
+
+            // Test if search results container exists
+            const searchResults = document.getElementById('search-results');
+            if (searchResults) {
+                logTest('Search Results Container', true, 'Search results container found');
+            } else {
+                logTest('Search Results Container', false, 'Search results container not found');
+            }
+
+            // Test search icons
+            const searchIcons = document.querySelectorAll('.search-icon');
+            if (searchIcons.length > 0) {
+                logTest('Search Icons', true, `Found ${searchIcons.length} search icon(s)`);
+            } else {
+                logTest('Search Icons', false, 'No search icons found');
+            }
+        }
+
+        // Test 3: Pagefind API Functionality
+        async function testPagefindAPI() {
+            logTest('Pagefind API Tests', true, 'Starting API functionality tests...');
+            
+            if (!pagefindAPI) {
+                logTest('Pagefind API Available', false, 'Pagefind API not loaded, run script tests first');
+                return;
+            }
+
+            try {
+                // Test basic search
+                const results = await pagefindAPI.search('test');
+                
+                if (results && results.results) {
+                    logTest('Pagefind Search Function', true, `Search returned ${results.results.length} results`);
+                    
+                    // Test result structure
+                    if (results.results.length > 0) {
+                        const firstResult = results.results[0];
+                        logTest('Result Structure', true, `First result has ${Object.keys(firstResult).length} properties`);
+                        
+                        // Test if data function exists
+                        if (typeof firstResult.data === 'function') {
+                            logTest('Result Data Function', true, 'Result data function is callable');
+                            
+                            // Test data extraction
+                            try {
+                                const resultData = await firstResult.data();
+                                if (resultData && typeof resultData === 'object') {
+                                    logTest('Data Extraction', true, `Extracted data with ${Object.keys(resultData).length} properties`);
+                                    
+                                    // Test specific data fields
+                                    if (resultData.title) {
+                                        logTest('Title Extraction', true, `Title: "${resultData.title.substring(0, 50)}..."`);
+                                    } else {
+                                        logTest('Title Extraction', false, 'No title found in extracted data');
+                                    }
+                                    
+                                    if (resultData.url) {
+                                        logTest('URL Extraction', true, `URL: ${resultData.url}`);
+                                    } else {
+                                        logTest('URL Extraction', false, 'No URL found in extracted data');
+                                    }
+                                } else {
+                                    logTest('Data Extraction', false, 'Extracted data is not an object');
+                                }
+                            } catch (error) {
+                                logTest('Data Extraction', false, `Error extracting data: ${error.message}`);
+                            }
+                        } else {
+                            logTest('Result Data Function', false, 'Result data is not a function');
+                        }
+                    } else {
+                        logTest('Result Structure', false, 'No results to test structure');
+                    }
+                } else {
+                    logTest('Pagefind Search Function', false, 'Search did not return expected results structure');
+                }
+            } catch (error) {
+                logTest('Pagefind API Tests', false, `API test failed: ${error.message}`);
+            }
+        }
+
+        // Test 4: Live Search Testing
+        async function testLiveSearch(query) {
+            if (!query || query.length < 2) {
+                document.getElementById('live-search-results').innerHTML = '<em>Type at least 2 characters to test search...</em>';
+                return;
+            }
+
+            if (!pagefindAPI) {
+                document.getElementById('live-search-results').innerHTML = '<em>Pagefind API not loaded. Run script tests first.</em>';
+                return;
+            }
+
+            try {
+                const results = await pagefindAPI.search(query);
+                const resultsDiv = document.getElementById('live-search-results');
+                
+                if (results && results.results && results.results.length > 0) {
+                    let resultsHTML = `<h4>Search Results for "${query}" (${results.results.length} found):</h4>`;
+                    
+                    for (let i = 0; i < Math.min(results.results.length, 5); i++) {
+                        const result = results.results[i];
+                        try {
+                            const resultData = await result.data();
+                            const title = resultData.title || 'Untitled';
+                            const url = resultData.url || '#';
+                            const excerpt = resultData.excerpt || 'No excerpt available';
+                            
+                            resultsHTML += `
+                                <div style="margin: 10px 0; padding: 10px; border: 1px solid #eee; border-radius: 3px;">
+                                    <strong>${title}</strong><br>
+                                    <small>URL: ${url}</small><br>
+                                    <em>${excerpt.substring(0, 100)}...</em>
+                                </div>
+                            `;
+                        } catch (error) {
+                            resultsHTML += `
+                                <div style="margin: 10px 0; padding: 10px; border: 1px solid #ffcccc; border-radius: 3px; color: #cc0000;">
+                                    <strong>Error extracting result ${i + 1}:</strong> ${error.message}
+                                </div>
+                            `;
+                        }
+                    }
+                    
+                    resultsDiv.innerHTML = resultsHTML;
+                } else {
+                    resultsDiv.innerHTML = `<em>No results found for "${query}"</em>`;
+                }
+            } catch (error) {
+                document.getElementById('live-search-results').innerHTML = `<em>Search error: ${error.message}</em>`;
+            }
+        }
+
+        // Run all tests
+        async function runAllTests() {
+            clearResults();
+            logTest('Test Suite Started', true, 'Running comprehensive Pagefind integration tests...');
+            
+            await testPagefindScripts();
+            testSearchModal();
+            await testPagefindAPI();
+            
+            logTest('Test Suite Complete', true, `All tests completed. ${testResults.filter(r => r.status === 'PASS').length}/${testResults.length} tests passed.`);
+        }
+
+        // Auto-run basic tests on page load
+        window.addEventListener('load', async () => {
+            logTest('Page Loaded', true, 'Test page loaded successfully');
+            await testPagefindScripts();
+            testSearchModal();
+        });
+    </script>
+</body>
+</html>
