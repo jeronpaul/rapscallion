@@ -31,6 +31,7 @@
         <button class="test-button" onclick="testPagefindScripts()">📜 Test Pagefind Scripts</button>
         <button class="test-button" onclick="testSearchModal()">🔍 Test Search Modal</button>
         <button class="test-button" onclick="testPagefindAPI()">⚡ Test Pagefind API</button>
+        <button class="test-button" onclick="testMainSite()">🏠 Test Main Site</button>
     </div>
 
     <div class="search-test">
@@ -276,6 +277,26 @@
             } catch (error) {
                 document.getElementById('live-search-results').innerHTML = `<em>Search error: ${error.message}</em>`;
             }
+        }
+
+        // Test 5: Main Site Functionality
+        function testMainSite() {
+            logTest('Main Site Test', true, 'Testing main site functionality...');
+            
+            // Open main site in new tab for testing
+            const mainSiteUrl = 'http://localhost:8000/';
+            logTest('Main Site URL', true, `Opening main site: ${mainSiteUrl}`);
+            
+            // Try to open in new tab
+            try {
+                window.open(mainSiteUrl, '_blank');
+                logTest('Main Site Access', true, 'Main site opened in new tab. Test search functionality there.');
+            } catch (error) {
+                logTest('Main Site Access', false, `Failed to open main site: ${error.message}`);
+            }
+            
+            // Provide instructions
+            logTest('Main Site Instructions', true, 'On main site: 1) Click search icon 2) Type "test" 3) Check results 4) Click a result');
         }
 
         // Run all tests
