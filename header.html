@@ -5,25 +5,8 @@
             <img src="/images/logo.svg?v=103" alt="Rapscallion" class="logo-image">
         </a>
         
-        <!-- Pagefind Search Overlay -->
-        <div class="search-overlay" id="search-overlay">
-            <div class="search-container">
-                <div class="search-header">
-                    <button class="search-close" id="search-close">
-                        <span>CLOSE</span>
-                        <span class="close-icon">×</span>
-                    </button>
-                </div>
-                <div class="search-input-container">
-                    <input type="search" id="search-input" placeholder="Search the site..." class="search-input">
-                    <svg class="search-icon-inline" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <div id="search-results" class="search-results"></div>
-            </div>
-        </div>
+        <!-- Pagefind Search Container (hidden, we use our custom UI) -->
+        <div id="search" style="display: none;"></div>
         
         <div class="nav-icons">
             <!-- Search Icon - Mobile -->
@@ -68,13 +51,16 @@
     </div>
 </nav>
 
-<!-- Pagefind Highlight Script - Enables highlighting of search terms when navigating from search results -->
-<script type="module">
-    try {
-        await import('/pagefind/pagefind-highlight.js');
-        new PagefindHighlight({ highlightParam: "highlight" });
-        console.log('✅ Pagefind highlight script loaded successfully');
-    } catch (error) {
-        console.warn('⚠️ Pagefind highlight script failed to load:', error);
-    }
-</script>
+<!-- Custom Search Modal -->
+<div class="search-overlay" id="search-overlay">
+    <div class="search-modal">
+        <div class="search-header">
+            <input type="text" id="search-input" placeholder="Search..." autocomplete="off">
+            <button class="search-close" id="search-close">×</button>
+        </div>
+        <div class="search-results" id="search-results">
+            <!-- Search results will be populated here -->
+        </div>
+    </div>
+</div>
+

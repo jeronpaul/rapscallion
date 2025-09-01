@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Loading Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .pass { background-color: #d4edda; border-color: #c3e6cb; }
+        .fail { background-color: #f8d7da; border-color: #f5c6cb; }
+        .pending { background-color: #fff3cd; border-color: #ffeaa7; }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Loading Tests</h1>
+    <div id="test-results"></div>
+
+    <!-- Test 1: Basic JavaScript execution -->
+    <script>
+        console.log('🧪 Test 1: Basic JavaScript execution');
+        document.getElementById('test-results').innerHTML += 
+            '<div class="test pass">✅ Test 1: Basic JavaScript execution - PASSED</div>';
+    </script>
+
+    <!-- Test 2: External script loading -->
+    <script src="/pagefind/pagefind-ui.js" onload="console.log('✅ Pagefind UI script loaded')" onerror="console.error('❌ Pagefind UI script failed to load')"></script>
+    <script>
+        console.log('🧪 Test 2: External script loading');
+        setTimeout(() => {
+            const test2Result = typeof PagefindUI !== 'undefined' ? 'pass' : 'fail';
+            const test2Message = typeof PagefindUI !== 'undefined' ? 'PASSED' : 'FAILED';
+            document.getElementById('test-results').innerHTML += 
+                `<div class="test ${test2Result}">${test2Result === 'pass' ? '✅' : '❌'} Test 2: External script loading - ${test2Message}</div>`;
+        }, 1000);
+    </script>
+
+    <!-- Test 3: Header.html script execution -->
+    <script>
+        console.log('🧪 Test 3: Header.html script execution');
+        // This simulates what should happen in header.html
+        try {
+            console.log('🔍 Script starting...');
+            console.log('🔍 JavaScript is working');
+            console.log('🔍 Document ready state:', document.readyState);
+            document.getElementById('test-results').innerHTML += 
+                '<div class="test pass">✅ Test 3: Header.html script execution - PASSED</div>';
+        } catch (error) {
+            console.error('🔍 JavaScript error:', error);
+            document.getElementById('test-results').innerHTML += 
+                '<div class="test fail">❌ Test 3: Header.html script execution - FAILED</div>';
+        }
+    </script>
+
+    <!-- Test 4: DOM Content Loaded event -->
+    <script>
+        console.log('🧪 Test 4: DOM Content Loaded event');
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔍 DOM loaded, initializing Pagefind UI...');
+            console.log('🔍 PagefindUI available:', typeof PagefindUI);
+            document.getElementById('test-results').innerHTML += 
+                '<div class="test pass">✅ Test 4: DOM Content Loaded event - PASSED</div>';
+        });
+    </script>
+
+    <!-- Test 5: Search modal elements -->
+    <script>
+        console.log('🧪 Test 5: Search modal elements');
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchOverlay = document.getElementById('search-overlay');
+            const searchClose = document.getElementById('search-close');
+            const searchIcons = [
+                document.getElementById('search-icon-mobile'),
+                document.getElementById('search-icon-desktop')
+            ].filter(Boolean);
+            
+            console.log('🔍 Search overlay:', searchOverlay);
+            console.log('🔍 Search close:', searchClose);
+            console.log('🔍 Search icons:', searchIcons);
+            
+            if (searchOverlay && searchClose && searchIcons.length > 0) {
+                document.getElementById('test-results').innerHTML += 
+                    '<div class="test pass">✅ Test 5: Search modal elements - PASSED</div>';
+            } else {
+                document.getElementById('test-results').innerHTML += 
+                    '<div class="test fail">❌ Test 5: Search modal elements - FAILED</div>';
+            }
+        });
+    </script>
+
+    <!-- Test 6: Click event binding -->
+    <script>
+        console.log('🧪 Test 6: Click event binding');
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchIcons = [
+                document.getElementById('search-icon-mobile'),
+                document.getElementById('search-icon-desktop')
+            ].filter(Boolean);
+            
+            if (searchIcons.length > 0) {
+                searchIcons.forEach((icon, index) => {
+                    console.log(`🔍 Binding click event to search icon ${index}:`, icon);
+                    icon.addEventListener('click', function() {
+                        console.log('🔍 Search icon clicked!');
+                        document.getElementById('test-results').innerHTML += 
+                            '<div class="test pass">✅ Test 6: Click event binding - PASSED</div>';
+                    });
+                });
+            } else {
+                document.getElementById('test-results').innerHTML += 
+                    '<div class="test fail">❌ Test 6: Click event binding - FAILED (no search icons found)</div>';
+            }
+        });
+    </script>
+
+    <!-- Test 7: Header.html content loading -->
+    <script>
+        console.log('🧪 Test 7: Header.html content loading');
+        fetch('/header.html')
+            .then(response => response.text())
+            .then(html => {
+                console.log('🔍 Header.html loaded, length:', html.length);
+                if (html.includes('pagefind-ui.js')) {
+                    document.getElementById('test-results').innerHTML += 
+                        '<div class="test pass">✅ Test 7: Header.html content loading - PASSED</div>';
+                } else {
+                    document.getElementById('test-results').innerHTML += 
+                        '<div class="test fail">❌ Test 7: Header.html content loading - FAILED (no pagefind-ui.js found)</div>';
+                }
+            })
+            .catch(error => {
+                console.error('🔍 Error loading header.html:', error);
+                document.getElementById('test-results').innerHTML += 
+                    '<div class="test fail">❌ Test 7: Header.html content loading - FAILED (fetch error)</div>';
+            });
+    </script>
+</body>
+</html>

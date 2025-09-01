@@ -1,6 +1,8 @@
 // Embedded Search functionality for Rapscallion site
 // This implementation provides deep linking to specific sections and highlights search terms
 
+console.log('🔍 Search-embedded.js loaded!');
+
 class EmbeddedSearchManager {
     constructor() {
         this.isInitialized = false;

@@ -9,60 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <script>
-        console.log('🔍 Debug: Page loaded');
-        console.log('🔍 Debug: Current location:', window.location.href);
-        console.log('🔍 Debug: Current pathname:', window.location.pathname);
-        console.log('🔍 Debug: CSS link href:', document.querySelector('link[rel="stylesheet"]').href);
-        
-        // Check if CSS loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🔍 Debug: DOM loaded');
-            
-            // Check if CSS is actually loaded
-            const styles = getComputedStyle(document.body);
-            console.log('🔍 Debug: Body font-family:', styles.fontFamily);
-            console.log('🔍 Debug: Body background-color:', styles.backgroundColor);
-            console.log('🔍 Debug: Body color:', styles.color);
-            console.log('🔍 Debug: Body margin:', styles.margin);
-            console.log('🔍 Debug: Body padding:', styles.padding);
-            
-            // Check if header/footer elements exist
-            const header = document.getElementById('header');
-            const footer = document.getElementById('footer');
-            console.log('🔍 Debug: Header element:', header);
-            console.log('🔍 Debug: Footer element:', footer);
-            console.log('🔍 Debug: Header innerHTML length:', header ? header.innerHTML.length : 'N/A');
-            console.log('🔍 Debug: Footer innerHTML length:', footer ? footer.innerHTML.length : 'N/A');
-            
-            // Check CSS loading status
-            const cssLink = document.querySelector('link[rel="stylesheet"]');
-            console.log('🔍 Debug: CSS link element:', cssLink);
-            console.log('🔍 Debug: CSS link href:', cssLink.href);
-            console.log('🔍 Debug: CSS link disabled:', cssLink.disabled);
-            console.log('🔍 Debug: CSS link media:', cssLink.media);
-            
-            // Check if any styles are actually applied
-            const testElement = document.createElement('div');
-            testElement.style.position = 'absolute';
-            testElement.style.left = '-9999px';
-            testElement.textContent = 'Test element for CSS debugging';
-            document.body.appendChild(testElement);
-            
-            const testStyles = getComputedStyle(testElement);
-            console.log('🔍 Debug: Test element font-family:', testStyles.fontFamily);
-            console.log('🔍 Debug: Test element color:', testStyles.color);
-            
-            document.body.removeChild(testElement);
-        });
-        
-        // Check CSS loading errors
-        window.addEventListener('error', function(e) {
-            if (e.target.tagName === 'LINK') {
-                console.error('🔍 Debug: CSS loading error:', e);
-            }
-        });
-    </script>
+
 </head>
 <body>
     <div id="header"></div>

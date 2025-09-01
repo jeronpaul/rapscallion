@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Site JavaScript Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .pass { background-color: #d4edda; border-color: #c3e6cb; }
+        .fail { background-color: #f8d7da; border-color: #f5c6cb; }
+        .pending { background-color: #fff3cd; border-color: #ffeaa7; }
+    </style>
+</head>
+<body>
+    <h1>Main Site JavaScript Tests</h1>
+    <div id="test-results"></div>
+
+    <!-- Test 1: Load the main site in an iframe -->
+    <iframe id="main-site" src="/" width="100%" height="400" style="border: 1px solid #ccc; margin: 10px 0;"></iframe>
+    
+    <script>
+        console.log('🧪 Main Site JavaScript Test Starting');
+        
+        // Test 1: Check if main site loads
+        document.getElementById('main-site').onload = function() {
+            console.log('✅ Main site iframe loaded');
+            document.getElementById('test-results').innerHTML += 
+                '<div class="test pass">✅ Test 1: Main site loads - PASSED</div>';
+            
+            // Test 2: Check if header.html is being loaded
+            const iframe = document.getElementById('main-site');
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                const headerScripts = iframeDoc.querySelectorAll('script');
+                console.log('🔍 Scripts found in main site:', headerScripts.length);
+                
+                let hasPagefindScript = false;
+                headerScripts.forEach(script => {
+                    if (script.src && script.src.includes('pagefind-ui.js')) {
+                        hasPagefindScript = true;
+                    }
+                });
+                
+                if (hasPagefindScript) {
+                    document.getElementById('test-results').innerHTML += 
+                        '<div class="test pass">✅ Test 2: Pagefind script found - PASSED</div>';
+                } else {
+                    document.getElementById('test-results').innerHTML += 
+                        '<div class="test fail">❌ Test 2: Pagefind script found - FAILED</div>';
+                }
+                
+                // Test 3: Check if search elements exist
+                const searchOverlay = iframeDoc.getElementById('search-overlay');
+                const searchIcons = iframeDoc.querySelectorAll('[id*="search-icon"]');
+                
+                if (searchOverlay && searchIcons.length > 0) {
+                    document.getElementById('test-results').innerHTML += 
+                        '<div class="test pass">✅ Test 3: Search elements exist - PASSED</div>';
+                } else {
+                    document.getElementById('test-results').innerHTML += 
+                        '<div class="test fail">❌ Test 3: Search elements exist - FAILED</div>';
+                }
+                
+            } catch (error) {
+                console.error('🔍 Error accessing iframe content:', error);
+                document.getElementById('test-results').innerHTML += 
+                    '<div class="test fail">❌ Test 2-3: Cross-origin access blocked - FAILED</div>';
+            }
+        };
+        
+        // Test 4: Check if we can access the main site directly
+        fetch('/')
+            .then(response => response.text())
+            .then(html => {
+                console.log('🔍 Main site HTML loaded, length:', html.length);
+                
+                if (html.includes('pagefind-ui.js')) {
+                    document.getElementById('test-results').innerHTML += 
+                        '<div class="test pass">✅ Test 4: Main site contains pagefind-ui.js - PASSED</div>';
+                } else {
+                    document.getElementById('test-results').innerHTML += 
+                        '<div class="test fail">❌ Test 4: Main site contains pagefind-ui.js - FAILED</div>';
+                }
+                
+                if (html.includes('search-overlay')) {
+                    document.getElementById('test-results').innerHTML += 
+                        '<div class="test pass">✅ Test 5: Main site contains search-overlay - PASSED</div>';
+                } else {
+                    document.getElementById('test-results').innerHTML += 
+                        '<div class="test fail">❌ Test 5: Main site contains search-overlay - FAILED</div>';
+                }
+            })
+            .catch(error => {
+                console.error('🔍 Error loading main site:', error);
+                document.getElementById('test-results').innerHTML += 
+                    '<div class="test fail">❌ Test 4-5: Main site loading - FAILED</div>';
+            });
+    </script>
+</body>
+</html>
