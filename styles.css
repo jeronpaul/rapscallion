@@ -2655,7 +2655,7 @@ footer {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(255, 255, 255, 0.98);
     z-index: 1000;
     display: none;
     transition: all 0.3s ease;
@@ -2664,7 +2664,7 @@ footer {
 .search-overlay.active {
     opacity: 1;
     visibility: visible;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(255, 255, 255, 0.98);
 }
 
 /* Custom Search Modal */
@@ -2677,7 +2677,8 @@ footer {
     max-width: 800px;
     background: #fff;
     border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e5e5;
     overflow: visible;
     padding: 2rem;
     box-sizing: border-box;
