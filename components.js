@@ -140,7 +140,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Search icon functionality is now handled by search.js
 function initializeSearchIcon() {
+    console.log('🔍 initializeSearchIcon called...');
+    console.log('🔍 Current document ready state:', document.readyState);
+    
+    // Check if search icons exist
+    const searchIcons = [
+        document.getElementById('search-icon-mobile'),
+        document.getElementById('search-icon-desktop')
+    ].filter(Boolean);
+    
+    console.log('🔍 Search icons found in initializeSearchIcon:', searchIcons.length);
+    searchIcons.forEach((icon, index) => {
+        console.log(`🔍 Search icon ${index}:`, icon);
+        console.log(`🔍 Search icon ${index} id:`, icon.id);
+        console.log(`🔍 Search icon ${index} onclick:`, icon.onclick);
+    });
+    
     // Search functionality moved to search.js with Pagefind integration
+    // But we'll add basic click events here for immediate feedback
+    searchIcons.forEach((icon, index) => {
+        if (icon) {
+            console.log(`🔍 Adding basic click event to search icon ${index}`);
+            icon.addEventListener('click', function(e) {
+                console.log(`🔍 Search icon ${index} clicked!`);
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Show a temporary message that search is loading
+                const loadingMsg = document.createElement('div');
+                loadingMsg.textContent = 'Search is loading...';
+                loadingMsg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:20px;border:1px solid #ccc;border-radius:8px;z-index:10000;box-shadow:0 4px 12px rgba(0,0,0,0.15);';
+                document.body.appendChild(loadingMsg);
+                
+                // Remove after 2 seconds
+                setTimeout(() => {
+                    if (loadingMsg.parentNode) {
+                        loadingMsg.parentNode.removeChild(loadingMsg);
+                    }
+                }, 2000);
+            });
+        }
+    });
 }
 
         // Global variable to store Pagefind UI instance
