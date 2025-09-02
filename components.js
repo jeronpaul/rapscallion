@@ -41,7 +41,7 @@ async function loadComponent(elementId, componentPath) {
         }
         
         // Set active states based on current page (only for header, with delay to ensure DOM is ready)
-        if (componentPath === 'header.html') {
+        if (componentPath.endsWith('header.html')) {
             console.log('🔍 Header loaded, setting up components...');
             setTimeout(() => {
                 console.log('🔍 Setting up header components...');
