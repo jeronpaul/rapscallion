@@ -156,6 +156,7 @@ function initializeSearchIcon() {
                     showImages: false,
                     showSubResults: true,
                     excerptLength: 150,
+                    highlightParam: "highlight",
                     processResult: function(result) {
                         // Custom URL mapping for our site structure
                         const urlMap = {
