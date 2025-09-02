@@ -303,8 +303,31 @@ function initializeSearchIcon() {
                     const searchModule = search.default || search;
                     console.log('🔍 Using search module:', searchModule);
                     
-                    const searchInstance = await searchModule.init();
-                    console.log('🔍 Search instance created:', searchInstance);
+                    // Try different initialization approaches
+                    let searchInstance;
+                    if (typeof searchModule.init === 'function') {
+                        console.log('🔍 Calling searchModule.init()...');
+                        searchInstance = await searchModule.init();
+                        console.log('🔍 Search instance from init():', searchInstance);
+                    }
+                    
+                    // If init() didn't work, try using the module directly
+                    if (!searchInstance && typeof searchModule.search === 'function') {
+                        console.log('🔍 Using searchModule directly for search...');
+                        searchInstance = searchModule;
+                    }
+                    
+                    // If still no instance, try creating a new instance
+                    if (!searchInstance && typeof searchModule === 'function') {
+                        console.log('🔍 Creating new search instance...');
+                        searchInstance = new searchModule();
+                    }
+                    
+                    console.log('🔍 Final search instance:', searchInstance);
+                    
+                    if (!searchInstance || typeof searchInstance.search !== 'function') {
+                        throw new Error('Could not create a valid search instance');
+                    }
                     
                     const results = await searchInstance.search(query);
                     
