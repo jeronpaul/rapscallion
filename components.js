@@ -168,6 +168,10 @@ function initializeSearchIcon() {
                     console.log('🔍 Global Pagefind search instance:', globalPagefindUI);
                     console.log('🔍 Debug: globalPagefindUI.search method:', typeof globalPagefindUI.search);
                     console.log('🔍 Debug: globalPagefindUI methods:', Object.keys(globalPagefindUI).filter(key => typeof globalPagefindUI[key] === 'function'));
+                    
+                    // Now that Pagefind is initialized, initialize the custom search modal
+                    initializeCustomSearchModal(globalPagefindUI);
+                    console.log('✅ Pagefind search initialization complete');
                 }).catch(error => {
                     console.error('❌ Error importing Pagefind search module:', error);
                 });
@@ -175,11 +179,6 @@ function initializeSearchIcon() {
                 console.error('❌ Error initializing Pagefind search:', error);
                 return;
             }
-
-            // Initialize custom search modal
-            initializeCustomSearchModal(globalPagefindUI);
-
-            console.log('✅ Pagefind search initialization complete');
         }
 
         // Initialize custom search modal with Pagefind integration
