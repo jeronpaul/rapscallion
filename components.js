@@ -294,8 +294,18 @@ function initializeSearchIcon() {
                 
                 try {
                     // Use Pagefind's standard search functionality
+                    console.log('🔍 Importing Pagefind...');
                     const search = await import('/pagefind/pagefind.js');
-                    const searchInstance = await search.init();
+                    console.log('🔍 Pagefind imported:', search);
+                    console.log('🔍 Search object keys:', Object.keys(search));
+                    
+                    // Check if search.default exists (ES module default export)
+                    const searchModule = search.default || search;
+                    console.log('🔍 Using search module:', searchModule);
+                    
+                    const searchInstance = await searchModule.init();
+                    console.log('🔍 Search instance created:', searchInstance);
+                    
                     const results = await searchInstance.search(query);
                     
                     console.log('🔍 Search results:', results);
