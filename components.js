@@ -289,82 +289,54 @@ function initializeSearchIcon() {
                 console.log('✅ Search modal closed');
             }
 
-            async function performSearch(query) {
+                        async function performSearch(query) {
                 console.log('🔍 Performing search for:', query);
                 
                 try {
-                    // Use Pagefind's standard search functionality
-                    console.log('🔍 Importing Pagefind...');
+                    // Use the Pagefind UI instance that's already configured with showSubResults: true
+                    if (pagefindUI && typeof pagefindUI.search === 'function') {
+                        console.log('🔍 Using Pagefind UI search method with showSubResults: true');
+                        const results = await pagefindUI.search(query);
+                        console.log('🔍 Pagefind UI search results:', results);
+                        
+                        if (results && results.length > 0) {
+                            console.log('🔍 Total results from Pagefind UI:', results.length);
+                            console.log('🔍 All results:', results);
+                            await displaySearchResults(results);
+                            return;
+                        }
+                    }
+                    
+                    // Fallback to direct Pagefind API if UI method not available
+                    console.log('🔍 Falling back to direct Pagefind API...');
                     const search = await import('/pagefind/pagefind.js');
-                    console.log('🔍 Pagefind imported:', search);
-                    console.log('🔍 Search object keys:', Object.keys(search));
-                    
-                    // Check if search.default exists (ES module default export)
                     const searchModule = search.default || search;
-                    console.log('🔍 Using search module:', searchModule);
                     
-                    // Try different initialization approaches
-                    let searchInstance;
-                    if (typeof searchModule.init === 'function') {
-                        console.log('🔍 Calling searchModule.init()...');
-                        searchInstance = await searchModule.init();
-                        console.log('🔍 Search instance from init():', searchInstance);
-                    }
+                    const results = await searchModule.search(query, { showSubResults: true });
                     
-                    // If init() didn't work, try using the module directly
-                    if (!searchInstance && typeof searchModule.search === 'function') {
-                        console.log('🔍 Using searchModule directly for search...');
-                        searchInstance = searchModule;
-                    }
-                    
-                    // If still no instance, try creating a new instance
-                    if (!searchInstance && typeof searchModule === 'function') {
-                        console.log('🔍 Creating new search instance...');
-                        searchInstance = new searchModule();
-                    }
-                    
-                    console.log('🔍 Final search instance:', searchInstance);
-                    
-                    if (!searchInstance || typeof searchInstance.search !== 'function') {
-                        throw new Error('Could not create a valid search instance');
-                    }
-                    
-                    const results = await searchInstance.search(query, { showSubResults: true });
-                    
-                    console.log('🔍 Search results:', results);
+                    console.log('🔍 Direct API search results:', results);
                     console.log('🔍 Results type:', typeof results);
                     console.log('🔍 Results keys:', Object.keys(results));
                     console.log('🔍 Results.results:', results.results);
                     console.log('🔍 Results.results length:', results.results?.length);
-                    console.log('🔍 First result structure:', results.results?.[0]);
-                    console.log('🔍 First result keys:', results.results?.[0] ? Object.keys(results.results[0]) : 'No results');
                     
-                    // Check if we have sub-results
                     if (results.results && results.results.length > 0) {
-                        results.results.forEach((result, index) => {
-                            console.log(`🔍 Result ${index} keys:`, Object.keys(result));
-                            console.log(`🔍 Result ${index} has subResults:`, result.subResults);
-                            console.log(`🔍 Result ${index} subResults length:`, result.subResults?.length);
+                        // Flatten results to include sub-results
+                        let allResults = [];
+                        results.results.forEach(result => {
+                            allResults.push(result);
+                            if (result.subResults && result.subResults.length > 0) {
+                                allResults.push(...result.subResults);
+                            }
                         });
+                        
+                        console.log('🔍 Total results after flattening:', allResults.length);
+                        console.log('🔍 All results:', allResults);
+                        
+                        await displaySearchResults(allResults);
+                    } else {
+                        searchResults.innerHTML = '<div class="no-results">No results found</div>';
                     }
-                    
-                                    if (results.results && results.results.length > 0) {
-                    // Flatten results to include sub-results
-                    let allResults = [];
-                    results.results.forEach(result => {
-                        allResults.push(result);
-                        if (result.subResults && result.subResults.length > 0) {
-                            allResults.push(...result.subResults);
-                        }
-                    });
-                    
-                    console.log('🔍 Total results after flattening:', allResults.length);
-                    console.log('🔍 All results:', allResults);
-                    
-                    await displaySearchResults(allResults);
-                } else {
-                    searchResults.innerHTML = '<div class="no-results">No results found</div>';
-                }
                 } catch (error) {
                     console.error('❌ Search error:', error);
                     searchResults.innerHTML = '<div class="search-error">Search temporarily unavailable</div>';
