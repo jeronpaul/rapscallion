@@ -1,6 +1,37 @@
 // Load header and footer components
 console.log('🔍 Components.js loaded at:', new Date().toISOString());
 
+// Check if the current page needs search functionality
+function shouldInitializeSearch() {
+    // Check if search icons exist on the page
+    const searchIconMobile = document.getElementById('search-icon-mobile');
+    const searchIconDesktop = document.getElementById('search-icon-desktop');
+    
+    // Check if search overlay exists
+    const searchOverlay = document.getElementById('search-overlay');
+    
+    // Check if we're on a content page that would benefit from search
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const isContentPage = currentPage.includes('.html') && 
+                         (currentPage === 'index.html' || 
+                          currentPage.startsWith('content/') || 
+                          currentPage === 'startup-ideas.html');
+    
+    // Only initialize search if we have search UI elements or are on a content page
+    const hasSearchUI = searchIconMobile || searchIconDesktop || searchOverlay;
+    
+    console.log('🔍 Search initialization check:', {
+        currentPage,
+        isContentPage,
+        hasSearchUI,
+        searchIconMobile: !!searchIconMobile,
+        searchIconDesktop: !!searchIconDesktop,
+        searchOverlay: !!searchOverlay
+    });
+    
+    return hasSearchUI || isContentPage;
+}
+
 async function loadComponent(elementId, componentPath) {
     try {
         const response = await fetch(componentPath);
@@ -41,10 +72,15 @@ async function loadComponent(elementId, componentPath) {
                 setActiveStates();
                 initializeHamburgerMenu();
                 initializeSearchIcon();
-                // Initialize Pagefind after a longer delay to ensure scripts are loaded
+                // Initialize Pagefind only on pages that need search functionality
                 setTimeout(() => {
-                    console.log('🔍 About to initialize Pagefind...');
-                    initializePagefindSearch();
+                    console.log('🔍 Checking if page needs search functionality...');
+                    if (shouldInitializeSearch()) {
+                        console.log('🔍 About to initialize Pagefind...');
+                        initializePagefindSearch();
+                    } else {
+                        console.log('🔍 Page does not need search functionality, skipping Pagefind initialization');
+                    }
                 }, 500);
             }, 100);
         }
