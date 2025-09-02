@@ -465,7 +465,12 @@ function initializeSearchIcon() {
         function addSearchResultClickHandlers() {
             const searchResults = document.querySelectorAll('.search-result-link');
             searchResults.forEach(link => {
-                link.addEventListener('click', function(e) {
+                // Remove any existing click event listeners to prevent duplicates
+                const newLink = link.cloneNode(true);
+                link.parentNode.replaceChild(newLink, link);
+                
+                // Add the click handler to the new element
+                newLink.addEventListener('click', function(e) {
                     // Close the search modal after a short delay to allow navigation
                     setTimeout(() => {
                         closeSearchModal();
