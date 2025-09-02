@@ -453,9 +453,25 @@ function initializeSearchIcon() {
                 }));
 
                 searchResults.innerHTML = resultsHeader + resultsHTML.join('');
+                
+                // Add click handlers for search results
+                addSearchResultClickHandlers();
             }
 
 
+        }
+
+        // Function to add click handlers for search results
+        function addSearchResultClickHandlers() {
+            const searchResults = document.querySelectorAll('.search-result-link');
+            searchResults.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Close the search modal after a short delay to allow navigation
+                    setTimeout(() => {
+                        closeSearchModal();
+                    }, 100);
+                });
+            });
         }
 
 // Hamburger menu functionality
