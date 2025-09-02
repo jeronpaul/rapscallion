@@ -138,45 +138,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-// Initialize search icon click events immediately when header loads
+// Search icon functionality is now handled by search.js
 function initializeSearchIcon() {
-    console.log('🔍 Initializing search icon click events...');
-    
-    // Set up basic search icon click events immediately
-    const searchIcons = [
-        document.getElementById('search-icon-mobile'),
-        document.getElementById('search-icon-desktop')
-    ].filter(Boolean);
-    
-    console.log('🔍 Found search icons:', searchIcons.length);
-    
-    searchIcons.forEach((icon, index) => {
-        if (icon) {
-            console.log(`🔍 Binding basic click event to search icon ${index}`);
-            icon.addEventListener('click', function() {
-                console.log('🔍 Search icon clicked, but Pagefind not ready yet...');
-                // Show a message that search is loading
-                if (window.searchLoadingMessage) {
-                    window.searchLoadingMessage.style.display = 'block';
-                } else {
-                    // Create a temporary loading message
-                    const loadingMsg = document.createElement('div');
-                    loadingMsg.textContent = 'Search is loading...';
-                    loadingMsg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:20px;border:1px solid #ccc;border-radius:8px;z-index:10000;';
-                    document.body.appendChild(loadingMsg);
-                    window.searchLoadingMessage = loadingMsg;
-                    
-                    // Remove after 2 seconds
-                    setTimeout(() => {
-                        if (loadingMsg.parentNode) {
-                            loadingMsg.parentNode.removeChild(loadingMsg);
-                        }
-                        window.searchLoadingMessage = null;
-                    }, 2000);
-                }
-            });
-        }
-    });
+    // Search functionality moved to search.js with Pagefind integration
 }
 
         // Global variable to store Pagefind UI instance
@@ -278,16 +242,11 @@ function initializeSearchIcon() {
 
             console.log('🔍 Search icons found:', searchIcons.length);
 
-            // Remove old click event listeners and set up new ones for search modal
+            // Open search modal when search icons are clicked
             searchIcons.forEach((icon, index) => {
                 if (icon) {
-                    console.log(`🔍 Replacing click event for search icon ${index}`);
-                    // Remove old event listeners by cloning the element
-                    const newIcon = icon.cloneNode(true);
-                    icon.parentNode.replaceChild(newIcon, icon);
-                    
-                    // Set up new click event for search modal
-                    newIcon.addEventListener('click', function() {
+                    console.log(`🔍 Binding click event to search icon ${index}`);
+                    icon.addEventListener('click', function() {
                         console.log('🔍 Search icon clicked, opening custom search modal...');
                         openSearchModal();
                     });
