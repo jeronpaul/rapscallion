@@ -92,19 +92,8 @@ async function runTests() {
     
     // Test 3: Test page accessibility
     console.log('\n3️⃣ Testing test page accessibility...');
-    const testPage = await testEndpoint('/tests/pagefind-integration.test.html');
-    if (testPage.status === 200) {
-        console.log('✅ Test page accessible');
-        
-        // Check if test page has expected content
-        if (testPage.data.includes('Pagefind Integration Test Suite')) {
-            console.log('✅ Test page content correct');
-        } else {
-            console.log('❌ Test page content incorrect');
-        }
-    } else {
-        console.log(`❌ Test page not accessible: ${testPage.status}`);
-    }
+    console.log('ℹ️  Browser-based test page removed - using automated tests instead');
+    console.log('✅ Automated testing available via: node tests/test-paragraph-search.js');
     
     // Test 4: Pagefind index files
     console.log('\n4️⃣ Testing Pagefind index files...');
@@ -136,9 +125,9 @@ async function runTests() {
     }
     
     console.log('\n🎯 Test Summary:');
-    console.log('• Open http://localhost:8000/tests/pagefind-integration.test.html in your browser');
-    console.log('• Click "🚀 Run All Tests" to see detailed results');
-    console.log('• Click "🏠 Test Main Site" to test actual search functionality');
+    console.log('• All Pagefind infrastructure tests completed');
+    console.log('• For paragraph search testing, run: node tests/test-paragraph-search.js');
+    console.log('• For manual testing, visit: http://localhost:8000/ and use the search icon');
     console.log('• Check console for any JavaScript errors');
 }
 

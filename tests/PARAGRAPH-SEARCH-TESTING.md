@@ -26,10 +26,10 @@ node tests/test-paragraph-search.js
 
 ### Option 2: Browser-Based Tests
 
-1. Open the test page: `http://localhost:8000/tests/pagefind-integration.test.html`
-2. Click "🚀 Run All Tests" to run comprehensive tests
-3. Click "📝 Test Paragraph Search" for paragraph-specific tests
-4. Click "🔗 Test Anchor Navigation" for anchor functionality tests
+1. Open the main site: `http://localhost:8000/`
+2. Click the search icon (🔍) in the header
+3. Test search functionality directly in the search modal
+4. Look for paragraph results with 📎 icons
 
 ### Option 3: Manual Testing
 
@@ -129,7 +129,6 @@ Paragraph-level search is working correctly when:
 
 - `components.js` - Search modal and result display logic
 - `styles.css` - Search modal styling and paragraph result appearance
-- `tests/pagefind-integration.test.html` - Comprehensive browser tests
 - `tests/test-paragraph-search.js` - Automated infrastructure tests
 - `tests/run-pagefind-tests.js` - Test runner for all Pagefind functionality
 
