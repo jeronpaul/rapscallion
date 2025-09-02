@@ -174,13 +174,36 @@ function initializeSearchIcon() {
                 script.onload = () => {
                     // PagefindUI is now available globally as window.PagefindUI
                     if (window.PagefindUI) {
-                        // Initialize PagefindUI with standard configuration
-                        const pagefindUI = new window.PagefindUI({
-                            element: "#search-results",
-                            showImages: false,
-                            showSubResults: true,
-                            highlightParam: "highlight"
-                        });
+                                            // Initialize PagefindUI with our custom modal integration
+                    const pagefindUI = new window.PagefindUI({
+                        element: "#search-results",
+                        showImages: false,
+                        showSubResults: true,
+                        highlightParam: "highlight",
+                        // Custom modal management to work with our existing modal
+                        onOpen: () => {
+                            const searchOverlay = document.getElementById('search-overlay');
+                            if (searchOverlay) {
+                                searchOverlay.style.display = 'block';
+                                searchOverlay.classList.add('active');
+                                const searchInput = document.getElementById('search-input');
+                                if (searchInput) {
+                                    setTimeout(() => searchInput.focus(), 100);
+                                }
+                            }
+                        },
+                        onClose: () => {
+                            const searchOverlay = document.getElementById('search-overlay');
+                            if (searchOverlay) {
+                                searchOverlay.style.display = 'none';
+                                searchOverlay.classList.remove('active');
+                                const searchInput = document.getElementById('search-input');
+                                if (searchInput) {
+                                    searchInput.value = '';
+                                }
+                            }
+                        }
+                    });
                         
                         // Store the PagefindUI instance globally
                         globalPagefindUI = pagefindUI;
@@ -223,16 +246,36 @@ function initializeSearchIcon() {
             searchIcons.forEach((icon, index) => {
                 if (icon) {
                     icon.addEventListener('click', function() {
-                        openSearchModal();
+                        // Let PagefindUI handle opening the modal
+                        if (pagefindUI && typeof pagefindUI.open === 'function') {
+                            pagefindUI.open();
+                        } else {
+                            // Fallback to our custom modal if PagefindUI isn't ready
+                            openSearchModal();
+                        }
                     });
                 }
             });
 
             // Close search modal
-            searchClose.addEventListener('click', closeSearchModal);
+            searchClose.addEventListener('click', function() {
+                // Let PagefindUI handle closing the modal
+                if (pagefindUI && typeof pagefindUI.close === 'function') {
+                    pagefindUI.close();
+                } else {
+                    // Fallback to our custom modal if PagefindUI isn't ready
+                    closeSearchModal();
+                }
+            });
             searchOverlay.addEventListener('click', function(e) {
                 if (e.target === searchOverlay) {
-                    closeSearchModal();
+                    // Let PagefindUI handle closing the modal
+                    if (pagefindUI && typeof pagefindUI.close === 'function') {
+                        pagefindUI.close();
+                    } else {
+                        // Fallback to our custom modal if PagefindUI isn't ready
+                        closeSearchModal();
+                    }
                 }
             });
 
@@ -254,12 +297,20 @@ function initializeSearchIcon() {
                 // Open search with Ctrl/Cmd + K
                 if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                     e.preventDefault();
-                    openSearchModal();
+                    if (pagefindUI && typeof pagefindUI.open === 'function') {
+                        pagefindUI.open();
+                    } else {
+                        openSearchModal();
+                    }
                 }
                 
                 // Close search with Escape
                 if (e.key === 'Escape' && searchOverlay.style.display === 'block') {
-                    closeSearchModal();
+                    if (pagefindUI && typeof pagefindUI.close === 'function') {
+                        pagefindUI.close();
+                    } else {
+                        closeSearchModal();
+                    }
                 }
             });
 
