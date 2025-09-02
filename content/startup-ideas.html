@@ -1354,14 +1354,15 @@
 
     <div id="footer"></div>
 
-            <script src="../components.js?v=112"></script>
+    <!-- Scripts moved outside data-pagefind-body area -->
+    <script src="../components.js?v=112"></script>
     
     <!-- Load header and footer components -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             loadComponent('header', '../header.html');
             loadComponent('footer', '../footer.html');
-            });
+        });
 
         setTimeout(function() {
             const header = document.getElementById('header');
@@ -1381,8 +1382,9 @@
         try {
             await import('/pagefind/pagefind-highlight.js');
             new PagefindHighlight({ highlightParam: "highlight" });
-            } catch (error) {
-            }
+        } catch (error) {
+            // Silently handle import errors
+        }
     </script>
 </body>
 </html>
