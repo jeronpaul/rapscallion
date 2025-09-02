@@ -86,5 +86,27 @@
     <div id="footer"></div>
 
             <script src="components.js?v=110"></script>
+    
+    <!-- Load header and footer components -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔍 DOM loaded, loading components...');
+            loadComponent('header', 'header.html');
+            loadComponent('footer', 'footer.html');
+        });
+    </script>
+    
+    <!-- Pagefind Search functionality is handled by components.js -->
+    
+    <!-- Pagefind Highlight Script -->
+    <script type="module">
+        try {
+            await import('/pagefind/pagefind-highlight.js');
+            new PagefindHighlight({ highlightParam: "highlight" });
+            console.log('✅ Pagefind highlight script loaded successfully');
+        } catch (error) {
+            console.warn('⚠️ Pagefind highlight script failed to load:', error);
+        }
+    </script>
 </body>
 </html>
