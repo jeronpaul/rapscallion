@@ -179,11 +179,7 @@ function initializeSearchIcon() {
                             element: "#search-results",
                             showImages: false,
                             showSubResults: true,
-                            highlightParam: "highlight",
-                            processResult: (result, resultElement) => {
-                                // Customize result display while keeping Pagefind's event handling
-                                resultElement.classList.add('search-result-link');
-                            }
+                            highlightParam: "highlight"
                         });
                         
                         // Store the PagefindUI instance globally
