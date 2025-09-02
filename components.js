@@ -2,9 +2,8 @@
 
 // Check if the current page needs search functionality
 function shouldInitializeSearch() {
-    // Since we want search on every page that has the header, always return true
-    // The header is loaded on every viewable page, so search should be available everywhere
-    return true;
+    // Disable default PagefindUI in favor of custom search implementation
+    return false;
 }
 
 async function loadComponent(elementId, componentPath) {
@@ -39,10 +38,20 @@ async function loadComponent(elementId, componentPath) {
         
         // Set active states based on current page (only for header, with delay to ensure DOM is ready)
         if (componentPath.endsWith('header.html')) {
+            console.log('🔧 Header loaded, starting initialization...');
+            
             setTimeout(() => {
                 setActiveStates();
                 initializeHamburgerMenu();
-                initializeSearchIcon();
+                
+                // Load search files first, then initialize
+                loadSearchFiles().then(() => {
+                    console.log('✅ Search files loaded, calling initializeSearchIcon');
+                    initializeSearchIcon();
+                }).catch(error => {
+                    console.error('❌ Failed to load search files:', error);
+                });
+                
                 // Initialize Pagefind only on pages that need search functionality
                 setTimeout(() => {
                     if (shouldInitializeSearch()) {
@@ -129,37 +138,109 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-// Search icon functionality is now handled by search.js
-function initializeSearchIcon() {
-    // Check if search icons exist
-    const searchIcons = [
-        document.getElementById('search-icon-mobile'),
-        document.getElementById('search-icon-desktop')
-    ].filter(Boolean);
+// Load search CSS and JS files dynamically
+async function loadSearchFiles() {
+    console.log('🏁 COMPONENTS.JS: Starting search file loading...');
+    console.log('🏁 Current pathname:', window.location.pathname);
     
-    // Search functionality moved to search.js with Pagefind integration
-    // But we'll add basic click events here for immediate feedback
-    searchIcons.forEach((icon, index) => {
-        if (icon) {
-            icon.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // Show a temporary message that search is loading
-                const loadingMsg = document.createElement('div');
-                loadingMsg.textContent = 'Search is loading...';
-                loadingMsg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:20px;border:1px solid #ccc;border-radius:8px;z-index:10000;box-shadow:0 4px 12px rgba(0,0,0,0.15);';
-                document.body.appendChild(loadingMsg);
-                
-                // Remove after 2 seconds
-                setTimeout(() => {
-                    if (loadingMsg.parentNode) {
-                        loadingMsg.parentNode.removeChild(loadingMsg);
-                    }
-                }, 2000);
-            });
-        }
+    // Dynamically determine correct path based on current location
+    const isInContentFolder = window.location.pathname.includes('/content/');
+    const timestamp = Date.now();
+    const searchCssPath = isInContentFolder ? `../custom-search.css?v=${timestamp}` : `custom-search.css?v=${timestamp}`;
+    const searchJsPath = isInContentFolder ? `../custom-search.js?v=${timestamp}` : `custom-search.js?v=${timestamp}`;
+
+    console.log('🔍 Search file paths:', { 
+        isInContentFolder, 
+        searchCssPath, 
+        searchJsPath,
+        timestamp 
     });
+
+    // Test if JS file is reachable
+    try {
+        const response = await fetch(searchJsPath);
+        console.log('🔍 Fetch test for JS file:', response.ok ? '✅ OK' : '❌ FAILED', response.status);
+        if (!response.ok) {
+            throw new Error(`JS file not found: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('❌ JS file fetch test failed:', searchJsPath, error);
+        throw error;
+    }
+
+    // Load CSS
+    const cssLink = document.createElement('link');
+    cssLink.rel = 'stylesheet';
+    cssLink.href = searchCssPath;
+    cssLink.onload = () => console.log('✅ Custom search CSS loaded successfully');
+    cssLink.onerror = () => console.error('❌ Failed to load custom search CSS:', searchCssPath);
+    document.head.appendChild(cssLink);
+
+    console.log('🎨 CSS link added to head');
+
+    // Load JS and wait for it
+    return new Promise((resolve, reject) => {
+        const jsScript = document.createElement('script');
+        jsScript.src = searchJsPath;
+        jsScript.onload = () => {
+            console.log('✅ Custom search JS file loaded successfully');
+            
+            // Wait for the script to execute and create the search instance
+            const checkForInstance = (attempts = 0) => {
+                console.log('🔍 Checking for window.rapscallionSearch (attempt', attempts + 1, '):', !!window.rapscallionSearch);
+                
+                if (window.rapscallionSearch) {
+                    console.log('🎉 Search instance found!');
+                    console.log('🔍 Available methods:', typeof window.rapscallionSearch.bindSearchIcons);
+                    resolve();
+                } else if (attempts < 20) {
+                    setTimeout(() => checkForInstance(attempts + 1), 100);
+                } else {
+                    console.error('❌ Search instance never created after 2 seconds');
+                    reject(new Error('Search instance timeout'));
+                }
+            };
+            
+            checkForInstance();
+        };
+        jsScript.onerror = (error) => {
+            console.error('❌ Failed to load custom search JS:', searchJsPath, error);
+            reject(error);
+        };
+        
+        document.head.appendChild(jsScript);
+        console.log('🚀 JS script added to head, waiting for load...');
+    });
+}
+
+// Search icon functionality - ensure binding when header loads
+function initializeSearchIcon() {
+    console.log('🔗 COMPONENTS.JS: initializeSearchIcon called');
+    console.log('🔗 Current window.rapscallionSearch:', !!window.rapscallionSearch);
+    
+    // Trigger search icon binding from custom-search.js if available
+    setTimeout(() => {
+        console.log('🔗 First timeout (100ms) - checking search instance...');
+        if (window.rapscallionSearch && window.rapscallionSearch.bindSearchIcons) {
+            console.log('🔍 ✅ Found search instance, binding icons...');
+            window.rapscallionSearch.bindSearchIcons();
+        } else {
+            // Search instance not ready yet, retry
+            console.log('🔍 ❌ Search instance not ready, retrying in 1000ms...');
+            console.log('🔍 Available methods on window:', Object.keys(window).filter(key => key.includes('search')));
+            
+            setTimeout(() => {
+                console.log('🔗 Second timeout (1000ms) - checking again...');
+                if (window.rapscallionSearch && window.rapscallionSearch.bindSearchIcons) {
+                    console.log('🔍 ✅ Found search instance on retry, binding icons...');
+                    window.rapscallionSearch.bindSearchIcons();
+                } else {
+                    console.error('🔍 ❌ Search instance still not available after 1100ms total wait');
+                    console.log('🔍 Final window check:', !!window.rapscallionSearch);
+                }
+            }, 1000);
+        }
+    }, 100);
 }
 
         // Global variable to store Pagefind UI instance
@@ -174,19 +255,39 @@ function initializeSearchIcon() {
                 script.onload = () => {
                     // PagefindUI is now available globally as window.PagefindUI
                     if (window.PagefindUI) {
-                                            // Initialize PagefindUI with standard modal (we'll customize styling later)
-                    const pagefindUI = new window.PagefindUI({
-                        element: "#search",
-                        showImages: false,
-                        showSubResults: true,
-                        highlightParam: "highlight"
-                    });
+                        // Initialize PagefindUI with enhanced configuration
+                        const pagefindUI = new window.PagefindUI({
+                            element: "#search",
+                            showImages: false,
+                            showSubResults: true,
+                            highlightParam: "highlight",
+                            excerptLength: 15,
+                            resetStyles: false,
+                            showEmptyFilters: true,
+                            translations: {
+                                placeholder: "Search Rapscallion content...",
+                                clear_search: "Clear",
+                                load_more: "Load more results",
+                                search_label: "Search this site",
+                                filters_label: "Filters",
+                                zero_results: "No results for [SEARCH_TERM]",
+                                many_results: "[COUNT] results for [SEARCH_TERM]",
+                                one_result: "1 result for [SEARCH_TERM]",
+                                alt_search: "No results for [SEARCH_TERM]. Showing results for [DIFFERENT_TERM] instead",
+                                search_suggestion: "Try searching for [DIFFERENT_TERM]",
+                                searching: "Searching..."
+                            }
+                        });
                         
                         // Store the PagefindUI instance globally
                         globalPagefindUI = pagefindUI;
                         
                         // Initialize the search modal with PagefindUI integration
                         initializeSearchModalWithPagefindUI(pagefindUI);
+                        
+                        // Add custom result enhancement
+                        enhanceSearchResults();
+                        
                     } else {
                         console.error('PagefindUI not found after script load');
                     }
@@ -236,11 +337,110 @@ function initializeSearchIcon() {
             });
         }
 
+        // Enhance search results with deep linking and highlighting
+        function enhanceSearchResults() {
+            // Watch for search results being added to the DOM
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'childList') {
+                        const searchResults = document.querySelectorAll('.pagefind-ui__result');
+                        searchResults.forEach(result => {
+                            if (!result.dataset.enhanced) {
+                                enhanceIndividualResult(result);
+                                result.dataset.enhanced = 'true';
+                            }
+                        });
+                    }
+                });
+            });
 
+            // Start observing
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        }
 
+        // Enhance individual search result with deep linking
+        function enhanceIndividualResult(resultElement) {
+            const resultLink = resultElement.querySelector('a[href]');
+            if (!resultLink) return;
 
+            const originalHref = resultLink.getAttribute('href');
+            
+            // Extract search term from current search
+            const searchInput = document.querySelector('.pagefind-ui__search-input');
+            const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+            
+            if (searchTerm) {
+                // Add highlight parameter to the link
+                const separator = originalHref.includes('?') ? '&' : '?';
+                resultLink.href = `${originalHref}${separator}highlight=${encodeURIComponent(searchTerm)}`;
+            }
 
+            // Add click handler for highlighting
+            resultLink.addEventListener('click', (e) => {
+                if (searchTerm) {
+                    setTimeout(() => {
+                        highlightSearchTermsOnPage(searchTerm);
+                    }, 100);
+                }
+            });
+        }
 
+        // Highlight search terms on the current page using only Pagefind's built-in highlighting
+        function highlightSearchTermsOnPage(searchTerm) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const highlightParam = urlParams.get('highlight') || searchTerm;
+            
+            if (highlightParam && window.PagefindHighlight) {
+                // Use only Pagefind's built-in highlighting to avoid conflicts
+                new PagefindHighlight({ highlightParam: "highlight" });
+            }
+        }
+
+        // Initialize highlighting on page load if highlight parameter exists
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const highlightTerm = urlParams.get('highlight');
+            if (highlightTerm) {
+                // Wait for content to load, then apply highlighting
+                setTimeout(() => {
+                    highlightSearchTermsOnPage(highlightTerm);
+                    
+                    // After highlighting, scroll to target with single attempt
+                    setTimeout(() => {
+                        let scrollTarget = null;
+                        
+                        // First priority: scroll to hash anchor if exists
+                        if (window.location.hash && window.location.hash.length > 1) {
+                            console.log(`🎯 SCROLL DEBUG - Looking for anchor: ${window.location.hash}`);
+                            try {
+                                scrollTarget = document.querySelector(window.location.hash);
+                                console.log(`🎯 SCROLL DEBUG - Found target:`, scrollTarget);
+                            } catch (error) {
+                                console.log(`🎯 SCROLL DEBUG - Invalid hash selector: ${window.location.hash}`);
+                            }
+                        }
+                        
+                        // Second priority: scroll to first highlight
+                        if (!scrollTarget) {
+                            scrollTarget = document.querySelector('mark[data-pagefind-match]');
+                        }
+                        
+                        // Scroll to target if found, respecting existing scroll-margin CSS
+                        if (scrollTarget) {
+                            // Use smooth scrolling but let CSS scroll-margin handle positioning
+                            scrollTarget.scrollIntoView({ 
+                                behavior: 'smooth', 
+                                block: 'start',
+                                inline: 'nearest'
+                            });
+                        }
+                    }, 200);
+                }, 800);
+            }
+        });
 
 // Hamburger menu functionality
 function initializeHamburgerMenu() {

@@ -2229,6 +2229,12 @@ footer {
     margin-top: -20px; /* Compensates for the padding to maintain layout */
 }
 
+/* Scroll margin for pagefind highlights and other potential scroll targets */
+mark[data-pagefind-match],
+[id] {
+    scroll-margin-top: 100px; /* Consistent scroll margin for all scroll targets */
+}
+
 /* Image underlay block styles */
 .image-underlay-block .underlay-image {
     width: 100%;
@@ -2994,12 +3000,25 @@ footer {
     pointer-events: none;
 }
 
-/* Highlight search terms */
+/* Highlight search terms - unified styling with high specificity to override pagefind reset */
+mark[data-pagefind-match],
+mark.pagefind-highlight,
+mark.custom-search-highlight,
 mark {
-    background: #fff3cd;
-    color: #856404;
-    padding: 0.1rem 0.2rem;
-    border-radius: 3px;
+    background: rgba(255, 243, 163, 0.85) !important;
+    color: #333 !important;
+    padding: 0.1rem 0.2rem !important;
+    border-radius: 3px !important;
+    border: none !important;
+    box-shadow: none !important;
+    animation: none !important;
+    /* Override any pagefind UI resets */
+    all: unset;
+    display: inline;
+    background: rgba(255, 243, 163, 0.85) !important;
+    color: #333 !important;
+    padding: 0.1rem 0.2rem !important;
+    border-radius: 3px !important;
 }
 
 /* ===== SEARCH INPUT STYLING ===== */
@@ -3127,11 +3146,7 @@ mark {
 
 /* ===== SEARCH HIGHLIGHT STYLING ===== */
 
-/* Custom highlight styling for search terms */
-.pagefind-highlight {
-    background: #fff3a3;
-    padding: 0 0.1em;
-    border-radius: 2px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
+/* Legacy highlight styles removed - using unified styling above */
+
+/* Legacy Pagefind UI styles removed - using custom search implementation */
 
