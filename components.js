@@ -480,16 +480,18 @@ function initializeSearchIcon() {
         function addSearchResultClickHandlers() {
             const searchResults = document.querySelectorAll('.search-result-link');
             searchResults.forEach(link => {
-                // Remove any existing click event listeners to prevent duplicates
+                // Remove any existing click event listeners by cloning the element
+                // This prevents duplicate event listeners from multiple searches
                 const newLink = link.cloneNode(true);
                 link.parentNode.replaceChild(newLink, link);
                 
                 // Add the click handler to the new element
                 newLink.addEventListener('click', function(e) {
-                    // Close the search modal after a short delay to allow navigation
-                    setTimeout(() => {
-                        closeSearchModal();
-                    }, 100);
+                    // Close the search modal immediately to prevent race conditions
+                    closeSearchModal();
+                    
+                    // Allow the default navigation to happen
+                    // The modal will be closed before the page navigation occurs
                 });
             });
         }
