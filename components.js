@@ -242,7 +242,7 @@ function initializeSearchIcon() {
 
                 // Debounce search
                 searchTimeout = setTimeout(() => {
-                    performSearch(query, pagefindUI);
+                    performSearch(query);
                 }, 300);
             });
 
@@ -289,12 +289,16 @@ function initializeSearchIcon() {
                 console.log('✅ Search modal closed');
             }
 
-            async function performSearch(query, pagefindUI) {
+            async function performSearch(query) {
                 console.log('🔍 Performing search for:', query);
                 
                 try {
-                    // Use Pagefind UI's search functionality to get paragraph-level results
-                    const results = await pagefindUI.search(query);
+                    // Use Pagefind's search functionality directly with sub-results enabled
+                    const search = await import('/pagefind/pagefind.js');
+                    const results = await search.search(query, {
+                        showSubResults: true,
+                        highlightParam: "highlight"
+                    });
                     
                     console.log('🔍 Search results:', results);
                     console.log('🔍 First result structure:', results.results?.[0]);
