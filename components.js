@@ -175,9 +175,6 @@ function initializeSearchIcon() {
                 });
 
                 console.log('✅ Pagefind UI initialized successfully');
-                
-                // Make pagefindUI globally available for our custom search function
-                window.pagefindUI = pagefindUI;
             } catch (error) {
                 console.error('❌ Error initializing Pagefind UI:', error);
                 return;
@@ -296,20 +293,7 @@ function initializeSearchIcon() {
                 console.log('🔍 Performing search for:', query);
                 
                 try {
-                    // Use the Pagefind UI instance that's already configured with showSubResults: true
-                    if (window.pagefindUI && typeof window.pagefindUI.search === 'function') {
-                        console.log('🔍 Using Pagefind UI search method');
-                        const results = await window.pagefindUI.search(query);
-                        console.log('🔍 Pagefind UI search results:', results);
-                        
-                        if (results && results.length > 0) {
-                            await displaySearchResults(results);
-                            return;
-                        }
-                    }
-                    
-                    // Fallback to direct Pagefind API
-                    console.log('🔍 Using direct Pagefind API as fallback');
+                    // Use Pagefind's standard search functionality
                     const search = await import('/pagefind/pagefind.js');
                     const searchInstance = await search.init();
                     const results = await searchInstance.search(query);
