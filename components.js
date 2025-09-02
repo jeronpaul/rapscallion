@@ -168,29 +168,40 @@ function initializeSearchIcon() {
         // Initialize Pagefind search functionality using standard PagefindUI
         function initializePagefindSearch() {
             try {
-                // Use PagefindUI for standard search behavior and modal management
-                import('/pagefind/pagefind-ui.js').then(async (uiModule) => {
-                    // Initialize PagefindUI with standard configuration
-                    const pagefindUI = new uiModule.PagefindUI({
-                        element: "#search-results",
-                        showImages: false,
-                        showSubResults: true,
-                        highlightParam: "highlight",
-                        processResult: (result, resultElement) => {
-                            // Customize result display while keeping Pagefind's event handling
-                            resultElement.classList.add('search-result-link');
-                        }
-                    });
-                    
-                    // Store the PagefindUI instance globally
-                    globalPagefindUI = pagefindUI;
-                    
-                    // Initialize the search modal with PagefindUI integration
-                    initializeSearchModalWithPagefindUI(pagefindUI);
-                }).catch(error => {
-                    console.error('Failed to load PagefindUI:', error);
-                    // Fallback to custom implementation if needed
-                });
+                // Load PagefindUI script and wait for it to be available globally
+                const script = document.createElement('script');
+                script.src = '/pagefind/pagefind-ui.js';
+                script.onload = () => {
+                    // PagefindUI is now available globally as window.PagefindUI
+                    if (window.PagefindUI) {
+                        // Initialize PagefindUI with standard configuration
+                        const pagefindUI = new window.PagefindUI({
+                            element: "#search-results",
+                            showImages: false,
+                            showSubResults: true,
+                            highlightParam: "highlight",
+                            processResult: (result, resultElement) => {
+                                // Customize result display while keeping Pagefind's event handling
+                                resultElement.classList.add('search-result-link');
+                            }
+                        });
+                        
+                        // Store the PagefindUI instance globally
+                        globalPagefindUI = pagefindUI;
+                        
+                        // Initialize the search modal with PagefindUI integration
+                        initializeSearchModalWithPagefindUI(pagefindUI);
+                    } else {
+                        console.error('PagefindUI not found after script load');
+                    }
+                };
+                script.onerror = (error) => {
+                    console.error('Failed to load PagefindUI script:', error);
+                };
+                
+                // Append the script to the document head
+                document.head.appendChild(script);
+                
             } catch (error) {
                 console.error('Failed to initialize PagefindUI:', error);
                 return;
