@@ -156,10 +156,50 @@ function initializeSearchIcon() {
                 // Import and initialize Pagefind search
                 import('/pagefind/pagefind.js').then(async (searchModule) => {
                     console.log('🔍 Pagefind search module imported:', searchModule);
+                    console.log('🔍 Search module keys:', Object.keys(searchModule));
+                    console.log('🔍 Search module type:', typeof searchModule);
                     
-                    // Initialize the search instance
-                    const searchInstance = await searchModule.init();
-                    console.log('🔍 Pagefind search instance created:', searchInstance);
+                    // Try different ways to get the search instance
+                    let searchInstance;
+                    
+                    // Method 1: Try searchModule.init()
+                    if (typeof searchModule.init === 'function') {
+                        console.log('🔍 Trying searchModule.init()...');
+                        searchInstance = await searchModule.init();
+                        console.log('🔍 searchModule.init() result:', searchInstance);
+                    }
+                    
+                    // Method 2: Try searchModule.default.init() if it's an ES module
+                    if (!searchInstance && searchModule.default && typeof searchModule.default.init === 'function') {
+                        console.log('🔍 Trying searchModule.default.init()...');
+                        searchInstance = await searchModule.default.init();
+                        console.log('🔍 searchModule.default.init() result:', searchInstance);
+                    }
+                    
+                    // Method 3: Try using searchModule directly if it has a search method
+                    if (!searchInstance && typeof searchModule.search === 'function') {
+                        console.log('🔍 Using searchModule directly (has search method)');
+                        searchInstance = searchModule;
+                    }
+                    
+                    // Method 4: Try searchModule.default if it has a search method
+                    if (!searchInstance && searchModule.default && typeof searchModule.default.search === 'function') {
+                        console.log('🔍 Using searchModule.default directly (has search method)');
+                        searchInstance = searchModule.default;
+                    }
+                    
+                    if (!searchInstance) {
+                        console.error('❌ Could not create a valid search instance from any method');
+                        console.log('🔍 Available methods on searchModule:', Object.keys(searchModule).filter(key => typeof searchModule[key] === 'function'));
+                        if (searchModule.default) {
+                            console.log('🔍 Available methods on searchModule.default:', Object.keys(searchModule.default).filter(key => typeof searchModule.default[key] === 'function'));
+                        }
+                        return;
+                    }
+                    
+                    console.log('🔍 Final search instance created:', searchInstance);
+                    console.log('🔍 Search instance type:', typeof searchInstance);
+                    console.log('🔍 Search instance keys:', Object.keys(searchInstance));
                     
                     // Store the search instance globally
                     globalPagefindUI = searchInstance;
