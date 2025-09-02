@@ -238,20 +238,7 @@ function initializeSearchIcon() {
 
 
 
-        // Function to close the search modal
-        function closeSearchModal() {
-            const searchModal = document.getElementById('search-modal');
-            const searchOverlay = document.getElementById('search-overlay');
-            const searchInput = document.getElementById('search-input');
-            
-            if (searchModal) searchModal.classList.remove('active');
-            if (searchOverlay) searchOverlay.classList.remove('active');
-            if (searchInput) searchInput.value = '';
-            
-            // Clear search results
-            const searchResults = document.getElementById('search-results');
-            if (searchResults) searchResults.innerHTML = '';
-        }
+
 
 
 
