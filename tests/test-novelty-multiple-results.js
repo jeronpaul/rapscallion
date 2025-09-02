@@ -2,7 +2,7 @@
 
 /**
  * Test script to verify that searching for "novelty" returns multiple results
- * This ensures our paragraph-level indexing with data-pagefind-body is working correctly
+ * This ensures our paragraph-level indexing with hidden h6 elements and IDs is working correctly
  */
 
 const http = require('http');
@@ -76,18 +76,18 @@ async function testNoveltySearchResults() {
             return false;
         }
 
-        // Count paragraphs with data-pagefind-body that mention "novelty"
+        // Count hidden h6 elements with IDs that mention "novelty"
         const content = contentResponse.data;
         const noveltyParagraphs = [];
         
-        // Find all paragraphs with data-pagefind-body that contain "novelty"
-        const paragraphRegex = /<p[^>]*data-pagefind-body[^>]*>.*?novelty.*?<\/p>/gi;
+        // Find all hidden h6 elements with IDs that contain "novelty"
+        const h6Regex = /<h6[^>]*id="[^"]*novelty[^"]*"[^>]*>.*?<\/h6>/gi;
         let match;
-        while ((match = paragraphRegex.exec(content)) !== null) {
+        while ((match = h6Regex.exec(content)) !== null) {
             noveltyParagraphs.push(match[0].substring(0, 100) + '...');
         }
 
-        console.log(`📊 Found ${noveltyParagraphs.length} paragraphs with data-pagefind-body mentioning "${SEARCH_TERM}"`);
+        console.log(`📊 Found ${noveltyParagraphs.length} hidden h6 elements with IDs mentioning "${SEARCH_TERM}"`);
         
         if (noveltyParagraphs.length > 1) {
             console.log('✅ Multiple paragraphs are indexed for novelty search');
@@ -96,7 +96,7 @@ async function testNoveltySearchResults() {
             });
             return true;
         } else {
-            console.log('❌ Only one or no paragraphs found with data-pagefind-body mentioning novelty');
+            console.log('❌ Only one or no hidden h6 elements found with IDs mentioning novelty');
             return false;
         }
 
@@ -161,8 +161,8 @@ async function runTests() {
         console.log('\n⚠️  Some tests failed. Check the output above for details.');
         console.log('\n🔧 Troubleshooting:');
         console.log('- Ensure the HTTP server is running on port 8000');
-        console.log('- Verify Pagefind index has been regenerated after adding data-pagefind-body attributes');
-        console.log('- Check that content/startup-ideas.html has multiple paragraphs with data-pagefind-body mentioning "novelty"');
+        console.log('- Verify Pagefind index has been regenerated after adding hidden h6 elements with IDs');
+        console.log('- Check that content/startup-ideas.html has multiple hidden h6 elements with IDs mentioning "novelty"');
     }
 
     process.exit(passedTests === totalTests ? 0 : 1);
