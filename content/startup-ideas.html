@@ -1356,6 +1356,15 @@
 
             <script src="../components.js?v=110"></script>
     
+    <!-- Load header and footer components -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔍 DOM loaded, loading components...');
+            loadComponent('header', '../header.html');
+            loadComponent('footer', '../footer.html');
+        });
+    </script>
+    
     <!-- Pagefind highlight script for search term highlighting -->
     <script type="module">
         import PagefindHighlight from '/pagefind/pagefind-highlight.js';
