@@ -58,7 +58,7 @@ async function loadComponent(elementId, componentPath) {
                         console.log('🔍 Page does not need search functionality, skipping Pagefind initialization');
                     }
                 }, 500);
-            }, 100);
+            }, 300);
         }
     } catch (error) {
         console.error(`❌ Error loading ${componentPath}:`, error);
@@ -179,8 +179,26 @@ function initializeSearchIcon() {
                     }
                 }, 2000);
             });
+            
+            // Verify the event listener was added
+            console.log(`🔍 Event listener added to search icon ${index}`);
+            console.log(`🔍 Search icon ${index} onclick after adding listener:`, icon.onclick);
         }
     });
+    
+    // Double-check that the icons have event listeners
+    setTimeout(() => {
+        console.log('🔍 Double-checking search icons after 100ms...');
+        const checkIcons = [
+            document.getElementById('search-icon-mobile'),
+            document.getElementById('search-icon-desktop')
+        ].filter(Boolean);
+        
+        checkIcons.forEach((icon, index) => {
+            console.log(`🔍 Search icon ${index} final check - onclick:`, icon.onclick);
+            console.log(`🔍 Search icon ${index} final check - has click events:`, icon.onclick !== null);
+        });
+    }, 100);
 }
 
         // Global variable to store Pagefind UI instance
