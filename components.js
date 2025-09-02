@@ -293,12 +293,14 @@ function initializeSearchIcon() {
                 console.log('🔍 Performing search for:', query);
                 
                 try {
-                    // Use Pagefind's search functionality directly with sub-results enabled
+                    // Use Pagefind's search functionality with proper initialization
                     const search = await import('/pagefind/pagefind.js');
-                    const results = await search.search(query, {
-                        showSubResults: true,
-                        highlightParam: "highlight"
-                    });
+                    
+                    // Initialize Pagefind search
+                    const searchInstance = await search.init();
+                    
+                    // Perform search - Pagefind should automatically handle paragraph-level results
+                    const results = await searchInstance.search(query);
                     
                     console.log('🔍 Search results:', results);
                     console.log('🔍 First result structure:', results.results?.[0]);
