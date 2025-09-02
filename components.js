@@ -198,8 +198,22 @@ function initializeSearchIcon() {
                         return;
                     }
                     
-                    // Store the search instance globally
-                    globalPagefindUI = searchInstance;
+                    // Enhance the search instance with preloading capability
+                    const enhancedSearchInstance = {
+                        ...searchInstance,
+                        preload: (term) => {
+                            if (searchInstance && typeof searchInstance.preload === 'function') {
+                                try {
+                                    searchInstance.preload(term);
+                                } catch (error) {
+                                    // Silently handle errors in production
+                                }
+                            }
+                        }
+                    };
+                    
+                    // Store the enhanced search instance globally
+                    globalPagefindUI = enhancedSearchInstance;
                     
                     // Now that Pagefind is initialized, initialize the custom search modal
                     initializeCustomSearchModal(globalPagefindUI);
@@ -244,7 +258,7 @@ function initializeSearchIcon() {
                 }
             });
 
-            // Handle search input
+            // Handle search input with preloading strategy
             let searchTimeout;
             searchInput.addEventListener('input', function() {
                 const query = this.value.trim();
@@ -257,6 +271,15 @@ function initializeSearchIcon() {
                 if (query.length === 0) {
                     searchResults.innerHTML = '';
                     return;
+                }
+
+                // Preload the search term for instant results
+                if (pagefindUI && typeof pagefindUI.preload === 'function') {
+                    try {
+                        pagefindUI.preload(query);
+                    } catch (error) {
+                        // Silently handle errors in production
+                    }
                 }
 
                 // Debounce search
