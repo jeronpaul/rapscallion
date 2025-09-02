@@ -1,5 +1,4 @@
 // Load header and footer components
-console.log('🔍 Components.js v112 loaded at:', new Date().toISOString());
 
 // Check if the current page needs search functionality
 function shouldInitializeSearch() {
@@ -36,33 +35,25 @@ async function loadComponent(elementId, componentPath) {
         
         if (targetElement) {
             targetElement.innerHTML = html;
-        } else {
-            console.error(`❌ Target element ${elementId} not found`);
         }
         
         // Set active states based on current page (only for header, with delay to ensure DOM is ready)
         if (componentPath.endsWith('header.html')) {
-            console.log('🔍 Header loaded, setting up components...');
             setTimeout(() => {
-                console.log('🔍 Setting up header components...');
                 setActiveStates();
                 initializeHamburgerMenu();
                 initializeSearchIcon();
                 // Initialize Pagefind only on pages that need search functionality
                 setTimeout(() => {
-                    console.log('🔍 Checking if page needs search functionality...');
                     if (shouldInitializeSearch()) {
-                        console.log('🔍 About to initialize Pagefind...');
                         initializePagefindSearch();
-                    } else {
-                        console.log('🔍 Page does not need search functionality, skipping Pagefind initialization');
                     }
                 }, 500);
             }, 300);
         }
-    } catch (error) {
-        console.error(`❌ Error loading ${componentPath}:`, error);
-    }
+            } catch (error) {
+            // Silently handle errors in production
+        }
 }
 
 // Set active states for navigation
@@ -101,7 +92,7 @@ function setActiveStates() {
             if (gangLink) gangLink.classList.add('active');
         }
     } catch (error) {
-        console.warn('⚠️ Error setting active states:', error);
+        // Silently handle errors in production
     }
 }
 
@@ -140,29 +131,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Search icon functionality is now handled by search.js
 function initializeSearchIcon() {
-    console.log('🔍 initializeSearchIcon called...');
-    console.log('🔍 Current document ready state:', document.readyState);
-    
     // Check if search icons exist
     const searchIcons = [
         document.getElementById('search-icon-mobile'),
         document.getElementById('search-icon-desktop')
     ].filter(Boolean);
     
-    console.log('🔍 Search icons found in initializeSearchIcon:', searchIcons.length);
-    searchIcons.forEach((icon, index) => {
-        console.log(`🔍 Search icon ${index}:`, icon);
-        console.log(`🔍 Search icon ${index} id:`, icon.id);
-        console.log(`🔍 Search icon ${index} onclick:`, icon.onclick);
-    });
-    
     // Search functionality moved to search.js with Pagefind integration
     // But we'll add basic click events here for immediate feedback
     searchIcons.forEach((icon, index) => {
         if (icon) {
-            console.log(`🔍 Adding basic click event to search icon ${index}`);
             icon.addEventListener('click', function(e) {
-                console.log(`🔍 Search icon ${index} clicked!`);
                 e.preventDefault();
                 e.stopPropagation();
                 
@@ -179,26 +158,8 @@ function initializeSearchIcon() {
                     }
                 }, 2000);
             });
-            
-            // Verify the event listener was added
-            console.log(`🔍 Event listener added to search icon ${index}`);
-            console.log(`🔍 Search icon ${index} onclick after adding listener:`, icon.onclick);
         }
     });
-    
-    // Double-check that the icons have event listeners
-    setTimeout(() => {
-        console.log('🔍 Double-checking search icons after 100ms...');
-        const checkIcons = [
-            document.getElementById('search-icon-mobile'),
-            document.getElementById('search-icon-desktop')
-        ].filter(Boolean);
-        
-        checkIcons.forEach((icon, index) => {
-            console.log(`🔍 Search icon ${index} final check - onclick:`, icon.onclick);
-            console.log(`🔍 Search icon ${index} final check - has click events:`, icon.onclick !== null);
-        });
-    }, 100);
 }
 
         // Global variable to store Pagefind UI instance
@@ -206,84 +167,53 @@ function initializeSearchIcon() {
 
         // Initialize Pagefind search functionality with custom UI
         function initializePagefindSearch() {
-            console.log('🔍 Initializing Pagefind search with custom UI...');
-            console.log('🔍 Current time:', new Date().toISOString());
-            console.log('🔍 Document ready state:', document.readyState);
-
             // Initialize Pagefind search API directly (not UI component)
             try {
                 // Import and initialize Pagefind search
                 import('/pagefind/pagefind.js').then(async (searchModule) => {
-                    console.log('🔍 Pagefind search module imported:', searchModule);
-                    console.log('🔍 Search module keys:', Object.keys(searchModule));
-                    console.log('🔍 Search module type:', typeof searchModule);
-                    
                     // Try different ways to get the search instance
                     let searchInstance;
                     
                     // Method 1: Try searchModule.init()
                     if (typeof searchModule.init === 'function') {
-                        console.log('🔍 Trying searchModule.init()...');
                         searchInstance = await searchModule.init();
-                        console.log('🔍 searchModule.init() result:', searchInstance);
                     }
                     
                     // Method 2: Try searchModule.default.init() if it's an ES module
                     if (!searchInstance && searchModule.default && typeof searchModule.default.init === 'function') {
-                        console.log('🔍 Trying searchModule.default.init()...');
                         searchInstance = await searchModule.default.init();
-                        console.log('🔍 searchModule.default.init() result:', searchInstance);
                     }
                     
                     // Method 3: Try using searchModule directly if it has a search method
                     if (!searchInstance && typeof searchModule.search === 'function') {
-                        console.log('🔍 Using searchModule directly (has search method)');
                         searchInstance = searchModule;
                     }
                     
                     // Method 4: Try searchModule.default if it has a search method
                     if (!searchInstance && searchModule.default && typeof searchModule.default.search === 'function') {
-                        console.log('🔍 Using searchModule.default directly (has search method)');
                         searchInstance = searchModule.default;
                     }
                     
                     if (!searchInstance) {
-                        console.error('❌ Could not create a valid search instance from any method');
-                        console.log('🔍 Available methods on searchModule:', Object.keys(searchModule).filter(key => typeof searchModule[key] === 'function'));
-                        if (searchModule.default) {
-                            console.log('🔍 Available methods on searchModule.default:', Object.keys(searchModule.default).filter(key => typeof searchModule.default[key] === 'function'));
-                        }
                         return;
                     }
-                    
-                    console.log('🔍 Final search instance created:', searchInstance);
-                    console.log('🔍 Search instance type:', typeof searchInstance);
-                    console.log('🔍 Search instance keys:', Object.keys(searchInstance));
                     
                     // Store the search instance globally
                     globalPagefindUI = searchInstance;
                     
-                    console.log('✅ Pagefind search API initialized successfully');
-                    console.log('🔍 Global Pagefind search instance:', globalPagefindUI);
-                    console.log('🔍 Debug: globalPagefindUI.search method:', typeof globalPagefindUI.search);
-                    console.log('🔍 Debug: globalPagefindUI methods:', Object.keys(globalPagefindUI).filter(key => typeof globalPagefindUI[key] === 'function'));
-                    
                     // Now that Pagefind is initialized, initialize the custom search modal
                     initializeCustomSearchModal(globalPagefindUI);
-                    console.log('✅ Pagefind search initialization complete');
                 }).catch(error => {
-                    console.error('❌ Error importing Pagefind search module:', error);
+                    // Silently handle errors in production
                 });
             } catch (error) {
-                console.error('❌ Error initializing Pagefind search:', error);
+                // Silently handle errors in production
                 return;
             }
         }
 
         // Initialize custom search modal with Pagefind integration
         function initializeCustomSearchModal(pagefindUI) {
-            console.log('🔍 Initializing custom search modal...');
-
             const searchOverlay = document.getElementById('search-overlay');
             const searchInput = document.getElementById('search-input');
             const searchClose = document.getElementById('search-close');
@@ -294,18 +224,13 @@ function initializeSearchIcon() {
             ].filter(Boolean);
 
             if (!searchOverlay || !searchInput || !searchClose || !searchResults) {
-                console.error('❌ Custom search modal elements not found');
                 return;
             }
-
-            console.log('🔍 Search icons found:', searchIcons.length);
 
             // Open search modal when search icons are clicked
             searchIcons.forEach((icon, index) => {
                 if (icon) {
-                    console.log(`🔍 Binding click event to search icon ${index}`);
                     icon.addEventListener('click', function() {
-                        console.log('🔍 Search icon clicked, opening custom search modal...');
                         openSearchModal();
                     });
                 }
@@ -355,10 +280,6 @@ function initializeSearchIcon() {
             });
 
             function openSearchModal() {
-                console.log('🔍 Opening search modal...');
-                console.log('🔍 Search overlay:', searchOverlay);
-                console.log('🔍 Search input:', searchInput);
-                
                 searchOverlay.style.display = 'block';
                 searchOverlay.classList.add('active');
                 
@@ -366,13 +287,8 @@ function initializeSearchIcon() {
                 setTimeout(() => {
                     if (searchInput) {
                         searchInput.focus();
-                        console.log('✅ Search input focused');
-                    } else {
-                        console.error('❌ Search input not found for focusing');
                     }
                 }, 100);
-                
-                console.log('✅ Search modal opened');
             }
 
             function closeSearchModal() {
@@ -380,30 +296,13 @@ function initializeSearchIcon() {
                 searchOverlay.classList.remove('active');
                 searchInput.value = '';
                 searchResults.innerHTML = '';
-                console.log('✅ Search modal closed');
             }
 
                         async function performSearch(query) {
-                console.log('🔍 Performing search for:', query);
-                
                 try {
-                    // Debug: Check what we have available
-                    console.log('🔍 Debug: globalPagefindUI available?', !!globalPagefindUI);
-                    console.log('🔍 Debug: globalPagefindUI type:', typeof globalPagefindUI);
-                    console.log('🔍 Debug: globalPagefindUI keys:', globalPagefindUI ? Object.keys(globalPagefindUI) : 'N/A');
-                    console.log('🔍 Debug: globalPagefindUI.search exists?', globalPagefindUI && typeof globalPagefindUI.search);
-                    
                     // Use the Pagefind search API instance that's already configured
                     if (globalPagefindUI && typeof globalPagefindUI.search === 'function') {
-                        console.log('🔍 Using Pagefind search API with showSubResults: true');
-                        console.log('🔍 Debug: Calling globalPagefindUI.search("' + query + '", { showSubResults: true })');
-                        
                         const results = await globalPagefindUI.search(query, { showSubResults: true });
-                        console.log('🔍 Pagefind search API results:', results);
-                        console.log('🔍 Debug: Results type:', typeof results);
-                        console.log('🔍 Debug: Results keys:', Object.keys(results));
-                        console.log('🔍 Debug: Results.results:', results.results);
-                        console.log('🔍 Debug: Results.results length:', results.results?.length);
                         
                         if (results && results.results && results.results.length > 0) {
                             // Check if we have sub-results
@@ -416,17 +315,13 @@ function initializeSearchIcon() {
                                     if (typeof result.data === 'function') {
                                         const resultData = await result.data();
                                         if (resultData.sub_results && resultData.sub_results.length > 0) {
-                                            console.log('🔍 Found sub-results for result:', result.id, 'Count:', resultData.sub_results.length);
                                             allResults.push(...resultData.sub_results);
                                         }
                                     }
                                 } catch (error) {
-                                    console.warn('⚠️ Error checking sub-results:', error);
+                                    // Silently handle errors in production
                                 }
                             }
-                            
-                            console.log('🔍 Total results after including sub-results:', allResults.length);
-                            console.log('🔍 All results:', allResults);
                             
                             await displaySearchResults(allResults);
                             return;
@@ -434,17 +329,10 @@ function initializeSearchIcon() {
                     }
                     
                     // Fallback to direct Pagefind API if our instance doesn't work
-                    console.log('🔍 Falling back to direct Pagefind API...');
                     const search = await import('/pagefind/pagefind.js');
                     const searchModule = search.default || search;
                     
                     const results = await searchModule.search(query, { showSubResults: true });
-                    
-                    console.log('🔍 Direct API search results:', results);
-                    console.log('🔍 Results type:', typeof results);
-                    console.log('🔍 Results keys:', Object.keys(results));
-                    console.log('🔍 Results.results:', results.results);
-                    console.log('🔍 Results.results length:', results.results?.length);
                     
                     if (results.results && results.results.length > 0) {
                         // Flatten results to include sub-results
@@ -457,31 +345,24 @@ function initializeSearchIcon() {
                                 if (typeof result.data === 'function') {
                                     const resultData = await result.data();
                                     if (resultData.sub_results && resultData.sub_results.length > 0) {
-                                        console.log('🔍 Found sub-results for result:', result.id, 'Count:', resultData.sub_results.length);
                                         allResults.push(...resultData.sub_results);
                                     }
                                 }
                             } catch (error) {
-                                console.warn('⚠️ Error checking sub-results:', error);
+                                // Silently handle errors in production
                             }
                         }
-                        
-                        console.log('🔍 Total results after flattening:', allResults.length);
-                        console.log('🔍 All results:', allResults);
                         
                         await displaySearchResults(allResults);
                     } else {
                         searchResults.innerHTML = '<div class="no-results">No results found</div>';
                     }
                 } catch (error) {
-                    console.error('❌ Search error:', error);
                     searchResults.innerHTML = '<div class="search-error">Search temporarily unavailable</div>';
                 }
             }
 
             async function displaySearchResults(results) {
-                console.log('🔍 Displaying search results:', results);
-                
                 // Add results count header
                 const resultsCount = results.length;
                 const searchTerm = document.getElementById('search-input').value;
@@ -492,21 +373,14 @@ function initializeSearchIcon() {
                 `;
                 
                 const resultsHTML = await Promise.all(results.map(async (result) => {
-                    console.log('🔍 Individual result:', result);
-                    console.log('🔍 Result keys:', Object.keys(result));
-                    console.log('🔍 Result anchor property:', result.anchor);
-                    console.log('🔍 Result meta:', result.meta);
-                    
                     // Pagefind stores data in a function that needs to be called
                     let resultData = {};
                     try {
                         if (typeof result.data === 'function') {
                             resultData = await result.data();
-                            console.log('🔍 Extracted result data:', resultData);
-                            console.log('🔍 Result data keys:', Object.keys(resultData));
                         }
                     } catch (error) {
-                        console.warn('⚠️ Error extracting result data:', error);
+                        // Silently handle errors in production
                     }
                     
                     // Extract title from various possible locations
@@ -542,11 +416,7 @@ function initializeSearchIcon() {
                         if (!url.includes('#')) {
                             anchorUrl = `${url}#${result.anchor.id}`;
                         }
-                        
-                        console.log('🔍 Found anchor:', result.anchor);
                     }
-                    
-                    console.log('🔍 Processed result:', { title, url: anchorUrl, excerpt, anchorInfo });
                     
                     return `
                         <div class="search-result">
@@ -562,7 +432,7 @@ function initializeSearchIcon() {
                 searchResults.innerHTML = resultsHeader + resultsHTML.join('');
             }
 
-            console.log('✅ Custom search modal initialized');
+
         }
 
 // Hamburger menu functionality
