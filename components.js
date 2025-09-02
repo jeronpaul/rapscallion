@@ -178,6 +178,8 @@ function initializeSearchIcon() {
 
                 console.log('✅ Pagefind UI initialized successfully');
                 console.log('🔍 Global Pagefind UI instance:', globalPagefindUI);
+                console.log('🔍 Debug: globalPagefindUI.search method:', typeof globalPagefindUI.search);
+                console.log('🔍 Debug: globalPagefindUI methods:', Object.keys(globalPagefindUI).filter(key => typeof globalPagefindUI[key] === 'function'));
             } catch (error) {
                 console.error('❌ Error initializing Pagefind UI:', error);
                 return;
@@ -296,18 +298,54 @@ function initializeSearchIcon() {
                 console.log('🔍 Performing search for:', query);
                 
                 try {
+                    // Debug: Check what we have available
+                    console.log('🔍 Debug: globalPagefindUI available?', !!globalPagefindUI);
+                    console.log('🔍 Debug: globalPagefindUI type:', typeof globalPagefindUI);
+                    console.log('🔍 Debug: globalPagefindUI keys:', globalPagefindUI ? Object.keys(globalPagefindUI) : 'N/A');
+                    console.log('🔍 Debug: globalPagefindUI.search exists?', globalPagefindUI && typeof globalPagefindUI.search);
+                    
                     // Use the Pagefind UI instance that's already configured with showSubResults: true
                     if (globalPagefindUI && typeof globalPagefindUI.search === 'function') {
                         console.log('🔍 Using Pagefind UI search method with showSubResults: true');
+                        console.log('🔍 Debug: Calling globalPagefindUI.search("' + query + '")');
+                        
                         const results = await globalPagefindUI.search(query);
                         console.log('🔍 Pagefind UI search results:', results);
+                        console.log('🔍 Debug: Results type:', typeof results);
+                        console.log('🔍 Debug: Results length:', results ? results.length : 'N/A');
+                        console.log('🔍 Debug: Results structure:', results);
                         
                         if (results && results.length > 0) {
                             console.log('🔍 Total results from Pagefind UI:', results.length);
                             console.log('🔍 All results:', results);
                             await displaySearchResults(results);
                             return;
+                        } else {
+                            console.log('🔍 Debug: Pagefind UI returned no results, falling back...');
                         }
+                    } else if (globalPagefindUI && typeof globalPagefindUI.triggerSearch === 'function') {
+                        // Try alternative method name
+                        console.log('🔍 Using Pagefind UI triggerSearch method...');
+                        console.log('🔍 Debug: Calling globalPagefindUI.triggerSearch("' + query + '")');
+                        
+                        const results = await globalPagefindUI.triggerSearch(query);
+                        console.log('🔍 Pagefind UI triggerSearch results:', results);
+                        console.log('🔍 Debug: Results type:', typeof results);
+                        console.log('🔍 Debug: Results length:', results ? results.length : 'N/A');
+                        
+                        if (results && results.length > 0) {
+                            console.log('🔍 Total results from Pagefind UI triggerSearch:', results.length);
+                            await displaySearchResults(results);
+                            return;
+                        } else {
+                            console.log('🔍 Debug: Pagefind UI triggerSearch returned no results, falling back...');
+                        }
+                    } else {
+                        console.log('🔍 Debug: Pagefind UI method not available, reason:', 
+                            !globalPagefindUI ? 'globalPagefindUI is null/undefined' :
+                            typeof globalPagefindUI.search !== 'function' && typeof globalPagefindUI.triggerSearch !== 'function' ? 
+                            'neither search nor triggerSearch methods found' : 'unknown');
+                        console.log('🔍 Debug: Available methods:', globalPagefindUI ? Object.keys(globalPagefindUI).filter(key => typeof globalPagefindUI[key] === 'function') : 'N/A');
                     }
                     
                     // Fallback to direct Pagefind API if UI method not available
