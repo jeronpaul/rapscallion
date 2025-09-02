@@ -325,6 +325,9 @@ function initializeSearchIcon() {
                 
                 const resultsHTML = await Promise.all(results.map(async (result) => {
                     console.log('🔍 Individual result:', result);
+                    console.log('🔍 Result keys:', Object.keys(result));
+                    console.log('🔍 Result anchor property:', result.anchor);
+                    console.log('🔍 Result meta:', result.meta);
                     
                     // Pagefind stores data in a function that needs to be called
                     let resultData = {};
@@ -332,6 +335,7 @@ function initializeSearchIcon() {
                         if (typeof result.data === 'function') {
                             resultData = await result.data();
                             console.log('🔍 Extracted result data:', resultData);
+                            console.log('🔍 Result data keys:', Object.keys(resultData));
                         }
                     } catch (error) {
                         console.warn('⚠️ Error extracting result data:', error);
