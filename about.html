@@ -63,23 +63,21 @@
             <script src="components.js?v=112"></script>
     
     <!-- Load header and footer components -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🔍 DOM loaded, loading components...');
-            loadComponent('header', 'header.html');
-            loadComponent('footer', 'footer.html');
-        });
-    </script>
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                loadComponent('header', 'header.html');
+                loadComponent('footer', 'footer.html');
+            });
+        </script>
     
     <!-- Pagefind Highlight Script -->
-    <script type="module">
-        try {
-            await import('/pagefind/pagefind-highlight.js');
-            new PagefindHighlight({ highlightParam: "highlight" });
-            console.log('✅ Pagefind highlight script loaded successfully');
-        } catch (error) {
-            console.warn('⚠️ Pagefind highlight script failed to load:', error);
-        }
-    </script>
+            <script type="module">
+            try {
+                await import('/pagefind/pagefind-highlight.js');
+                new PagefindHighlight({ highlightParam: "highlight" });
+            } catch (error) {
+                // Silent error handling for production
+            }
+        </script>
 </body>
 </html>

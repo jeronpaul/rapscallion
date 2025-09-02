@@ -50,33 +50,9 @@
     <!-- Load header and footer components -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🔍 DOM loaded, loading components...');
-            console.log('🔍 About to load header component...');
             loadComponent('header', 'header.html');
-            console.log('🔍 About to load footer component...');
             loadComponent('footer', 'footer.html');
-            console.log('🔍 Component loading initiated...');
         });
-        
-        // Debug: Check if components loaded after a delay
-        setTimeout(function() {
-            console.log('🔍 Debug: Checking components after 2 seconds...');
-            const header = document.getElementById('header');
-            const footer = document.getElementById('footer');
-            console.log('🔍 Header element:', header);
-            console.log('🔍 Footer element:', footer);
-            console.log('🔍 Header innerHTML length:', header ? header.innerHTML.length : 'N/A');
-            console.log('🔍 Footer innerHTML length:', footer ? footer.innerHTML.length : 'N/A');
-            
-            // Check for search icons
-            const searchIcons = document.querySelectorAll('[id*="search-icon"]');
-            console.log('🔍 Search icons found:', searchIcons.length);
-            searchIcons.forEach((icon, index) => {
-                console.log(`🔍 Search icon ${index}:`, icon);
-                console.log(`🔍 Search icon ${index} onclick:`, icon.onclick);
-                console.log(`🔍 Search icon ${index} event listeners:`, icon.getEventListeners ? icon.getEventListeners('click') : 'getEventListeners not available');
-            });
-        }, 2000);
     </script>
     
     <!-- Pagefind Search functionality is handled by components.js -->
@@ -86,9 +62,8 @@
         try {
             await import('/pagefind/pagefind-highlight.js');
             new PagefindHighlight({ highlightParam: "highlight" });
-            console.log('✅ Pagefind highlight script loaded successfully');
         } catch (error) {
-            console.warn('⚠️ Pagefind highlight script failed to load:', error);
+            // Silent error handling for production
         }
     </script>
 </body>

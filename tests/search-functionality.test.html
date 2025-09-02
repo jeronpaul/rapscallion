@@ -165,8 +165,6 @@
 
         // Run all tests
         function runAllTests() {
-            console.log('🧪 Running Search Functionality Tests...');
-            
             testMainSiteLoads();
             testPagefindScripts();
             testSearchIcons();
@@ -177,8 +175,7 @@
             
             updateSummary();
             
-            console.log(`🧪 Tests complete: ${passedTests}/${totalTests} passed`);
-        }
+            }
 
         // Run tests when page loads
         document.addEventListener('DOMContentLoaded', function() {

@@ -20,11 +20,8 @@
     <iframe id="main-site" src="/" width="100%" height="400" style="border: 1px solid #ccc; margin: 10px 0;"></iframe>
     
     <script>
-        console.log('🧪 Main Site JavaScript Test Starting');
-        
         // Test 1: Check if main site loads
         document.getElementById('main-site').onload = function() {
-            console.log('✅ Main site iframe loaded');
             document.getElementById('test-results').innerHTML += 
                 '<div class="test pass">✅ Test 1: Main site loads - PASSED</div>';
             
@@ -33,8 +30,6 @@
             try {
                 const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                 const headerScripts = iframeDoc.querySelectorAll('script');
-                console.log('🔍 Scripts found in main site:', headerScripts.length);
-                
                 let hasPagefindScript = false;
                 headerScripts.forEach(script => {
                     if (script.src && script.src.includes('pagefind-ui.js')) {
@@ -63,7 +58,6 @@
                 }
                 
             } catch (error) {
-                console.error('🔍 Error accessing iframe content:', error);
                 document.getElementById('test-results').innerHTML += 
                     '<div class="test fail">❌ Test 2-3: Cross-origin access blocked - FAILED</div>';
             }
@@ -73,8 +67,6 @@
         fetch('/')
             .then(response => response.text())
             .then(html => {
-                console.log('🔍 Main site HTML loaded, length:', html.length);
-                
                 if (html.includes('pagefind-ui.js')) {
                     document.getElementById('test-results').innerHTML += 
                         '<div class="test pass">✅ Test 4: Main site contains pagefind-ui.js - PASSED</div>';
@@ -92,7 +84,6 @@
                 }
             })
             .catch(error => {
-                console.error('🔍 Error loading main site:', error);
                 document.getElementById('test-results').innerHTML += 
                     '<div class="test fail">❌ Test 4-5: Main site loading - FAILED</div>';
             });

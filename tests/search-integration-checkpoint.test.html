@@ -166,8 +166,6 @@
 
         // Run all tests
         function runAllTests() {
-            console.log('🧪 Running Search Integration Checkpoint Tests...');
-            
             testSearchIconClick();
             testCustomSearchModal();
             testPagefindIntegration();
@@ -176,8 +174,7 @@
             
             updateSummary();
             
-            console.log(`🧪 Checkpoint tests complete: ${passedTests}/${totalTests} passed`);
-        }
+            }
 
         // Run tests when page loads
         document.addEventListener('DOMContentLoaded', function() {
