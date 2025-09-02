@@ -44,9 +44,9 @@ class RapscallionSearch {
         modal.className = 'custom-search-modal';
         
         modal.innerHTML = `
+            <button class="custom-search-close" aria-label="Close search">×</button>
+            
             <div class="custom-search-header">
-                <button class="custom-search-close" aria-label="Close search">×</button>
-                
                 <div class="custom-search-input-container">
                     <input 
                         type="text" 
@@ -61,11 +61,7 @@ class RapscallionSearch {
             </div>
             
             <div class="custom-search-results" id="custom-search-results">
-                <div class="custom-search-empty">
-                    <div class="custom-search-empty-icon">🔍</div>
-                    <div class="custom-search-empty-title">Start typing to search</div>
-                    <div class="custom-search-empty-text">Find articles, startup frameworks, and entrepreneurial insights</div>
-                </div>
+                <!-- Results will appear here -->
             </div>
         `;
         
@@ -424,13 +420,7 @@ class RapscallionSearch {
     }
     
     showEmptyState() {
-        this.results.innerHTML = `
-            <div class="custom-search-empty">
-                <div class="custom-search-empty-icon">🔍</div>
-                <div class="custom-search-empty-title">Start typing to search</div>
-                <div class="custom-search-empty-text">Find articles, startup frameworks, and entrepreneurial insights</div>
-            </div>
-        `;
+        this.results.innerHTML = '';
     }
     
     showLoading() {
@@ -443,24 +433,12 @@ class RapscallionSearch {
     }
     
     showNoResults(query) {
-        this.results.innerHTML = `
-            <div class="custom-search-empty">
-                <div class="custom-search-empty-icon">🔍</div>
-                <div class="custom-search-empty-title">No results found</div>
-                <div class="custom-search-empty-text">Try different keywords or check your spelling</div>
-            </div>
-        `;
+        this.results.innerHTML = '';
         this.updateStats(0, query);
     }
     
     showError() {
-        this.results.innerHTML = `
-            <div class="custom-search-empty">
-                <div class="custom-search-empty-icon">⚠️</div>
-                <div class="custom-search-empty-title">Search error</div>
-                <div class="custom-search-empty-text">Please try again in a moment</div>
-            </div>
-        `;
+        this.results.innerHTML = '';
     }
     
     selectFirstResult() {
