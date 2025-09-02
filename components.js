@@ -155,7 +155,7 @@ function initializeSearchIcon() {
                     element: "#search",
                     showImages: false,
                     showSubResults: true,
-                    excerptLength: 20,
+                    excerptLength: 150,
                     processResult: function(result) {
                         // Custom URL mapping for our site structure
                         const urlMap = {
@@ -241,7 +241,7 @@ function initializeSearchIcon() {
 
                 // Debounce search
                 searchTimeout = setTimeout(() => {
-                    performSearch(query);
+                    performSearch(query, pagefindUI);
                 }, 300);
             });
 
@@ -288,13 +288,12 @@ function initializeSearchIcon() {
                 console.log('✅ Search modal closed');
             }
 
-            async function performSearch(query) {
+            async function performSearch(query, pagefindUI) {
                 console.log('🔍 Performing search for:', query);
                 
                 try {
-                    // Use Pagefind's search functionality
-                    const search = await import('/pagefind/pagefind.js');
-                    const results = await search.search(query);
+                    // Use Pagefind UI's search functionality to get paragraph-level results
+                    const results = await pagefindUI.search(query);
                     
                     console.log('🔍 Search results:', results);
                     console.log('🔍 First result structure:', results.results?.[0]);
