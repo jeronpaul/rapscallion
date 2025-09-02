@@ -349,13 +349,22 @@ function initializeSearchIcon() {
                         if (results && results.results && results.results.length > 0) {
                             // Check if we have sub-results
                             let allResults = [];
-                            results.results.forEach(result => {
+                            for (const result of results.results) {
                                 allResults.push(result);
-                                if (result.subResults && result.subResults.length > 0) {
-                                    console.log('🔍 Found sub-results for result:', result.id, 'Count:', result.subResults.length);
-                                    allResults.push(...result.subResults);
+                                
+                                // Get the result data to check for sub_results
+                                try {
+                                    if (typeof result.data === 'function') {
+                                        const resultData = await result.data();
+                                        if (resultData.sub_results && resultData.sub_results.length > 0) {
+                                            console.log('🔍 Found sub-results for result:', result.id, 'Count:', resultData.sub_results.length);
+                                            allResults.push(...resultData.sub_results);
+                                        }
+                                    }
+                                } catch (error) {
+                                    console.warn('⚠️ Error checking sub-results:', error);
                                 }
-                            });
+                            }
                             
                             console.log('🔍 Total results after including sub-results:', allResults.length);
                             console.log('🔍 All results:', allResults);
@@ -381,12 +390,22 @@ function initializeSearchIcon() {
                     if (results.results && results.results.length > 0) {
                         // Flatten results to include sub-results
                         let allResults = [];
-                        results.results.forEach(result => {
+                        for (const result of results.results) {
                             allResults.push(result);
-                            if (result.subResults && result.subResults.length > 0) {
-                                allResults.push(...result.subResults);
+                            
+                            // Get the result data to check for sub_results
+                            try {
+                                if (typeof result.data === 'function') {
+                                    const resultData = await result.data();
+                                    if (resultData.sub_results && resultData.sub_results.length > 0) {
+                                        console.log('🔍 Found sub-results for result:', result.id, 'Count:', resultData.sub_results.length);
+                                        allResults.push(...resultData.sub_results);
+                                    }
+                                }
+                            } catch (error) {
+                                console.warn('⚠️ Error checking sub-results:', error);
                             }
-                        });
+                        }
                         
                         console.log('🔍 Total results after flattening:', allResults.length);
                         console.log('🔍 All results:', allResults);
