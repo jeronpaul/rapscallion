@@ -151,37 +151,28 @@ function initializeSearchIcon() {
 
             console.log('🔍 PagefindUI available:', typeof PagefindUI);
 
-            // Initialize Pagefind UI (hidden, we use our custom UI)
+            // Initialize Pagefind search API directly (not UI component)
             try {
-                globalPagefindUI = new PagefindUI({
-                    element: "#search",
-                    showImages: false,
-                    showSubResults: true,
-                    excerptLength: 150,
-                    highlightParam: "highlight",
-                    processResult: function(result) {
-                        // Custom URL mapping for our site structure
-                        const urlMap = {
-                            "Startup Ideas: How the Best Founders Get Them and Why Novelty Is Overrated": "/content/startup-ideas.html",
-                            "Essential Reading": "/content/essential-reading.html",
-                            "Getting to Profitability without Raising Money": "/content/getting-to-profitability.html",
-                            "The Way of Openness": "/content/way-of-openness.html"
-                        };
-
-                        if (urlMap[result.meta?.title]) {
-                            result.meta.url = urlMap[result.meta.title];
-                        }
-
-                        return result;
-                    }
+                // Import and initialize Pagefind search
+                import('/pagefind/pagefind.js').then(async (searchModule) => {
+                    console.log('🔍 Pagefind search module imported:', searchModule);
+                    
+                    // Initialize the search instance
+                    const searchInstance = await searchModule.init();
+                    console.log('🔍 Pagefind search instance created:', searchInstance);
+                    
+                    // Store the search instance globally
+                    globalPagefindUI = searchInstance;
+                    
+                    console.log('✅ Pagefind search API initialized successfully');
+                    console.log('🔍 Global Pagefind search instance:', globalPagefindUI);
+                    console.log('🔍 Debug: globalPagefindUI.search method:', typeof globalPagefindUI.search);
+                    console.log('🔍 Debug: globalPagefindUI methods:', Object.keys(globalPagefindUI).filter(key => typeof globalPagefindUI[key] === 'function'));
+                }).catch(error => {
+                    console.error('❌ Error importing Pagefind search module:', error);
                 });
-
-                console.log('✅ Pagefind UI initialized successfully');
-                console.log('🔍 Global Pagefind UI instance:', globalPagefindUI);
-                console.log('🔍 Debug: globalPagefindUI.search method:', typeof globalPagefindUI.search);
-                console.log('🔍 Debug: globalPagefindUI methods:', Object.keys(globalPagefindUI).filter(key => typeof globalPagefindUI[key] === 'function'));
             } catch (error) {
-                console.error('❌ Error initializing Pagefind UI:', error);
+                console.error('❌ Error initializing Pagefind search:', error);
                 return;
             }
 
@@ -304,51 +295,38 @@ function initializeSearchIcon() {
                     console.log('🔍 Debug: globalPagefindUI keys:', globalPagefindUI ? Object.keys(globalPagefindUI) : 'N/A');
                     console.log('🔍 Debug: globalPagefindUI.search exists?', globalPagefindUI && typeof globalPagefindUI.search);
                     
-                    // Use the Pagefind UI instance that's already configured with showSubResults: true
+                    // Use the Pagefind search API instance that's already configured
                     if (globalPagefindUI && typeof globalPagefindUI.search === 'function') {
-                        console.log('🔍 Using Pagefind UI search method with showSubResults: true');
-                        console.log('🔍 Debug: Calling globalPagefindUI.search("' + query + '")');
+                        console.log('🔍 Using Pagefind search API with showSubResults: true');
+                        console.log('🔍 Debug: Calling globalPagefindUI.search("' + query + '", { showSubResults: true })');
                         
-                        const results = await globalPagefindUI.search(query);
-                        console.log('🔍 Pagefind UI search results:', results);
+                        const results = await globalPagefindUI.search(query, { showSubResults: true });
+                        console.log('🔍 Pagefind search API results:', results);
                         console.log('🔍 Debug: Results type:', typeof results);
-                        console.log('🔍 Debug: Results length:', results ? results.length : 'N/A');
-                        console.log('🔍 Debug: Results structure:', results);
+                        console.log('🔍 Debug: Results keys:', Object.keys(results));
+                        console.log('🔍 Debug: Results.results:', results.results);
+                        console.log('🔍 Debug: Results.results length:', results.results?.length);
                         
-                        if (results && results.length > 0) {
-                            console.log('🔍 Total results from Pagefind UI:', results.length);
-                            console.log('🔍 All results:', results);
-                            await displaySearchResults(results);
+                        if (results && results.results && results.results.length > 0) {
+                            // Check if we have sub-results
+                            let allResults = [];
+                            results.results.forEach(result => {
+                                allResults.push(result);
+                                if (result.subResults && result.subResults.length > 0) {
+                                    console.log('🔍 Found sub-results for result:', result.id, 'Count:', result.subResults.length);
+                                    allResults.push(...result.subResults);
+                                }
+                            });
+                            
+                            console.log('🔍 Total results after including sub-results:', allResults.length);
+                            console.log('🔍 All results:', allResults);
+                            
+                            await displaySearchResults(allResults);
                             return;
-                        } else {
-                            console.log('🔍 Debug: Pagefind UI returned no results, falling back...');
                         }
-                    } else if (globalPagefindUI && typeof globalPagefindUI.triggerSearch === 'function') {
-                        // Try alternative method name
-                        console.log('🔍 Using Pagefind UI triggerSearch method...');
-                        console.log('🔍 Debug: Calling globalPagefindUI.triggerSearch("' + query + '")');
-                        
-                        const results = await globalPagefindUI.triggerSearch(query);
-                        console.log('🔍 Pagefind UI triggerSearch results:', results);
-                        console.log('🔍 Debug: Results type:', typeof results);
-                        console.log('🔍 Debug: Results length:', results ? results.length : 'N/A');
-                        
-                        if (results && results.length > 0) {
-                            console.log('🔍 Total results from Pagefind UI triggerSearch:', results.length);
-                            await displaySearchResults(results);
-                            return;
-                        } else {
-                            console.log('🔍 Debug: Pagefind UI triggerSearch returned no results, falling back...');
-                        }
-                    } else {
-                        console.log('🔍 Debug: Pagefind UI method not available, reason:', 
-                            !globalPagefindUI ? 'globalPagefindUI is null/undefined' :
-                            typeof globalPagefindUI.search !== 'function' && typeof globalPagefindUI.triggerSearch !== 'function' ? 
-                            'neither search nor triggerSearch methods found' : 'unknown');
-                        console.log('🔍 Debug: Available methods:', globalPagefindUI ? Object.keys(globalPagefindUI).filter(key => typeof globalPagefindUI[key] === 'function') : 'N/A');
                     }
                     
-                    // Fallback to direct Pagefind API if UI method not available
+                    // Fallback to direct Pagefind API if our instance doesn't work
                     console.log('🔍 Falling back to direct Pagefind API...');
                     const search = await import('/pagefind/pagefind.js');
                     const searchModule = search.default || search;
