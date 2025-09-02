@@ -329,17 +329,42 @@ function initializeSearchIcon() {
                         throw new Error('Could not create a valid search instance');
                     }
                     
-                    const results = await searchInstance.search(query);
+                    const results = await searchInstance.search(query, { showSubResults: true });
                     
                     console.log('🔍 Search results:', results);
+                    console.log('🔍 Results type:', typeof results);
+                    console.log('🔍 Results keys:', Object.keys(results));
+                    console.log('🔍 Results.results:', results.results);
+                    console.log('🔍 Results.results length:', results.results?.length);
                     console.log('🔍 First result structure:', results.results?.[0]);
                     console.log('🔍 First result keys:', results.results?.[0] ? Object.keys(results.results[0]) : 'No results');
                     
+                    // Check if we have sub-results
                     if (results.results && results.results.length > 0) {
-                        await displaySearchResults(results.results);
-                    } else {
-                        searchResults.innerHTML = '<div class="no-results">No results found</div>';
+                        results.results.forEach((result, index) => {
+                            console.log(`🔍 Result ${index} keys:`, Object.keys(result));
+                            console.log(`🔍 Result ${index} has subResults:`, result.subResults);
+                            console.log(`🔍 Result ${index} subResults length:`, result.subResults?.length);
+                        });
                     }
+                    
+                                    if (results.results && results.results.length > 0) {
+                    // Flatten results to include sub-results
+                    let allResults = [];
+                    results.results.forEach(result => {
+                        allResults.push(result);
+                        if (result.subResults && result.subResults.length > 0) {
+                            allResults.push(...result.subResults);
+                        }
+                    });
+                    
+                    console.log('🔍 Total results after flattening:', allResults.length);
+                    console.log('🔍 All results:', allResults);
+                    
+                    await displaySearchResults(allResults);
+                } else {
+                    searchResults.innerHTML = '<div class="no-results">No results found</div>';
+                }
                 } catch (error) {
                     console.error('❌ Search error:', error);
                     searchResults.innerHTML = '<div class="search-error">Search temporarily unavailable</div>';
