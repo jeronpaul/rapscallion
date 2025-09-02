@@ -131,6 +131,9 @@ function initializeSearchIcon() {
     // Search functionality moved to search.js with Pagefind integration
 }
 
+        // Global variable to store Pagefind UI instance
+        let globalPagefindUI = null;
+
         // Initialize Pagefind search functionality with custom UI
         function initializePagefindSearch() {
             console.log('🔍 Initializing Pagefind search with custom UI...');
@@ -149,9 +152,8 @@ function initializeSearchIcon() {
             console.log('🔍 PagefindUI available:', typeof PagefindUI);
 
             // Initialize Pagefind UI (hidden, we use our custom UI)
-            let pagefindUI;
             try {
-                pagefindUI = new PagefindUI({
+                globalPagefindUI = new PagefindUI({
                     element: "#search",
                     showImages: false,
                     showSubResults: true,
@@ -175,13 +177,14 @@ function initializeSearchIcon() {
                 });
 
                 console.log('✅ Pagefind UI initialized successfully');
+                console.log('🔍 Global Pagefind UI instance:', globalPagefindUI);
             } catch (error) {
                 console.error('❌ Error initializing Pagefind UI:', error);
                 return;
             }
 
             // Initialize custom search modal
-            initializeCustomSearchModal(pagefindUI);
+            initializeCustomSearchModal(globalPagefindUI);
 
             console.log('✅ Pagefind search initialization complete');
         }
@@ -294,9 +297,9 @@ function initializeSearchIcon() {
                 
                 try {
                     // Use the Pagefind UI instance that's already configured with showSubResults: true
-                    if (pagefindUI && typeof pagefindUI.search === 'function') {
+                    if (globalPagefindUI && typeof globalPagefindUI.search === 'function') {
                         console.log('🔍 Using Pagefind UI search method with showSubResults: true');
-                        const results = await pagefindUI.search(query);
+                        const results = await globalPagefindUI.search(query);
                         console.log('🔍 Pagefind UI search results:', results);
                         
                         if (results && results.length > 0) {
