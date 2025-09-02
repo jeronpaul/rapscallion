@@ -165,69 +165,40 @@ function initializeSearchIcon() {
         // Global variable to store Pagefind UI instance
         let globalPagefindUI = null;
 
-        // Initialize Pagefind search functionality with custom UI
+        // Initialize Pagefind search functionality using standard PagefindUI
         function initializePagefindSearch() {
-            // Initialize Pagefind search API directly (not UI component)
             try {
-                // Import and initialize Pagefind search
-                import('/pagefind/pagefind.js').then(async (searchModule) => {
-                    // Try different ways to get the search instance
-                    let searchInstance;
-                    
-                    // Method 1: Try searchModule.init()
-                    if (typeof searchModule.init === 'function') {
-                        searchInstance = await searchModule.init();
-                    }
-                    
-                    // Method 2: Try searchModule.default.init() if it's an ES module
-                    if (!searchInstance && searchModule.default && typeof searchModule.default.init === 'function') {
-                        searchInstance = await searchModule.default.init();
-                    }
-                    
-                    // Method 3: Try using searchModule directly if it has a search method
-                    if (!searchInstance && typeof searchModule.search === 'function') {
-                        searchInstance = searchModule;
-                    }
-                    
-                    // Method 4: Try searchModule.default if it has a search method
-                    if (!searchInstance && searchModule.default && typeof searchModule.default.search === 'function') {
-                        searchInstance = searchModule.default;
-                    }
-                    
-                    if (!searchInstance) {
-                        return;
-                    }
-                    
-                    // Enhance the search instance with preloading capability
-                    const enhancedSearchInstance = {
-                        ...searchInstance,
-                        preload: (term) => {
-                            if (searchInstance && typeof searchInstance.preload === 'function') {
-                                try {
-                                    searchInstance.preload(term);
-                                } catch (error) {
-                                    // Silently handle errors in production
-                                }
-                            }
+                // Use PagefindUI for standard search behavior and modal management
+                import('/pagefind/pagefind-ui.js').then(async (uiModule) => {
+                    // Initialize PagefindUI with standard configuration
+                    const pagefindUI = new uiModule.PagefindUI({
+                        element: "#search-results",
+                        showImages: false,
+                        showSubResults: true,
+                        highlightParam: "highlight",
+                        processResult: (result, resultElement) => {
+                            // Customize result display while keeping Pagefind's event handling
+                            resultElement.classList.add('search-result-link');
                         }
-                    };
+                    });
                     
-                    // Store the enhanced search instance globally
-                    globalPagefindUI = enhancedSearchInstance;
+                    // Store the PagefindUI instance globally
+                    globalPagefindUI = pagefindUI;
                     
-                    // Now that Pagefind is initialized, initialize the custom search modal
-                    initializeCustomSearchModal(globalPagefindUI);
+                    // Initialize the search modal with PagefindUI integration
+                    initializeSearchModalWithPagefindUI(pagefindUI);
                 }).catch(error => {
-                    // Silently handle errors in production
+                    console.error('Failed to load PagefindUI:', error);
+                    // Fallback to custom implementation if needed
                 });
             } catch (error) {
-                // Silently handle errors in production
+                console.error('Failed to initialize PagefindUI:', error);
                 return;
             }
         }
 
-        // Initialize custom search modal with Pagefind integration
-        function initializeCustomSearchModal(pagefindUI) {
+        // Initialize search modal with PagefindUI integration
+        function initializeSearchModalWithPagefindUI(pagefindUI) {
             const searchOverlay = document.getElementById('search-overlay');
             const searchInput = document.getElementById('search-input');
             const searchClose = document.getElementById('search-close');
@@ -258,35 +229,18 @@ function initializeSearchIcon() {
                 }
             });
 
-            // Handle search input with preloading strategy
-            let searchTimeout;
-            searchInput.addEventListener('input', function() {
-                const query = this.value.trim();
-                
-                // Clear previous timeout
-                if (searchTimeout) {
-                    clearTimeout(searchTimeout);
-                }
-
-                if (query.length === 0) {
-                    searchResults.innerHTML = '';
-                    return;
-                }
-
-                // Preload the search term for instant results
-                if (pagefindUI && typeof pagefindUI.preload === 'function') {
-                    try {
-                        pagefindUI.preload(query);
-                    } catch (error) {
-                        // Silently handle errors in production
+            // Let PagefindUI handle the search input and results
+            // This ensures proper event handling and modal management
+            if (pagefindUI && typeof pagefindUI.triggerSearch === 'function') {
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.trim();
+                    if (query.length > 0) {
+                        pagefindUI.triggerSearch(query);
+                    } else {
+                        searchResults.innerHTML = '';
                     }
-                }
-
-                // Debounce search
-                searchTimeout = setTimeout(() => {
-                    performSearch(query);
-                }, 300);
-            });
+                });
+            }
 
             // Handle keyboard shortcuts
             document.addEventListener('keydown', function(e) {
@@ -320,146 +274,9 @@ function initializeSearchIcon() {
                 searchInput.value = '';
                 searchResults.innerHTML = '';
             }
-
-                        async function performSearch(query) {
-                try {
-                    // Use the Pagefind search API instance that's already configured
-                    if (globalPagefindUI && typeof globalPagefindUI.search === 'function') {
-                        const results = await globalPagefindUI.search(query, { showSubResults: true });
-                        
-                        if (results && results.results && results.results.length > 0) {
-                            // Check if we have sub-results
-                            let allResults = [];
-                            for (const result of results.results) {
-                                allResults.push(result);
-                                
-                                // Get the result data to check for sub_results
-                                try {
-                                    if (typeof result.data === 'function') {
-                                        const resultData = await result.data();
-                                        if (resultData.sub_results && resultData.sub_results.length > 0) {
-                                            allResults.push(...resultData.sub_results);
-                                        }
-                                    }
-                                } catch (error) {
-                                    // Silently handle errors in production
-                                }
-                            }
-                            
-                            await displaySearchResults(allResults);
-                            return;
-                        }
-                    }
-                    
-                    // Fallback to direct Pagefind API if our instance doesn't work
-                    const search = await import('/pagefind/pagefind.js');
-                    const searchModule = search.default || search;
-                    
-                    const results = await searchModule.search(query, { showSubResults: true });
-                    
-                    if (results.results && results.results.length > 0) {
-                        // Flatten results to include sub-results
-                        let allResults = [];
-                        for (const result of results.results) {
-                            allResults.push(result);
-                            
-                            // Get the result data to check for sub_results
-                            try {
-                                if (typeof result.data === 'function') {
-                                    const resultData = await result.data();
-                                    if (resultData.sub_results && resultData.sub_results.length > 0) {
-                                        allResults.push(...resultData.sub_results);
-                                    }
-                                }
-                            } catch (error) {
-                                // Silently handle errors in production
-                            }
-                        }
-                        
-                        await displaySearchResults(allResults);
-                    } else {
-                        searchResults.innerHTML = '<div class="no-results">No results found</div>';
-                    }
-                } catch (error) {
-                    searchResults.innerHTML = '<div class="search-error">Search temporarily unavailable</div>';
-                }
-            }
-
-            async function displaySearchResults(results) {
-                // Add results count header
-                const resultsCount = results.length;
-                const searchTerm = document.getElementById('search-input').value;
-                const resultsHeader = `
-                    <div class="search-results-header">
-                        <h3 class="results-count">${resultsCount} RESULT${resultsCount !== 1 ? 'S' : ''} FOR '${searchTerm.toUpperCase()}'</h3>
-                    </div>
-                `;
-                
-                const resultsHTML = await Promise.all(results.map(async (result) => {
-                    // Pagefind stores data in a function that needs to be called
-                    let resultData = {};
-                    try {
-                        if (typeof result.data === 'function') {
-                            resultData = await result.data();
-                        }
-                    } catch (error) {
-                        // Silently handle errors in production
-                    }
-                    
-                    // Extract title from various possible locations
-                    const title = resultData.title || 
-                                 resultData.meta?.title || 
-                                 result.meta?.title || 
-                                 result.title || 
-                                 'Untitled';
-                    
-                    // Extract URL from various possible locations
-                    let url = resultData.url || 
-                              resultData.meta?.url || 
-                              result.meta?.url || 
-                              result.url || 
-                              '#';
-                    
-                    // Extract excerpt from various possible locations
-                    const excerpt = resultData.excerpt || 
-                                   result.excerpt || 
-                                   resultData.content?.substring(0, 150) + '...' || 
-                                   result.content?.substring(0, 150) + '...' || 
-                                   '';
-                    
-                    // Check if this result has anchor information (paragraph-level result)
-                    let anchorInfo = '';
-                    let anchorUrl = url;
-                    
-                    if (result.anchor) {
-                        // This is a paragraph-level result with anchor
-                        anchorInfo = `<span class="search-result-anchor">📎 ${result.anchor.title || 'Paragraph'}</span>`;
-                        
-                        // Add anchor to URL if it's not already there
-                        if (!url.includes('#')) {
-                            anchorUrl = `${url}#${result.anchor.id}`;
-                        }
-                    }
-                    
-                    return `
-                        <div class="search-result">
-                            <a href="${anchorUrl}" class="search-result-link">
-                                <h3 class="search-result-title">${title}</h3>
-                                <p class="search-result-excerpt">${excerpt}</p>
-                                ${anchorInfo}
-                            </a>
-                        </div>
-                    `;
-                }));
-
-                searchResults.innerHTML = resultsHeader + resultsHTML.join('');
-                
-                // Add click handlers for search results
-                addSearchResultClickHandlers();
-            }
-
-
         }
+
+
 
         // Function to close the search modal
         function closeSearchModal() {
@@ -476,25 +293,7 @@ function initializeSearchIcon() {
             if (searchResults) searchResults.innerHTML = '';
         }
 
-        // Function to add click handlers for search results
-        function addSearchResultClickHandlers() {
-            const searchResults = document.querySelectorAll('.search-result-link');
-            searchResults.forEach(link => {
-                // Remove any existing click event listeners by cloning the element
-                // This prevents duplicate event listeners from multiple searches
-                const newLink = link.cloneNode(true);
-                link.parentNode.replaceChild(newLink, link);
-                
-                // Add the click handler to the new element
-                newLink.addEventListener('click', function(e) {
-                    // Close the search modal immediately to prevent race conditions
-                    closeSearchModal();
-                    
-                    // Allow the default navigation to happen
-                    // The modal will be closed before the page navigation occurs
-                });
-            });
-        }
+
 
 // Hamburger menu functionality
 function initializeHamburgerMenu() {

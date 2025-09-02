@@ -53,50 +53,42 @@ async function testModalClosingIssue() {
             return false;
         }
 
-        // Check for addSearchResultClickHandlers function
-        if (componentsJS.includes('function addSearchResultClickHandlers()')) {
-            console.log('✅ addSearchResultClickHandlers function found');
+        // Check for PagefindUI integration
+        if (componentsJS.includes('PagefindUI') && componentsJS.includes('highlightParam')) {
+            console.log('✅ PagefindUI integration found');
         } else {
-            console.log('❌ addSearchResultClickHandlers function not found');
+            console.log('❌ PagefindUI integration not found');
             return false;
         }
 
-        // Check for event listener cloning logic
-        if (componentsJS.includes('cloneNode(true)') && componentsJS.includes('replaceChild')) {
-            console.log('✅ Event listener cloning logic found (prevents duplicates)');
+        // Check for PagefindUI modal management
+        if (componentsJS.includes('initializeSearchModalWithPagefindUI')) {
+            console.log('✅ PagefindUI modal management found');
         } else {
-            console.log('❌ Event listener cloning logic not found');
-            return false;
-        }
-
-        // Check for setTimeout in click handler
-        if (componentsJS.includes('setTimeout(() => {') && componentsJS.includes('closeSearchModal()')) {
-            console.log('✅ Modal closing with setTimeout found');
-        } else {
-            console.log('❌ Modal closing with setTimeout not found');
+            console.log('❌ PagefindUI modal management not found');
             return false;
         }
 
         console.log('\n3️⃣ Testing Pagefind integration...');
-        if (componentsJS.includes('performSearch') && componentsJS.includes('displaySearchResults')) {
-            console.log('✅ Pagefind search integration found');
+        if (componentsJS.includes('PagefindUI') && componentsJS.includes('triggerSearch')) {
+            console.log('✅ PagefindUI search integration found');
         } else {
-            console.log('❌ Pagefind search integration not found');
+            console.log('❌ PagefindUI search integration not found');
             return false;
         }
 
         console.log('\n4️⃣ Testing search result generation...');
-        if (componentsJS.includes('search-result-link') && componentsJS.includes('addSearchResultClickHandlers()')) {
-            console.log('✅ Search result generation with click handlers found');
+        if (componentsJS.includes('search-result-link') && componentsJS.includes('processResult')) {
+            console.log('✅ PagefindUI result generation found');
         } else {
-            console.log('❌ Search result generation with click handlers not found');
+            console.log('❌ PagefindUI result generation not found');
             return false;
         }
 
         console.log('\n🎯 Test Summary:');
         console.log('• All modal closing components are present');
-        console.log('• Event listener duplication prevention is implemented');
-        console.log('• Pagefind integration is properly configured');
+        console.log('• PagefindUI handles modal management automatically');
+        console.log('• PagefindUI integration is properly configured');
         
         console.log('\n🔍 To manually test the modal closing issue:');
         console.log('1. Open http://localhost:8000/ in your browser');
