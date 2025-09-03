@@ -1,4 +1,4 @@
-// components.js v113 - Production-ready component loading and search initialization (debug logging removed)
+// components.js v114 - Production-ready component loading and search initialization (debug logging removed)
 
 // Load header and footer components
 
