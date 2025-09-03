@@ -1,4 +1,4 @@
-// Custom Search Implementation for Rapscallion
+// Custom Search Implementation for Rapscallion v2.0 - Production ready (debug logging removed)
 // Using Pagefind API with custom styling
 
 class RapscallionSearch {
@@ -109,7 +109,7 @@ class RapscallionSearch {
             );
             
             if (headerAdded) {
-                console.log('🔗 Header detected in DOM, binding search icons...');
+                // Header detected in DOM, binding search icons
                 setTimeout(() => this.bindSearchIcons(), 100);
             }
         });
@@ -264,12 +264,12 @@ class RapscallionSearch {
     async performSearch(query) {
         // Always attempt to ensure Pagefind is available
         if (!this.pagefind) {
-            console.log('Pagefind not loaded, loading...');
+            // Pagefind not loaded, loading
             try {
                 this.pagefind = await import('/pagefind/pagefind.js');
-                console.log('✅ Pagefind loaded successfully');
+                // Pagefind loaded successfully
             } catch (error) {
-                console.error('❌ Failed to load Pagefind:', error);
+                console.error('Failed to load Pagefind:', error);
                 this.showError();
                 return;
             }
@@ -280,9 +280,9 @@ class RapscallionSearch {
             console.error('Pagefind search function not available, attempting reload...');
             try {
                 this.pagefind = await import('/pagefind/pagefind.js');
-                console.log('✅ Pagefind reloaded successfully');
+                // Pagefind reloaded successfully
             } catch (error) {
-                console.error('❌ Failed to reload Pagefind:', error);
+                console.error('Failed to reload Pagefind:', error);
                 this.showError();
                 return;
             }
@@ -320,21 +320,12 @@ class RapscallionSearch {
     
     displayResults(results, query) {
         const resultsHtml = results.map((result, index) => {
-            console.log(`🔗 PROCESSING RESULT ${index + 1}:`, {
-                title: result.meta.title,
-                url: result.url,
-                sub_results_count: result.sub_results ? result.sub_results.length : 0,
-                sub_results: result.sub_results
-            });
+            // Processing search result
             
             // If we have sub-results, create individual clickable items for each
             if (result.sub_results && result.sub_results.length > 0) {
                 return result.sub_results.map((sub, subIndex) => {
-                    console.log(`🔗 SUB-RESULT ${subIndex + 1}:`, {
-                        title: sub.title,
-                        url: sub.url,
-                        excerpt: sub.excerpt.substring(0, 100) + '...'
-                    });
+                    // Processing sub-result
                     
                     // Use the sub-result URL directly if it has an anchor
                     let url;
@@ -343,11 +334,11 @@ class RapscallionSearch {
                         const baseUrl = sub.url.split('#')[0];
                         const anchor = sub.url.split('#')[1];
                         url = `${baseUrl}?highlight=${encodeURIComponent(query)}#${anchor}`;
-                        console.log(`🔗 DIRECT SUB-URL: ${url}`);
+                        // Direct sub-URL created
                     } else {
                         // Fallback to result URL with highlight
                         url = `${result.url}?highlight=${encodeURIComponent(query)}`;
-                        console.log(`🔗 FALLBACK URL: ${url}`);
+                        // Fallback URL created
                     }
                     
                     return `
@@ -364,7 +355,7 @@ class RapscallionSearch {
             } else {
                 // No sub-results, create a single result link
                 const url = `${result.url}?highlight=${encodeURIComponent(query)}`;
-                console.log(`🔗 MAIN RESULT URL: ${url}`);
+                // Main result URL created
                 
                 return `
                     <a href="${url}" class="custom-search-result" data-search-result>
@@ -382,8 +373,7 @@ class RapscallionSearch {
         this.results.querySelectorAll('[data-search-result]').forEach(link => {
             link.addEventListener('click', (e) => {
                 const href = link.getAttribute('href');
-                console.log('🔗 SEARCH RESULT CLICKED:', href);
-                console.log('🔗 CURRENT URL BEFORE:', window.location.href);
+                // Search result clicked
                 
                 // Parse the destination URL
                 const url = new URL(href, window.location.origin);
@@ -391,9 +381,7 @@ class RapscallionSearch {
                 const targetPath = url.pathname;
                 const samePage = currentPath === targetPath;
                 
-                console.log('🔗 SAME PAGE NAVIGATION:', samePage);
-                console.log('🔗 CURRENT PATH:', currentPath);
-                console.log('🔗 TARGET PATH:', targetPath);
+                // Navigation details
                 
                 // Always close the modal first
                 this.close();
@@ -405,8 +393,7 @@ class RapscallionSearch {
                     const anchor = url.hash ? url.hash.substring(1) : null;
                     const highlight = url.searchParams.get('highlight');
                     
-                    console.log('🔗 MANUAL NAVIGATION - Anchor:', anchor);
-                    console.log('🔗 MANUAL NAVIGATION - Highlight:', highlight);
+                    // Manual navigation parameters
                     
                     // Update URL without reloading
                     window.history.pushState({}, '', href);
@@ -418,14 +405,9 @@ class RapscallionSearch {
                 } else {
                     // Different page - let default navigation happen
                     // The browser will navigate and the search will be reinitialized on the new page
-                    console.log('🔗 DIFFERENT PAGE - allowing default navigation');
                 }
                 
-                // Log URL after close
-                setTimeout(() => {
-                    console.log('🔗 CURRENT URL AFTER:', window.location.href);
-                    console.log('🔗 CURRENT HASH AFTER:', window.location.hash);
-                }, 100);
+                // URL updated after close
             });
         });
     }
@@ -482,7 +464,7 @@ class RapscallionSearch {
     }
     
     handleSamePageNavigation(highlight, anchor) {
-        console.log('🎯 HANDLING SAME PAGE NAVIGATION:', { highlight, anchor });
+        // Handling same page navigation
         
         // Apply highlighting first if needed
         if (highlight && window.PagefindHighlight) {
@@ -496,9 +478,9 @@ class RapscallionSearch {
                 });
                 
                 new PagefindHighlight({ highlightParam: "highlight" });
-                console.log('🎯 HIGHLIGHTING APPLIED FOR:', highlight);
+                // Highlighting applied
             } catch (error) {
-                console.error('🎯 HIGHLIGHTING ERROR:', error);
+                console.error('Highlighting error:', error);
             }
         }
         
@@ -508,13 +490,13 @@ class RapscallionSearch {
             
             // STRICT PRIORITY: Only scroll to anchor if we have one, don't fall back
             if (anchor) {
-                console.log('🎯 LOOKING FOR SPECIFIC ANCHOR:', anchor);
+                // Looking for specific anchor
                 try {
                     scrollTarget = document.getElementById(anchor);
-                    console.log('🎯 ANCHOR TARGET FOUND:', !!scrollTarget);
+                    // Anchor target found
                     
                     if (scrollTarget) {
-                        console.log('🎯 SCROLLING TO SPECIFIC ANCHOR:', scrollTarget);
+                        // Scrolling to specific anchor
                         scrollTarget.scrollIntoView({ 
                             behavior: 'smooth', 
                             block: 'start',
@@ -527,19 +509,19 @@ class RapscallionSearch {
                         return;
                     }
                 } catch (error) {
-                    console.error('🎯 ANCHOR ERROR:', error);
+                    console.error('Anchor error:', error);
                     return;
                 }
             }
             
             // Only scroll to first highlight if we don't have a specific anchor
             if (!anchor && highlight) {
-                console.log('🎯 NO SPECIFIC ANCHOR - LOOKING FOR FIRST HIGHLIGHT');
+                // No specific anchor - looking for first highlight
                 scrollTarget = document.querySelector('mark[data-pagefind-match]');
-                console.log('🎯 HIGHLIGHT TARGET FOUND:', !!scrollTarget);
+                // Highlight target found
                 
                 if (scrollTarget) {
-                    console.log('🎯 SCROLLING TO FIRST HIGHLIGHT:', scrollTarget);
+                    // Scrolling to first highlight
                     scrollTarget.scrollIntoView({ 
                         behavior: 'smooth', 
                         block: 'start',
