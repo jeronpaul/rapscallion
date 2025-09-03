@@ -44,10 +44,10 @@ async function loadComponent(elementId, componentPath) {
                 setActiveStates();
                 initializeHamburgerMenu();
                 
-                // Load search files first, then initialize
+                // Load search files only - let custom-search.js handle its own initialization
                 loadSearchFiles().then(() => {
-                    console.log('✅ Search files loaded, calling initializeSearchIcon');
-                    initializeSearchIcon();
+                    console.log('✅ Search files loaded - custom-search.js will handle initialization');
+                    // Don't call initializeSearchIcon - let custom-search.js handle everything
                 }).catch(error => {
                     console.error('❌ Failed to load search files:', error);
                 });

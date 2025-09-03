@@ -9,22 +9,28 @@ class RapscallionSearch {
         this.results = [];
         this.debounceTimer = null;
         
-        this.init();
+        // Initialize synchronously for immediate availability
+        this.initSync();
+        
+        // Load Pagefind asynchronously in background
+        this.loadPagefindAsync();
     }
     
-    async init() {
-        // Load Pagefind
+    initSync() {
+        // Create search UI immediately
+        this.createSearchUI();
+        
+        // Bind events immediately
+        this.bindEvents();
+    }
+    
+    async loadPagefindAsync() {
+        // Load Pagefind in background
         try {
             this.pagefind = await import('/pagefind/pagefind.js');
         } catch (error) {
             console.error('Custom search: Failed to load Pagefind:', error);
         }
-        
-        // Create search UI
-        this.createSearchUI();
-        
-        // Bind events
-        this.bindEvents();
     }
     
     createSearchUI() {
@@ -124,7 +130,9 @@ class RapscallionSearch {
         });
         
         // Close button
-        this.closeBtn.addEventListener('click', () => this.close());
+        if (this.closeBtn) {
+            this.closeBtn.addEventListener('click', () => this.close());
+        }
         
         // Click outside to close
         this.overlay.addEventListener('click', (e) => {
@@ -148,22 +156,30 @@ class RapscallionSearch {
     }
     
     bindSearchIcons() {
-        console.log('🔗 Attempting to bind search icons...');
-        
         const searchIcons = [
             document.getElementById('search-icon-desktop'),
             document.getElementById('search-icon-mobile')
         ].filter(Boolean);
         
-        console.log(`🔗 Found ${searchIcons.length} search icons to bind`);
-        
         searchIcons.forEach((icon, index) => {
-            // Remove any existing listeners to prevent duplicates
+            // Skip if already bound to prevent duplicate listeners
+            if (icon.dataset.searchBound === 'true') {
+                return;
+            }
+            
+            // Remove any existing listeners first
             icon.onclick = null;
             
-            // Add new click listener
+            // Add new click listener with better event handling
             const clickHandler = (e) => {
-                console.log(`🔗 Search icon ${index + 1} clicked!`);
+                // Only handle if this icon is actually visible (not hidden by CSS)
+                const isVisible = window.getComputedStyle(icon).display !== 'none' && 
+                                 window.getComputedStyle(icon).visibility !== 'hidden';
+                
+                if (!isVisible) {
+                    return;
+                }
+                
                 e.preventDefault();
                 e.stopPropagation();
                 this.open();
@@ -171,29 +187,43 @@ class RapscallionSearch {
             
             icon.addEventListener('click', clickHandler);
             
-            // Also set onclick as backup
-            icon.onclick = clickHandler;
-            
-            console.log(`🔗 Bound search icon ${index + 1} (${icon.id})`);
+            // Mark as bound to prevent duplicates
+            icon.dataset.searchBound = 'true';
         });
         
         return searchIcons.length > 0;
     }
     
     open() {
+        if (!this.overlay) {
+            return;
+        }
+        
         this.isOpen = true;
         this.overlay.classList.add('active');
+        
+        // Remove inline styles that prevent visibility (from flash fix)
+        this.overlay.style.opacity = '';
+        this.overlay.style.visibility = '';
+        
         document.body.style.overflow = 'hidden';
         
         // Focus input after animation
         setTimeout(() => {
-            this.input.focus();
+            if (this.input) {
+                this.input.focus();
+            }
         }, 100);
     }
     
     close() {
         this.isOpen = false;
         this.overlay.classList.remove('active');
+        
+        // Restore inline styles to prevent flash on next page load
+        this.overlay.style.opacity = '0';
+        this.overlay.style.visibility = 'hidden';
+        
         document.body.style.overflow = '';
         this.input.value = '';
         this.currentQuery = '';
@@ -523,31 +553,24 @@ class RapscallionSearch {
 
 // Initialize custom search when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 CUSTOM-SEARCH.JS: DOMContentLoaded fired');
-    console.log('🚀 Document ready state:', document.readyState);
-    console.log('🚀 Existing window.rapscallionSearch:', !!window.rapscallionSearch);
-    
     // Prevent multiple instances
     if (window.rapscallionSearch) {
-        console.log('⚠️ Custom search already initialized, skipping');
         return;
     }
     
-    console.log('🔧 Creating new RapscallionSearch instance...');
-    // Initialize search immediately, then retry binding after components load
-    window.rapscallionSearch = new RapscallionSearch();
-    console.log('✅ RapscallionSearch instance created');
-    console.log('🔧 Instance methods:', Object.getOwnPropertyNames(Object.getPrototypeOf(window.rapscallionSearch)));
+    try {
+        // Initialize search immediately, then retry binding after components load
+        window.rapscallionSearch = new RapscallionSearch();
+    } catch (error) {
+        console.error('Failed to create RapscallionSearch instance:', error);
+    }
 });
 
 // Also try initialization if script loads after DOM is ready
-if (document.readyState === 'loading') {
-    console.log('🚀 CUSTOM-SEARCH.JS: Script loaded while DOM still loading');
-} else {
-    console.log('🚀 CUSTOM-SEARCH.JS: Script loaded after DOM ready');
-    if (!window.rapscallionSearch) {
-        console.log('🔧 Late initialization - creating RapscallionSearch instance...');
+if (document.readyState !== 'loading' && !window.rapscallionSearch) {
+    try {
         window.rapscallionSearch = new RapscallionSearch();
-        console.log('✅ Late RapscallionSearch instance created');
+    } catch (error) {
+        console.error('Failed to create RapscallionSearch instance:', error);
     }
 }
