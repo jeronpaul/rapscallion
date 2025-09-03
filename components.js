@@ -1,3 +1,5 @@
+// components.js v113 - Production-ready component loading and search initialization (debug logging removed)
+
 // Load header and footer components
 
 // Check if the current page needs search functionality
@@ -38,7 +40,7 @@ async function loadComponent(elementId, componentPath) {
         
         // Set active states based on current page (only for header, with delay to ensure DOM is ready)
         if (componentPath.endsWith('header.html')) {
-            console.log('🔧 Header loaded, starting initialization...');
+            // Header loaded, starting initialization
             
             setTimeout(() => {
                 setActiveStates();
@@ -46,10 +48,10 @@ async function loadComponent(elementId, componentPath) {
                 
                 // Load search files only - let custom-search.js handle its own initialization
                 loadSearchFiles().then(() => {
-                    console.log('✅ Search files loaded - custom-search.js will handle initialization');
+                    // Search files loaded - custom-search.js will handle initialization
                     // Don't call initializeSearchIcon - let custom-search.js handle everything
                 }).catch(error => {
-                    console.error('❌ Failed to load search files:', error);
+                    console.error('Failed to load search files:', error);
                 });
                 
                 // Initialize Pagefind only on pages that need search functionality
@@ -140,31 +142,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Load search CSS and JS files dynamically
 async function loadSearchFiles() {
-    console.log('🏁 COMPONENTS.JS: Starting search file loading...');
-    console.log('🏁 Current pathname:', window.location.pathname);
-    
     // Dynamically determine correct path based on current location
     const isInContentFolder = window.location.pathname.includes('/content/');
     const timestamp = Date.now();
     const searchCssPath = isInContentFolder ? `../custom-search.css?v=${timestamp}` : `custom-search.css?v=${timestamp}`;
     const searchJsPath = isInContentFolder ? `../custom-search.js?v=${timestamp}` : `custom-search.js?v=${timestamp}`;
 
-    console.log('🔍 Search file paths:', { 
-        isInContentFolder, 
-        searchCssPath, 
-        searchJsPath,
-        timestamp 
-    });
-
     // Test if JS file is reachable
     try {
         const response = await fetch(searchJsPath);
-        console.log('🔍 Fetch test for JS file:', response.ok ? '✅ OK' : '❌ FAILED', response.status);
         if (!response.ok) {
             throw new Error(`JS file not found: ${response.status}`);
         }
     } catch (error) {
-        console.error('❌ JS file fetch test failed:', searchJsPath, error);
+        console.error('JS file fetch test failed:', searchJsPath, error);
         throw error;
     }
 
@@ -172,31 +163,23 @@ async function loadSearchFiles() {
     const cssLink = document.createElement('link');
     cssLink.rel = 'stylesheet';
     cssLink.href = searchCssPath;
-    cssLink.onload = () => console.log('✅ Custom search CSS loaded successfully');
-    cssLink.onerror = () => console.error('❌ Failed to load custom search CSS:', searchCssPath);
+    cssLink.onload = () => {}; // CSS loaded successfully
+    cssLink.onerror = () => console.error('Failed to load custom search CSS:', searchCssPath);
     document.head.appendChild(cssLink);
-
-    console.log('🎨 CSS link added to head');
 
     // Load JS and wait for it
     return new Promise((resolve, reject) => {
         const jsScript = document.createElement('script');
         jsScript.src = searchJsPath;
         jsScript.onload = () => {
-            console.log('✅ Custom search JS file loaded successfully');
-            
             // Wait for the script to execute and create the search instance
             const checkForInstance = (attempts = 0) => {
-                console.log('🔍 Checking for window.rapscallionSearch (attempt', attempts + 1, '):', !!window.rapscallionSearch);
-                
                 if (window.rapscallionSearch) {
-                    console.log('🎉 Search instance found!');
-                    console.log('🔍 Available methods:', typeof window.rapscallionSearch.bindSearchIcons);
                     resolve();
                 } else if (attempts < 20) {
                     setTimeout(() => checkForInstance(attempts + 1), 100);
                 } else {
-                    console.error('❌ Search instance never created after 2 seconds');
+                    console.error('Search instance never created after 2 seconds');
                     reject(new Error('Search instance timeout'));
                 }
             };
@@ -204,39 +187,27 @@ async function loadSearchFiles() {
             checkForInstance();
         };
         jsScript.onerror = (error) => {
-            console.error('❌ Failed to load custom search JS:', searchJsPath, error);
+            console.error('Failed to load custom search JS:', searchJsPath, error);
             reject(error);
         };
         
         document.head.appendChild(jsScript);
-        console.log('🚀 JS script added to head, waiting for load...');
     });
 }
 
 // Search icon functionality - ensure binding when header loads
 function initializeSearchIcon() {
-    console.log('🔗 COMPONENTS.JS: initializeSearchIcon called');
-    console.log('🔗 Current window.rapscallionSearch:', !!window.rapscallionSearch);
-    
     // Trigger search icon binding from custom-search.js if available
     setTimeout(() => {
-        console.log('🔗 First timeout (100ms) - checking search instance...');
         if (window.rapscallionSearch && window.rapscallionSearch.bindSearchIcons) {
-            console.log('🔍 ✅ Found search instance, binding icons...');
             window.rapscallionSearch.bindSearchIcons();
         } else {
             // Search instance not ready yet, retry
-            console.log('🔍 ❌ Search instance not ready, retrying in 1000ms...');
-            console.log('🔍 Available methods on window:', Object.keys(window).filter(key => key.includes('search')));
-            
             setTimeout(() => {
-                console.log('🔗 Second timeout (1000ms) - checking again...');
                 if (window.rapscallionSearch && window.rapscallionSearch.bindSearchIcons) {
-                    console.log('🔍 ✅ Found search instance on retry, binding icons...');
                     window.rapscallionSearch.bindSearchIcons();
                 } else {
-                    console.error('🔍 ❌ Search instance still not available after 1100ms total wait');
-                    console.log('🔍 Final window check:', !!window.rapscallionSearch);
+                    console.error('Search instance still not available after 1100ms total wait');
                 }
             }, 1000);
         }
@@ -414,12 +385,10 @@ function initializeSearchIcon() {
                         
                         // First priority: scroll to hash anchor if exists
                         if (window.location.hash && window.location.hash.length > 1) {
-                            console.log(`🎯 SCROLL DEBUG - Looking for anchor: ${window.location.hash}`);
                             try {
                                 scrollTarget = document.querySelector(window.location.hash);
-                                console.log(`🎯 SCROLL DEBUG - Found target:`, scrollTarget);
                             } catch (error) {
-                                console.log(`🎯 SCROLL DEBUG - Invalid hash selector: ${window.location.hash}`);
+                                // Invalid hash selector, continue to next option
                             }
                         }
                         
