@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapscallion Test Suite</title>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background: #f8f9fa;
+            color: #333;
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .test-header h1 {
+            color: #333;
+            margin: 0;
+        }
+        
+        .test-summary {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .test-group {
+            background: white;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .test-group-header {
+            background: #333;
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+        }
+        
+        .test-case {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .test-case:last-child {
+            border-bottom: none;
+        }
+        
+        .test-name {
+            flex: 1;
+        }
+        
+        .test-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .test-status.passed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .test-status.failed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .test-status.running {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .test-details {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        .run-tests-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-right: 1rem;
+        }
+        
+        .run-tests-btn:hover {
+            background: #555;
+        }
+        
+        .run-tests-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .summary-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .passed { color: #28a745; }
+        .failed { color: #dc3545; }
+        .total { color: #333; }
+    </style>
+</head>
+<body>
+    <div class="test-header">
+        <h1>🧪 Rapscallion Test Suite</h1>
+        <p>Automated tests for core functionality</p>
+    </div>
+    
+    <div class="test-summary">
+        <button class="run-tests-btn" id="runTestsBtn" onclick="runAllTests()">Run All Tests</button>
+        <button class="run-tests-btn" id="runSearchBtn" onclick="runSearchTests()">Run Search Tests Only</button>
+        
+        <div class="summary-stats">
+            <div class="stat">
+                <div class="stat-number total" id="totalTests">0</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number passed" id="passedTests">0</div>
+                <div class="stat-label">Passed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number failed" id="failedTests">0</div>
+                <div class="stat-label">Failed</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-group">
+        <div class="test-group-header">Component Loading Tests</div>
+        <div id="componentTests"></div>
+    </div>
+    
+    <div class="test-group">
+        <div class="test-group-header">Search Functionality Tests</div>
+        <div id="searchTests"></div>
+    </div>
+    
+    <div class="test-group">
+        <div class="test-group-header">Navigation Tests</div>
+        <div id="navigationTests"></div>
+    </div>
+    
+    <script src="test-runner.js"></script>
+</body>
+</html>

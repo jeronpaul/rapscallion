@@ -38,6 +38,9 @@ class RapscallionSearch {
         const overlay = document.createElement('div');
         overlay.className = 'custom-search-overlay';
         overlay.id = 'custom-search-overlay';
+        // Immediately hide the overlay to prevent flash
+        overlay.style.opacity = '0';
+        overlay.style.visibility = 'hidden';
         
         // Create modal
         const modal = document.createElement('div');
