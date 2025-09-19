@@ -996,7 +996,7 @@ footer {
     .hero-content .intro-text,
     .about-hero .intro-text,
     .way-of-openness-hero .intro-text {
-        font-size: 1.5rem !important;
+        font-size: 1.25rem !important;
         line-height: 1.7 !important;
     }
 }
@@ -3156,7 +3156,7 @@ mark {
     .hero-content .intro-text,
     .about-hero .intro-text,
     .way-of-openness-hero .intro-text {
-        font-size: 1.5rem !important;
+        font-size: 1.3rem !important;
         line-height: 1.6 !important;
         margin-bottom: calc(var(--spacing-unit) * 2.5) !important;
     }
@@ -3175,7 +3175,7 @@ mark {
     .about.html .intro-text,
     .about .intro-text,
     .hero-content .intro-text {
-        font-size: 1.5rem !important;
+        font-size: 1.3rem !important;
         line-height: 1.6 !important;
     }
 }
@@ -3184,7 +3184,7 @@ mark {
     .about.html .intro-text,
     .about .intro-text,
     .hero-content .intro-text {
-        font-size: 1.5rem !important;
+        font-size: 1.25rem !important;
         line-height: 1.7 !important;
     }
 }
