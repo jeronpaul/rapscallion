@@ -2306,18 +2306,18 @@ mark[data-pagefind-match],
 }
 
 .article-body p {
-    margin: 0 0 calc(var(--spacing-unit) * 1.5) 0;
+    margin: 0 0 1.25rem 0;
     color: #444;
     font-size: 1.1rem;
 }
 
 .article-body ul {
-    margin: calc(var(--spacing-unit) * 1.5) 0;
-    padding-left: calc(var(--spacing-unit) * 2);
+    margin: 1.25rem 0;
+    padding-left: 1.5rem;
 }
 
 .article-body li {
-    margin-bottom: calc(var(--spacing-unit) * 0.5);
+    margin-bottom: 0.5rem;
     color: #444;
     font-size: 1.1rem;
 }
