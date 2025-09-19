@@ -993,9 +993,11 @@ footer {
     }
     
     /* Small mobile intro-text adjustments */
-    .intro-text {
-        font-size: 1.5rem;
-        line-height: 1.7;
+    .hero-content .intro-text,
+    .about-hero .intro-text,
+    .way-of-openness-hero .intro-text {
+        font-size: 1.5rem !important;
+        line-height: 1.7 !important;
     }
 }
 
@@ -3151,10 +3153,12 @@ mark {
     }
     
     /* Mobile intro-text consistency */
-    .intro-text {
+    .hero-content .intro-text,
+    .about-hero .intro-text,
+    .way-of-openness-hero .intro-text {
         font-size: 1.5rem !important;
-        line-height: 1.6;
-        margin-bottom: calc(var(--spacing-unit) * 2.5);
+        line-height: 1.6 !important;
+        margin-bottom: calc(var(--spacing-unit) * 2.5) !important;
     }
     
     .hero-content {
@@ -3165,6 +3169,25 @@ mark {
 /* ===== SEARCH HIGHLIGHT STYLING ===== */
 
 /* Legacy highlight styles removed - using unified styling above */
+
+/* FORCE MOBILE INTRO-TEXT SIZE - HIGHEST PRIORITY */
+@media (max-width: 768px) {
+    .about.html .intro-text,
+    .about .intro-text,
+    .hero-content .intro-text {
+        font-size: 1.5rem !important;
+        line-height: 1.6 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .about.html .intro-text,
+    .about .intro-text,
+    .hero-content .intro-text {
+        font-size: 1.5rem !important;
+        line-height: 1.7 !important;
+    }
+}
 
 /* Legacy Pagefind UI styles removed - using custom search implementation */
 
