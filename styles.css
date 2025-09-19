@@ -994,7 +994,7 @@ footer {
     
     /* Small mobile intro-text adjustments */
     .intro-text {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
         line-height: 1.7;
     }
 }
@@ -3152,7 +3152,7 @@ mark {
     
     /* Mobile intro-text consistency */
     .intro-text {
-        font-size: 1.25rem;
+        font-size: 1.4rem;
         line-height: 1.6;
         margin-bottom: calc(var(--spacing-unit) * 2.5);
     }
