@@ -333,6 +333,7 @@ h1 strong {
     color: var(--secondary-color);
     max-width: 800px;
     line-height: 1.5;
+    margin-bottom: 1.5rem;
 }
 
 .intro-text em {
@@ -989,6 +990,12 @@ footer {
     .nav-links {
         width: 100%;
         right: -100%;
+    }
+    
+    /* Small mobile intro-text adjustments */
+    .intro-text {
+        font-size: 1.1rem;
+        line-height: 1.7;
     }
 }
 
@@ -3141,6 +3148,17 @@ mark {
     
     .story-title {
         font-size: 1.25rem;
+    }
+    
+    /* Mobile intro-text consistency */
+    .intro-text {
+        font-size: 1.25rem;
+        line-height: 1.6;
+        margin-bottom: calc(var(--spacing-unit) * 2.5);
+    }
+    
+    .hero-content {
+        padding: 0 var(--spacing-unit);
     }
 }
 
