@@ -3199,18 +3199,5 @@ img {
     image-rendering: crisp-edges;
 }
 
-/* Lazy loading optimization */
-img[loading="lazy"] {
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-img[loading="lazy"].loaded {
-    opacity: 1;
-}
-
-/* Critical images that should load immediately */
-img[loading="eager"] {
-    opacity: 1;
-}
+/* Lazy loading optimization - removed opacity hiding that was breaking image display */
 
