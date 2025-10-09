@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.1.4 - Fix hero-content and container padding alignment */
+/* Rapscallion Styles v1.2.0 - FORCE CACHE BUST - Fix hero-content alignment */
 :root {
     --primary-color: #111111;
     --secondary-color: #444444;
@@ -287,7 +287,7 @@ main {
 .hero-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 var(--spacing-sm);
+    padding: 0 var(--spacing-sm) !important;
 }
 
 h1 {
@@ -3139,7 +3139,7 @@ mark {
     }
     
     .hero-content {
-        padding: 0 var(--spacing-sm);
+        padding: 0 var(--spacing-sm) !important;
     }
 }
 
