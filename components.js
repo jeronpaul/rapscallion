@@ -1,4 +1,4 @@
-// components.js v120 - Production-ready component loading and search initialization (debug logging removed)
+// components.js v121 - Fixed hamburger menu duplicate event listeners issue
 
 // Load header and footer components
 
@@ -411,55 +411,65 @@ function initializeSearchIcon() {
             }
         });
 
-// Hamburger menu functionality
+// Global hamburger menu state to prevent duplicate initialization
+let hamburgerMenuInitialized = false;
+
+// Hamburger menu functionality - with comprehensive duplicate prevention
 function initializeHamburgerMenu() {
     const hamburgerMenu = document.getElementById('hamburger-menu');
     const navLinks = document.getElementById('nav-links');
     const mobileCloseBtn = document.getElementById('mobile-close-btn');
     
-    if (hamburgerMenu && navLinks) {
-        hamburgerMenu.addEventListener('click', function() {
-            hamburgerMenu.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-        
-        // Close menu with close button
-        if (mobileCloseBtn) {
-            mobileCloseBtn.addEventListener('click', function() {
-                hamburgerMenu.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        }
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!hamburgerMenu.contains(event.target) && !navLinks.contains(event.target)) {
-                hamburgerMenu.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
-        
-        // Use event delegation for all nav-links interactions
-        navLinks.addEventListener('click', function(event) {
-            const target = event.target;
-            
-            // Handle dropdown toggle
-            if (target.classList.contains('dropdown-toggle')) {
-                if (window.innerWidth <= 768) {
-                    event.preventDefault();
-                    const dropdown = target.closest('.dropdown');
-                    if (dropdown) {
-                        dropdown.classList.toggle('active');
-                    }
-                }
-                return;
-            }
-            
-            // Close menu when clicking on regular links
-            if (target.tagName === 'A' && !target.classList.contains('dropdown-toggle')) {
-                hamburgerMenu.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
+    // Prevent duplicate initialization globally
+    if (hamburgerMenuInitialized || !hamburgerMenu || !navLinks) {
+        return;
+    }
+    
+    // Mark as initialized
+    hamburgerMenuInitialized = true;
+    
+    // Hamburger menu toggle
+    hamburgerMenu.addEventListener('click', function() {
+        hamburgerMenu.classList.toggle('active');
+        navLinks.classList.toggle('active');
+    });
+    
+    // Close menu with close button
+    if (mobileCloseBtn) {
+        mobileCloseBtn.addEventListener('click', function() {
+            hamburgerMenu.classList.remove('active');
+            navLinks.classList.remove('active');
         });
     }
+    
+    // Close menu when clicking outside (single global listener)
+    document.addEventListener('click', function(event) {
+        if (!hamburgerMenu.contains(event.target) && !navLinks.contains(event.target)) {
+            hamburgerMenu.classList.remove('active');
+            navLinks.classList.remove('active');
+        }
+    });
+    
+    // Use event delegation for all nav-links interactions
+    navLinks.addEventListener('click', function(event) {
+        const target = event.target;
+        
+        // Handle dropdown toggle
+        if (target.classList.contains('dropdown-toggle')) {
+            if (window.innerWidth <= 768) {
+                event.preventDefault();
+                const dropdown = target.closest('.dropdown');
+                if (dropdown) {
+                    dropdown.classList.toggle('active');
+                }
+            }
+            return;
+        }
+        
+        // Close menu when clicking on regular links
+        if (target.tagName === 'A' && !target.classList.contains('dropdown-toggle')) {
+            hamburgerMenu.classList.remove('active');
+            navLinks.classList.remove('active');
+        }
+    });
 }
