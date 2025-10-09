@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.0.1 - Fixed article spacing */
+/* Rapscallion Styles v1.0.2 - Standardized spacing system */
 :root {
     --primary-color: #111111;
     --secondary-color: #444444;
@@ -2264,9 +2264,9 @@ mark[data-pagefind-match],
     transition: transform 0.3s ease;
 }
 
-/* Long-form article styles */
+/* Long-form article styles - Standardized spacing */
 .article-content {
-    padding: calc(var(--spacing-unit) * 0.5) 0;
+    padding: var(--spacing-sm) 0;
 }
 
 .long-form-article {
@@ -2278,9 +2278,9 @@ mark[data-pagefind-match],
 
 .article-meta {
     display: flex;
-    gap: calc(var(--spacing-unit) * 2);
-    margin: 1.5rem 0 1rem 0;
-    padding-bottom: 1.8rem;
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+    padding-bottom: var(--spacing-lg);
     border-bottom: 1px solid #e5e5e5;
     text-align: left;
     justify-content: flex-start;
@@ -2297,7 +2297,7 @@ mark[data-pagefind-match],
     font-size: 2rem;
     font-weight: 600;
     color: #333;
-    margin: calc(var(--spacing-unit) * 1.5) 0 calc(var(--spacing-unit) * 1) 0;
+    margin: var(--spacing-lg) 0 var(--spacing-md) 0;
     line-height: 1.3;
 }
 
@@ -2305,39 +2305,39 @@ mark[data-pagefind-match],
     font-size: 1.4rem;
     font-weight: 500;
     color: #333;
-    margin: calc(var(--spacing-unit) * 1.25) 0 calc(var(--spacing-unit) * 0.75) 0;
+    margin: var(--spacing-lg) 0 var(--spacing-sm) 0;
     line-height: 1.4;
 }
 
 .article-body p {
-    margin: 0 0 1.25rem 0;
+    margin: 0 0 var(--spacing-md) 0;
     color: #444;
     font-size: 1.1rem;
 }
 
 .article-body ul {
-    margin: 1.25rem 0;
-    padding-left: 1.5rem;
+    margin: var(--spacing-md) 0;
+    padding-left: var(--spacing-lg);
 }
 
 .article-body li {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-xs);
     color: #444;
     font-size: 1.1rem;
 }
 
 @media (max-width: 768px) {
     .article-content {
-        padding: calc(var(--spacing-unit) * 0.5) 0;
+        padding: var(--spacing-sm) 0;
     }
     
     .long-form-article {
-        padding: 0 calc(var(--spacing-unit) * 1);
+        padding: 0 var(--spacing-md);
     }
     
     .article-meta {
         flex-direction: column;
-        gap: calc(var(--spacing-unit) * 0.5);
+        gap: var(--spacing-sm);
         text-align: left;
         justify-content: flex-start;
     }
