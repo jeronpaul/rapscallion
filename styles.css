@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.3.4 - DEBUG: Increase hero-content padding to 3rem */
+/* Rapscallion Styles v1.3.5 - Final mobile spacing and alignment optimization */
 
 /* Hero content alignment - matches stories section for perfect alignment */
 .hero-content {
@@ -3098,21 +3098,6 @@ mark {
         margin-top: 0.75rem;
     }
     
-    /* DEBUG: Visual alignment debugging */
-    .hero-content {
-        border: 3px solid red !important;
-        background-color: rgba(255, 0, 0, 0.1) !important;
-    }
-    
-    .stories-section .container {
-        border: 3px solid blue !important;
-        background-color: rgba(0, 0, 255, 0.1) !important;
-    }
-    
-    .story-card {
-        border: 3px solid green !important;
-        background-color: rgba(0, 255, 0, 0.1) !important;
-    }
 }
 
 .stories-section .container {
