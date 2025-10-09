@@ -1,3 +1,4 @@
+/* Rapscallion Styles v1.0.1 - Fixed article spacing */
 :root {
     --primary-color: #111111;
     --secondary-color: #444444;
@@ -2265,7 +2266,7 @@ mark[data-pagefind-match],
 
 /* Long-form article styles */
 .article-content {
-    padding: calc(var(--spacing-unit) * 2) 0;
+    padding: calc(var(--spacing-unit) * 0.5) 0;
 }
 
 .long-form-article {
@@ -2293,7 +2294,7 @@ mark[data-pagefind-match],
     font-size: 2rem;
     font-weight: 600;
     color: #333;
-    margin: calc(var(--spacing-unit) * 3) 0 calc(var(--spacing-unit) * 1.5) 0;
+    margin: calc(var(--spacing-unit) * 1.5) 0 calc(var(--spacing-unit) * 1) 0;
     line-height: 1.3;
 }
 
@@ -2301,7 +2302,7 @@ mark[data-pagefind-match],
     font-size: 1.4rem;
     font-weight: 500;
     color: #333;
-    margin: calc(var(--spacing-unit) * 2) 0 calc(var(--spacing-unit) * 1) 0;
+    margin: calc(var(--spacing-unit) * 1.25) 0 calc(var(--spacing-unit) * 0.75) 0;
     line-height: 1.4;
 }
 
@@ -2324,7 +2325,7 @@ mark[data-pagefind-match],
 
 @media (max-width: 768px) {
     .article-content {
-        padding: calc(var(--spacing-unit) * 2) 0;
+        padding: calc(var(--spacing-unit) * 0.5) 0;
     }
     
     .long-form-article {
