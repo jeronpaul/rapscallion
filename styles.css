@@ -2278,8 +2278,8 @@ mark[data-pagefind-match],
 .article-meta {
     display: flex;
     gap: calc(var(--spacing-unit) * 2);
-    margin-bottom: calc(var(--spacing-unit) * 3);
-    padding-bottom: calc(var(--spacing-unit) * 2);
+    margin-bottom: calc(var(--spacing-unit) * 1);
+    padding-bottom: calc(var(--spacing-unit) * 1);
     border-bottom: 1px solid #e5e5e5;
 }
 
