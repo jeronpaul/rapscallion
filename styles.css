@@ -3139,7 +3139,7 @@ mark {
     }
     
     .hero-content {
-        padding: 0 var(--spacing-unit);
+        padding: 0 var(--spacing-sm);
     }
 }
 
