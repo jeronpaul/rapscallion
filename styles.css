@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.2.4 - Aggressive mobile spacing reduction */
+/* Rapscallion Styles v1.2.5 - DEBUG: Visual spacing debugging for mobile */
 
 /* Hero content alignment - matches long-form-article for perfect alignment */
 .hero-content {
@@ -3079,6 +3079,27 @@ mark {
     
     .stories-grid {
         margin-top: 1rem;
+    }
+    
+    /* DEBUG: Visual spacing debugging */
+    .hero {
+        border: 3px solid red !important;
+        background-color: rgba(255, 0, 0, 0.1) !important;
+    }
+    
+    .stories-section {
+        border: 3px solid blue !important;
+        background-color: rgba(0, 0, 255, 0.1) !important;
+    }
+    
+    .stories-grid {
+        border: 3px solid green !important;
+        background-color: rgba(0, 255, 0, 0.1) !important;
+    }
+    
+    .story-card {
+        border: 3px solid orange !important;
+        background-color: rgba(255, 165, 0, 0.1) !important;
     }
 }
 
