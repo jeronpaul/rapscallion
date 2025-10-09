@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.2.5 - DEBUG: Visual spacing debugging for mobile */
+/* Rapscallion Styles v1.2.6 - DEBUG: Targeted fix based on visual analysis */
 
 /* Hero content alignment - matches long-form-article for perfect alignment */
 .hero-content {
@@ -3054,7 +3054,7 @@ mark {
 /* Reduce stories section padding on mobile */
 @media (max-width: 768px) {
     .stories-section {
-        padding: 1rem 0;
+        padding: 0.5rem 0 !important;
     }
     
     .hero {
@@ -3063,13 +3063,13 @@ mark {
     }
     
     .stories-grid {
-        margin-top: 1.5rem;
+        margin-top: 0.75rem !important;
     }
 }
 
 @media (max-width: 480px) {
     .stories-section {
-        padding: 0.5rem 0;
+        padding: 0 !important;
     }
     
     .hero {
@@ -3078,7 +3078,7 @@ mark {
     }
     
     .stories-grid {
-        margin-top: 1rem;
+        margin-top: 0.5rem !important;
     }
     
     /* DEBUG: Visual spacing debugging */
