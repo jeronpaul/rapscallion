@@ -1,10 +1,19 @@
 /* Rapscallion Styles v1.2.2 - Clean approach to fix alignment */
 
-/* Fix: Make hero-content and container use same max-width */
+/* DEBUG: Compare AI Playlist vs Competition article alignment */
 .hero-content {
     max-width: var(--container-xl);
     margin: 0 auto;
     padding: 0 var(--spacing-sm);
+    border: 2px solid red; /* Hero content border */
+}
+
+.container {
+    border: 2px solid blue; /* Container border */
+}
+
+.long-form-article {
+    border: 2px solid green; /* Article border */
 }
 :root {
     --primary-color: #111111;
