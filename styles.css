@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.0.6 - Cache bust for hero alignment */
+/* Rapscallion Styles v1.0.7 - Left-align hero and content sections */
 :root {
     --primary-color: #111111;
     --secondary-color: #444444;
@@ -278,6 +278,7 @@ main {
     min-height: calc(40vh - 40px);
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     padding: calc(var(--spacing-unit) * 0.25);
     background-color: var(--bg-color);
     padding-top: calc(var(--spacing-unit) * 3);
@@ -286,7 +287,7 @@ main {
 
 .hero-content {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 0;
     padding: 0 2rem;
 }
 
@@ -2234,7 +2235,7 @@ mark[data-pagefind-match],
 
 .long-form-article {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0;
     line-height: 1.7;
     text-align: left;
 }
@@ -3039,7 +3040,7 @@ mark {
 
 .stories-section .container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 0;
     padding: 0 2rem;
 }
 
