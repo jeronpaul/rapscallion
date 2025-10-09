@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.1.0 - Fix article header consistency */
+/* Rapscallion Styles v1.1.1 - Remove dates and fix h1 consistency */
 :root {
     --primary-color: #111111;
     --secondary-color: #444444;
@@ -2247,6 +2247,10 @@ mark[data-pagefind-match],
     border-bottom: 1px solid #e5e5e5;
     text-align: left;
     justify-content: flex-start;
+}
+
+.article-meta:empty {
+    display: none;
 }
 
 .article-meta .author,
