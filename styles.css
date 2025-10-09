@@ -2284,7 +2284,7 @@ mark[data-pagefind-match],
     border-bottom: 1px solid #e5e5e5;
     text-align: left;
     justify-content: flex-start;
-    max-width: 800px;
+    max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -2343,7 +2343,7 @@ mark[data-pagefind-match],
         gap: calc(var(--spacing-unit) * 0.5);
         text-align: left;
         justify-content: flex-start;
-        max-width: 800px;
+        max-width: 1400px;
         margin-left: auto;
         margin-right: auto;
         padding: 0 var(--spacing-unit) 1rem var(--spacing-unit);
