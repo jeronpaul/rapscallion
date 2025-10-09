@@ -1,4 +1,5 @@
-// components.js v123 - Added comprehensive debugging for hamburger menu issues
+// components.js v124 - Enhanced debugging to track script loading and DOM events
+console.log('🍔 DEBUG: components.js loaded on page:', window.location.pathname);
 
 // Load header and footer components
 
@@ -112,9 +113,13 @@ function setActiveStates() {
 
 // Load components when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🍔 DEBUG: DOMContentLoaded fired on page:', window.location.pathname);
+    
     // Determine the correct path based on current location
     const currentPath = window.location.pathname;
     const isInContentFolder = currentPath.includes('/content/');
+    
+    console.log('🍔 DEBUG: isInContentFolder:', isInContentFolder);
     
     // Add cache-busting timestamp
     const timestamp = Date.now();
