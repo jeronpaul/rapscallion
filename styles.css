@@ -1,10 +1,10 @@
-/* Rapscallion Styles v1.3.0 - Final mobile spacing optimization - clean and balanced */
+/* Rapscallion Styles v1.3.1 - Fix hero section horizontal alignment with content below */
 
-/* Hero content alignment - matches long-form-article for perfect alignment */
+/* Hero content alignment - matches stories section for perfect alignment */
 .hero-content {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 var(--spacing-sm);
+    padding: 0 2rem;
 }
 :root {
     --primary-color: #111111;
@@ -3062,6 +3062,10 @@ mark {
         min-height: auto;
     }
     
+    .hero-content {
+        padding: 0 var(--spacing-md);
+    }
+    
     .stories-grid {
         margin-top: 1rem;
     }
@@ -3079,6 +3083,7 @@ mark {
     
     .hero-content {
         margin-bottom: 0;
+        padding: 0 var(--spacing-sm);
     }
     
     .hero h1 {
