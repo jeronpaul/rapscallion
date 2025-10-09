@@ -1,10 +1,12 @@
-/* Rapscallion Styles v1.2.1 - FORCE CACHE BUST - Fix hero-content alignment */
+/* Rapscallion Styles v1.2.2 - Clean approach to fix alignment */
 
-/* Specific fix for Competition article alignment */
-.competition-article .hero-content {
-    padding: 0 var(--spacing-sm) !important;
-    max-width: 1200px !important;
-    margin: 0 auto !important;
+/* Debug: Let's see what's actually happening with the alignment */
+.hero-content {
+    border: 1px solid red; /* Temporary debug border */
+}
+
+.container {
+    border: 1px solid blue; /* Temporary debug border */
 }
 :root {
     --primary-color: #111111;
@@ -291,11 +293,7 @@ main {
     padding-bottom: 1rem;
 }
 
-.hero-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-sm) !important;
-}
+/* .hero-content rule moved above for debugging */
 
 h1 {
     font-size: clamp(2rem, 5vw, 3.5rem);
@@ -3146,7 +3144,7 @@ mark {
     }
     
     .hero-content {
-        padding: 0 var(--spacing-sm) !important;
+        padding: 0 var(--spacing-sm);
     }
 }
 
