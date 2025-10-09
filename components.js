@@ -1,4 +1,4 @@
-// components.js v122 - Improved hamburger menu initialization with data attributes
+// components.js v123 - Added comprehensive debugging for hamburger menu issues
 
 // Load header and footer components
 
@@ -41,9 +41,12 @@ async function loadComponent(elementId, componentPath) {
         // Set active states based on current page (only for header, with delay to ensure DOM is ready)
         if (componentPath.endsWith('header.html')) {
             // Header loaded, starting initialization
+            console.log('🍔 DEBUG: Header loaded, starting initialization in 300ms...');
             
             setTimeout(() => {
+                console.log('🍔 DEBUG: Starting header initialization...');
                 setActiveStates();
+                console.log('🍔 DEBUG: About to call initializeHamburgerMenu...');
                 initializeHamburgerMenu();
                 
                 // Load search files only - let custom-search.js handle its own initialization
@@ -411,20 +414,33 @@ function initializeSearchIcon() {
             }
         });
 
-// Hamburger menu functionality - with robust duplicate prevention
+// Hamburger menu functionality - with comprehensive debugging
 function initializeHamburgerMenu() {
+    console.log('🍔 DEBUG: initializeHamburgerMenu called');
+    console.log('🍔 DEBUG: Current page:', window.location.pathname);
+    
     const hamburgerMenu = document.getElementById('hamburger-menu');
     const navLinks = document.getElementById('nav-links');
     const mobileCloseBtn = document.getElementById('mobile-close-btn');
     
+    console.log('🍔 DEBUG: Elements found:', {
+        hamburgerMenu: !!hamburgerMenu,
+        navLinks: !!navLinks,
+        mobileCloseBtn: !!mobileCloseBtn
+    });
+    
     if (!hamburgerMenu || !navLinks) {
+        console.log('🍔 DEBUG: Missing required elements, exiting');
         return;
     }
     
     // Check if already initialized by looking for data attribute
     if (hamburgerMenu.dataset.hamburgerInitialized === 'true') {
+        console.log('🍔 DEBUG: Already initialized, skipping');
         return;
     }
+    
+    console.log('🍔 DEBUG: Initializing hamburger menu...');
     
     // Mark as initialized
     hamburgerMenu.dataset.hamburgerInitialized = 'true';
@@ -432,13 +448,16 @@ function initializeHamburgerMenu() {
     
     // Hamburger menu toggle
     hamburgerMenu.addEventListener('click', function() {
+        console.log('🍔 DEBUG: Hamburger clicked, toggling menu');
         hamburgerMenu.classList.toggle('active');
         navLinks.classList.toggle('active');
+        console.log('🍔 DEBUG: Menu active state:', navLinks.classList.contains('active'));
     });
     
     // Close menu with close button
     if (mobileCloseBtn) {
         mobileCloseBtn.addEventListener('click', function() {
+            console.log('🍔 DEBUG: Close button clicked');
             hamburgerMenu.classList.remove('active');
             navLinks.classList.remove('active');
         });
@@ -447,6 +466,7 @@ function initializeHamburgerMenu() {
     // Close menu when clicking outside - use a more specific approach
     const handleOutsideClick = function(event) {
         if (!hamburgerMenu.contains(event.target) && !navLinks.contains(event.target)) {
+            console.log('🍔 DEBUG: Outside click detected, closing menu');
             hamburgerMenu.classList.remove('active');
             navLinks.classList.remove('active');
         }
@@ -454,13 +474,17 @@ function initializeHamburgerMenu() {
     
     // Only add the outside click listener once per page
     if (!document.hamburgerOutsideClickAdded) {
+        console.log('🍔 DEBUG: Adding outside click listener');
         document.addEventListener('click', handleOutsideClick);
         document.hamburgerOutsideClickAdded = true;
+    } else {
+        console.log('🍔 DEBUG: Outside click listener already added');
     }
     
     // Use event delegation for all nav-links interactions
     navLinks.addEventListener('click', function(event) {
         const target = event.target;
+        console.log('🍔 DEBUG: Nav links clicked, target:', target.tagName, target.className);
         
         // Handle dropdown toggle
         if (target.classList.contains('dropdown-toggle')) {
@@ -476,8 +500,11 @@ function initializeHamburgerMenu() {
         
         // Close menu when clicking on regular links
         if (target.tagName === 'A' && !target.classList.contains('dropdown-toggle')) {
+            console.log('🍔 DEBUG: Regular link clicked, closing menu');
             hamburgerMenu.classList.remove('active');
             navLinks.classList.remove('active');
         }
     });
+    
+    console.log('🍔 DEBUG: Hamburger menu initialization complete');
 }
