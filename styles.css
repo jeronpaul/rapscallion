@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.2.9 - DEBUG: Uniform hero padding and remove intro-text margin */
+/* Rapscallion Styles v1.3.0 - Final mobile spacing optimization - clean and balanced */
 
 /* Hero content alignment - matches long-form-article for perfect alignment */
 .hero-content {
@@ -3054,65 +3054,43 @@ mark {
 /* Reduce stories section padding on mobile */
 @media (max-width: 768px) {
     .stories-section {
-        padding: 0.5rem 0 !important;
+        padding: 0.75rem 0;
     }
     
     .hero {
-        padding-top: 0.25rem !important;
-        padding-bottom: 0.125rem !important;
-        min-height: auto !important;
+        padding: 1.25rem 0;
+        min-height: auto;
     }
     
     .stories-grid {
-        margin-top: 0.75rem !important;
+        margin-top: 1rem;
     }
 }
 
 @media (max-width: 480px) {
     .stories-section {
-        padding: 0 !important;
+        padding: 0.5rem 0;
     }
     
     .hero {
-        padding: 0.5rem 0 !important;
-        min-height: auto !important;
+        padding: 1rem 0;
+        min-height: auto;
     }
     
     .hero-content {
-        margin-bottom: 0 !important;
+        margin-bottom: 0;
     }
     
     .hero h1 {
-        margin-bottom: 0.5rem !important;
+        margin-bottom: 0.75rem;
     }
     
     .hero .intro-text {
-        margin-bottom: 0 !important;
+        margin-bottom: 0;
     }
     
     .stories-grid {
-        margin-top: 0.5rem !important;
-    }
-    
-    /* DEBUG: Visual spacing debugging */
-    .hero {
-        border: 3px solid red !important;
-        background-color: rgba(255, 0, 0, 0.1) !important;
-    }
-    
-    .stories-section {
-        border: 3px solid blue !important;
-        background-color: rgba(0, 0, 255, 0.1) !important;
-    }
-    
-    .stories-grid {
-        border: 3px solid green !important;
-        background-color: rgba(0, 255, 0, 0.1) !important;
-    }
-    
-    .story-card {
-        border: 3px solid orange !important;
-        background-color: rgba(255, 165, 0, 0.1) !important;
+        margin-top: 0.75rem;
     }
 }
 
@@ -3202,9 +3180,9 @@ mark {
     
     /* Mobile intro-text consistency */
     .hero-content .intro-text {
-        font-size: 1.3rem !important;
-        line-height: 1.6 !important;
-        margin-bottom: 0 !important;
+        font-size: 1.3rem;
+        line-height: 1.6;
+        margin-bottom: 0;
     }
     
     .hero-content {
