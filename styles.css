@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.2.2 - Clean approach to fix alignment */
+/* Rapscallion Styles v1.2.3 - Reduced mobile spacing between hero and content */
 
 /* Hero content alignment - matches long-form-article for perfect alignment */
 .hero-content {
@@ -3049,6 +3049,29 @@ mark {
 .stories-section {
     padding: 4rem 0;
     background: var(--bg-color);
+}
+
+/* Reduce stories section padding on mobile */
+@media (max-width: 768px) {
+    .stories-section {
+        padding: 2rem 0;
+    }
+    
+    .hero {
+        padding-top: calc(var(--spacing-unit) * 1.5);
+        padding-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .stories-section {
+        padding: 1.5rem 0;
+    }
+    
+    .hero {
+        padding-top: calc(var(--spacing-unit) * 1);
+        padding-bottom: 0.25rem;
+    }
 }
 
 .stories-section .container {
