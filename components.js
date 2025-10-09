@@ -1,4 +1,4 @@
-// components.js v125 - Enhanced debugging for component loading process
+// components.js v126 - Fixed header initialization bug with cache-busting query parameters
 console.log('🍔 DEBUG: components.js loaded on page:', window.location.pathname);
 
 // Load header and footer components
@@ -46,7 +46,7 @@ async function loadComponent(elementId, componentPath) {
         }
         
         // Set active states based on current page (only for header, with delay to ensure DOM is ready)
-        if (componentPath.endsWith('header.html')) {
+        if (componentPath.includes('header.html')) {
             // Header loaded, starting initialization
             console.log('🍔 DEBUG: Header loaded, starting initialization in 300ms...');
             
