@@ -2282,8 +2282,8 @@ mark[data-pagefind-match],
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid #e5e5e5;
-    text-align: center;
-    justify-content: center;
+    text-align: left;
+    justify-content: flex-start;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -2341,8 +2341,8 @@ mark[data-pagefind-match],
     .article-meta {
         flex-direction: column;
         gap: calc(var(--spacing-unit) * 0.5);
-        text-align: center;
-        justify-content: center;
+        text-align: left;
+        justify-content: flex-start;
         max-width: 800px;
         margin-left: auto;
         margin-right: auto;
