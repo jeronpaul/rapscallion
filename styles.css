@@ -2279,14 +2279,11 @@ mark[data-pagefind-match],
 .article-meta {
     display: flex;
     gap: calc(var(--spacing-unit) * 2);
-    margin-bottom: 1.5rem;
-    padding: 0 calc(var(--spacing-unit) * 0.5) 1rem calc(var(--spacing-unit) * 0.5);
+    margin: 1.5rem 0 1rem 0;
+    padding-bottom: 1rem;
     border-bottom: 1px solid #e5e5e5;
     text-align: left;
     justify-content: flex-start;
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .article-meta .author,
@@ -2343,10 +2340,6 @@ mark[data-pagefind-match],
         gap: calc(var(--spacing-unit) * 0.5);
         text-align: left;
         justify-content: flex-start;
-        max-width: 1400px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0 var(--spacing-unit) 1rem var(--spacing-unit);
     }
     
     .article-body h2 {
