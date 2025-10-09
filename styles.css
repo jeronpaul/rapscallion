@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.3.5 - Final mobile spacing and alignment optimization */
+/* Rapscallion Styles v1.3.6 - Fix homepage hero text wrapping */
 
 /* Hero content alignment - matches stories section for perfect alignment */
 .hero-content {
@@ -303,6 +303,11 @@ h1 {
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: none;
+}
+
+/* Homepage hero h1 - prevent wrapping to keep "audacious" on same line */
+body:not(.content-page) .hero h1 {
+    white-space: nowrap;
 }
 
 h1 strong {
