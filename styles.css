@@ -1,19 +1,10 @@
 /* Rapscallion Styles v1.2.2 - Clean approach to fix alignment */
 
-/* DEBUG: Let's see what's actually happening with alignment */
+/* Hero content alignment - matches long-form-article for perfect alignment */
 .hero-content {
     max-width: 800px;
     margin: 0 auto;
     padding: 0 var(--spacing-sm);
-    border: 3px solid red; /* Hero content border */
-}
-
-.container {
-    border: 3px solid blue; /* Container border */
-}
-
-.long-form-article {
-    border: 3px solid green; /* Article border */
 }
 :root {
     --primary-color: #111111;
