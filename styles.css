@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.1.1 - Remove dates and fix h1 consistency */
+/* Rapscallion Styles v1.1.2 - Fix hero section alignment consistency */
 :root {
     --primary-color: #111111;
     --secondary-color: #444444;
@@ -288,6 +288,8 @@ main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -297,6 +299,9 @@ h1 {
     margin-bottom: calc(var(--spacing-unit) * 0.5);
     letter-spacing: -0.02em;
     max-width: 1200px;
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 h1 strong {
@@ -328,6 +333,9 @@ h1 strong {
     max-width: 800px;
     line-height: 1.5;
     margin-bottom: 1.5rem;
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .intro-text em {
