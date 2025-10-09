@@ -1,4 +1,4 @@
-// components.js v124 - Enhanced debugging to track script loading and DOM events
+// components.js v125 - Enhanced debugging for component loading process
 console.log('🍔 DEBUG: components.js loaded on page:', window.location.pathname);
 
 // Load header and footer components
@@ -10,8 +10,10 @@ function shouldInitializeSearch() {
 }
 
 async function loadComponent(elementId, componentPath) {
+    console.log('🍔 DEBUG: loadComponent called for', elementId, 'from', componentPath);
     try {
         const response = await fetch(componentPath);
+        console.log('🍔 DEBUG: Fetch response for', elementId, ':', response.status, response.statusText);
         
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -34,9 +36,13 @@ async function loadComponent(elementId, componentPath) {
         }
         
         const targetElement = document.getElementById(elementId);
+        console.log('🍔 DEBUG: Target element for', elementId, ':', !!targetElement);
         
         if (targetElement) {
             targetElement.innerHTML = html;
+            console.log('🍔 DEBUG: Successfully inserted', elementId, 'component');
+        } else {
+            console.log('🍔 DEBUG: ERROR - Target element not found for', elementId);
         }
         
         // Set active states based on current page (only for header, with delay to ensure DOM is ready)
@@ -126,11 +132,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (isInContentFolder) {
         // If we're in the content folder, go up one level to find header/footer
+        console.log('🍔 DEBUG: Loading components from content folder...');
+        console.log('🍔 DEBUG: Loading header from: ../header.html?v=' + timestamp);
         loadComponent('header', `../header.html?v=${timestamp}`);
+        console.log('🍔 DEBUG: Loading footer from: ../footer.html?v=' + timestamp);
         loadComponent('footer', `../footer.html?v=${timestamp}`);
     } else {
         // If we're at the root, use relative paths
+        console.log('🍔 DEBUG: Loading components from root folder...');
+        console.log('🍔 DEBUG: Loading header from: header.html?v=' + timestamp);
         loadComponent('header', `header.html?v=${timestamp}`);
+        console.log('🍔 DEBUG: Loading footer from: footer.html?v=' + timestamp);
         loadComponent('footer', `footer.html?v=${timestamp}`);
     }
     
