@@ -2,6 +2,7 @@
 
 /* DEBUG: Let's see what's actually happening with alignment */
 .hero-content {
+    padding: 0 var(--spacing-sm); /* Match container padding */
     border: 3px solid red; /* Hero content border */
 }
 
@@ -308,7 +309,7 @@ h1 {
     max-width: 1200px;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    hyphens: auto;
+    hyphens: none;
 }
 
 h1 strong {
@@ -342,7 +343,7 @@ h1 strong {
     margin-bottom: 1.5rem;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    hyphens: auto;
+    hyphens: none;
 }
 
 .intro-text em {
@@ -2252,6 +2253,7 @@ mark[data-pagefind-match],
     margin: 0 auto;
     line-height: 1.7;
     text-align: left;
+    padding: 0 var(--spacing-sm); /* Match hero-content padding */
 }
 
 .article-meta {
@@ -2314,7 +2316,7 @@ mark[data-pagefind-match],
     }
     
     .long-form-article {
-        padding: 0 var(--spacing-md);
+        padding: 0 var(--spacing-sm); /* Match hero-content padding */
     }
     
     .article-meta {
