@@ -2,9 +2,6 @@
 
 /* DEBUG: Let's see what's actually happening with alignment */
 .hero-content {
-    max-width: var(--container-xl);
-    margin: 0 auto;
-    padding: 0 var(--spacing-sm);
     border: 3px solid red; /* Hero content border */
 }
 
