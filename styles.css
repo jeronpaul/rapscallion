@@ -306,7 +306,7 @@ h1 {
     line-height: 1.2;
     margin-bottom: calc(var(--spacing-unit) * 0.5);
     letter-spacing: -0.02em;
-    max-width: 1200px;
+    max-width: 800px;
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: none;
