@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.3.2 - DEBUG: Visual alignment debugging */
+/* Rapscallion Styles v1.3.3 - DEBUG: Match hero-content padding to stories-section */
 
 /* Hero content alignment - matches stories section for perfect alignment */
 .hero-content {
@@ -3063,7 +3063,7 @@ mark {
     }
     
     .hero-content {
-        padding: 0 var(--spacing-md);
+        padding: 0 2rem;
     }
     
     .stories-grid {
@@ -3083,7 +3083,7 @@ mark {
     
     .hero-content {
         margin-bottom: 0;
-        padding: 0 var(--spacing-sm);
+        padding: 0 2rem;
     }
     
     .hero h1 {
