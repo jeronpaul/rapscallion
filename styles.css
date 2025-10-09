@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.2.8 - DEBUG: Eliminate hero section padding completely */
+/* Rapscallion Styles v1.2.9 - DEBUG: Uniform hero padding and remove intro-text margin */
 
 /* Hero content alignment - matches long-form-article for perfect alignment */
 .hero-content {
@@ -3074,9 +3074,20 @@ mark {
     }
     
     .hero {
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
+        padding: 0.5rem 0 !important;
         min-height: auto !important;
+    }
+    
+    .hero-content {
+        margin-bottom: 0 !important;
+    }
+    
+    .hero h1 {
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .hero .intro-text {
+        margin-bottom: 0 !important;
     }
     
     .stories-grid {
@@ -3193,7 +3204,7 @@ mark {
     .hero-content .intro-text {
         font-size: 1.3rem !important;
         line-height: 1.6 !important;
-        margin-bottom: calc(var(--spacing-unit) * 2.5) !important;
+        margin-bottom: 0 !important;
     }
     
     .hero-content {
