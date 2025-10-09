@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.2.6 - DEBUG: Targeted fix based on visual analysis */
+/* Rapscallion Styles v1.2.7 - DEBUG: Fix hero section padding (red box) */
 
 /* Hero content alignment - matches long-form-article for perfect alignment */
 .hero-content {
@@ -3058,8 +3058,8 @@ mark {
     }
     
     .hero {
-        padding-top: calc(var(--spacing-unit) * 1);
-        padding-bottom: 0.25rem;
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.25rem !important;
     }
     
     .stories-grid {
@@ -3073,8 +3073,8 @@ mark {
     }
     
     .hero {
-        padding-top: calc(var(--spacing-unit) * 0.5);
-        padding-bottom: 0.125rem;
+        padding-top: 0.25rem !important;
+        padding-bottom: 0.125rem !important;
     }
     
     .stories-grid {
