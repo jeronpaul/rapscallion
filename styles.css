@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.0.3 - Fixed hero content alignment */
+/* Rapscallion Styles v1.0.5 - Final hero alignment fix */
 :root {
     --primary-color: #111111;
     --secondary-color: #444444;
@@ -280,12 +280,14 @@ main {
     align-items: center;
     padding: calc(var(--spacing-unit) * 0.25);
     background-color: var(--bg-color);
+    padding-top: calc(var(--spacing-unit) * 3);
+    padding-bottom: 1rem;
 }
 
 .hero-content {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 calc(var(--spacing-unit) * 0.5);
+    padding: 0 2rem;
 }
 
 h1 {
@@ -319,15 +321,6 @@ h1 strong {
 }
 
 /* About Page */
-.about-hero {
-    padding: calc(var(--spacing-unit) * 6) var(--spacing-unit) calc(var(--spacing-unit) * 3);
-    background-color: var(--bg-color);
-}
-
-.about-hero h1 {
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    margin-bottom: calc(var(--spacing-unit) * 2);
-}
 
 .intro-text {
     font-size: clamp(1.25rem, 2.5vw, 1.75rem);
@@ -483,26 +476,6 @@ h2 {
 }
 
 /* Companies Page */
-.companies-hero {
-    padding: calc(var(--spacing-unit) * 6) var(--spacing-unit) calc(var(--spacing-unit) * 3);
-    background-color: var(--bg-color);
-    text-align: center;
-}
-
-.companies-hero h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    margin-bottom: calc(var(--spacing-unit) * 2);
-    font-weight: 500;
-    color: var(--primary-color);
-}
-
-.companies-hero .intro-text {
-    max-width: 600px;
-    margin: 0 auto;
-    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-    color: var(--secondary-color);
-    line-height: 1.6;
-}
 
 .companies-grid {
     padding: calc(var(--spacing-unit) * 4) var(--spacing-unit);
@@ -994,22 +967,12 @@ footer {
     }
     
     /* Small mobile intro-text adjustments */
-    .hero-content .intro-text,
-    .about-hero .intro-text,
-    .way-of-openness-hero .intro-text {
+    .hero-content .intro-text {
         font-size: 1.25rem !important;
         line-height: 1.7 !important;
     }
 }
 
-/* Way of Openness Page Styles */
-.way-of-openness-hero,
-.companies-hero,
-.about-hero {
-    padding-top: calc(var(--spacing-unit) * 3);
-    padding-bottom: 1rem;
-    min-height: auto;
-}
 
 .source-text {
     font-size: 1rem;
@@ -3159,9 +3122,7 @@ mark {
     }
     
     /* Mobile intro-text consistency */
-    .hero-content .intro-text,
-    .about-hero .intro-text,
-    .way-of-openness-hero .intro-text {
+    .hero-content .intro-text {
         font-size: 1.3rem !important;
         line-height: 1.6 !important;
         margin-bottom: calc(var(--spacing-unit) * 2.5) !important;
