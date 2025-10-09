@@ -2280,7 +2280,7 @@ mark[data-pagefind-match],
     display: flex;
     gap: calc(var(--spacing-unit) * 2);
     margin: 1.5rem 0 1rem 0;
-    padding-bottom: 1.5rem;
+    padding-bottom: 1.8rem;
     border-bottom: 1px solid #e5e5e5;
     text-align: left;
     justify-content: flex-start;
