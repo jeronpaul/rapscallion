@@ -1,4 +1,4 @@
-// components.js v121 - Fixed hamburger menu duplicate event listeners issue
+// components.js v122 - Improved hamburger menu initialization with data attributes
 
 // Load header and footer components
 
@@ -411,22 +411,24 @@ function initializeSearchIcon() {
             }
         });
 
-// Global hamburger menu state to prevent duplicate initialization
-let hamburgerMenuInitialized = false;
-
-// Hamburger menu functionality - with comprehensive duplicate prevention
+// Hamburger menu functionality - with robust duplicate prevention
 function initializeHamburgerMenu() {
     const hamburgerMenu = document.getElementById('hamburger-menu');
     const navLinks = document.getElementById('nav-links');
     const mobileCloseBtn = document.getElementById('mobile-close-btn');
     
-    // Prevent duplicate initialization globally
-    if (hamburgerMenuInitialized || !hamburgerMenu || !navLinks) {
+    if (!hamburgerMenu || !navLinks) {
+        return;
+    }
+    
+    // Check if already initialized by looking for data attribute
+    if (hamburgerMenu.dataset.hamburgerInitialized === 'true') {
         return;
     }
     
     // Mark as initialized
-    hamburgerMenuInitialized = true;
+    hamburgerMenu.dataset.hamburgerInitialized = 'true';
+    navLinks.dataset.hamburgerInitialized = 'true';
     
     // Hamburger menu toggle
     hamburgerMenu.addEventListener('click', function() {
@@ -442,13 +444,19 @@ function initializeHamburgerMenu() {
         });
     }
     
-    // Close menu when clicking outside (single global listener)
-    document.addEventListener('click', function(event) {
+    // Close menu when clicking outside - use a more specific approach
+    const handleOutsideClick = function(event) {
         if (!hamburgerMenu.contains(event.target) && !navLinks.contains(event.target)) {
             hamburgerMenu.classList.remove('active');
             navLinks.classList.remove('active');
         }
-    });
+    };
+    
+    // Only add the outside click listener once per page
+    if (!document.hamburgerOutsideClickAdded) {
+        document.addEventListener('click', handleOutsideClick);
+        document.hamburgerOutsideClickAdded = true;
+    }
     
     // Use event delegation for all nav-links interactions
     navLinks.addEventListener('click', function(event) {
