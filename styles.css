@@ -1,4 +1,11 @@
-/* Rapscallion Styles v1.2.0 - FORCE CACHE BUST - Fix hero-content alignment */
+/* Rapscallion Styles v1.2.1 - FORCE CACHE BUST - Fix hero-content alignment */
+
+/* Specific fix for Competition article alignment */
+.competition-article .hero-content {
+    padding: 0 var(--spacing-sm) !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+}
 :root {
     --primary-color: #111111;
     --secondary-color: #444444;
