@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.0.2 - Standardized spacing system */
+/* Rapscallion Styles v1.0.3 - Fixed hero content alignment */
 :root {
     --primary-color: #111111;
     --secondary-color: #444444;
@@ -283,7 +283,7 @@ main {
 }
 
 .hero-content {
-    max-width: 1400px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 0 calc(var(--spacing-unit) * 0.5);
 }
