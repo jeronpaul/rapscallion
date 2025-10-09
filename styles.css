@@ -2279,11 +2279,14 @@ mark[data-pagefind-match],
 .article-meta {
     display: flex;
     gap: calc(var(--spacing-unit) * 2);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid #e5e5e5;
     text-align: center;
     justify-content: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .article-meta .author,
@@ -2340,6 +2343,9 @@ mark[data-pagefind-match],
         gap: calc(var(--spacing-unit) * 0.5);
         text-align: center;
         justify-content: center;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .article-body h2 {
