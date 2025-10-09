@@ -1007,7 +1007,7 @@ footer {
 .companies-hero,
 .about-hero {
     padding-top: calc(var(--spacing-unit) * 3);
-    padding-bottom: calc(var(--spacing-unit) * 0.25);
+    padding-bottom: 0.5rem;
     min-height: auto;
 }
 
@@ -2278,8 +2278,8 @@ mark[data-pagefind-match],
 .article-meta {
     display: flex;
     gap: calc(var(--spacing-unit) * 2);
-    margin-bottom: calc(var(--spacing-unit) * 0.5);
-    padding-bottom: calc(var(--spacing-unit) * 0.5);
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
     border-bottom: 1px solid #e5e5e5;
 }
 
