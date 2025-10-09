@@ -1,12 +1,10 @@
 /* Rapscallion Styles v1.2.2 - Clean approach to fix alignment */
 
-/* Debug: Let's see what's actually happening with the alignment */
+/* Fix: Make hero-content and container use same max-width */
 .hero-content {
-    border: 1px solid red; /* Temporary debug border */
-}
-
-.container {
-    border: 1px solid blue; /* Temporary debug border */
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    padding: 0 var(--spacing-sm);
 }
 :root {
     --primary-color: #111111;
@@ -293,7 +291,7 @@ main {
     padding-bottom: 1rem;
 }
 
-/* .hero-content rule moved above for debugging */
+/* .hero-content rule moved above for proper alignment */
 
 h1 {
     font-size: clamp(2rem, 5vw, 3.5rem);
