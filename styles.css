@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.2.7 - DEBUG: Fix hero section padding (red box) */
+/* Rapscallion Styles v1.2.8 - DEBUG: Eliminate hero section padding completely */
 
 /* Hero content alignment - matches long-form-article for perfect alignment */
 .hero-content {
@@ -3058,8 +3058,9 @@ mark {
     }
     
     .hero {
-        padding-top: 0.5rem !important;
-        padding-bottom: 0.25rem !important;
+        padding-top: 0.25rem !important;
+        padding-bottom: 0.125rem !important;
+        min-height: auto !important;
     }
     
     .stories-grid {
@@ -3073,8 +3074,9 @@ mark {
     }
     
     .hero {
-        padding-top: 0.25rem !important;
-        padding-bottom: 0.125rem !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        min-height: auto !important;
     }
     
     .stories-grid {
