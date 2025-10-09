@@ -1007,7 +1007,7 @@ footer {
 .companies-hero,
 .about-hero {
     padding-top: calc(var(--spacing-unit) * 3);
-    padding-bottom: 0.5rem;
+    padding-bottom: 1rem;
     min-height: auto;
 }
 
@@ -2273,14 +2273,17 @@ mark[data-pagefind-match],
     max-width: 800px;
     margin: 0 auto;
     line-height: 1.7;
+    text-align: left;
 }
 
 .article-meta {
     display: flex;
     gap: calc(var(--spacing-unit) * 2);
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
     border-bottom: 1px solid #e5e5e5;
+    text-align: center;
+    justify-content: center;
 }
 
 .article-meta .author,
@@ -2335,6 +2338,8 @@ mark[data-pagefind-match],
     .article-meta {
         flex-direction: column;
         gap: calc(var(--spacing-unit) * 0.5);
+        text-align: center;
+        justify-content: center;
     }
     
     .article-body h2 {
