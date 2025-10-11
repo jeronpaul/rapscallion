@@ -3250,6 +3250,8 @@ img {
 @media (min-width: 769px) {
     .hero h1 {
         white-space: nowrap;
+        border: 3px solid red !important;
+        background-color: yellow !important;
     }
 }
 
