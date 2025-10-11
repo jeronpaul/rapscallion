@@ -1,4 +1,4 @@
-// components.js v128 - Clean production version without debug logging
+// components.js v129 - Fixed syntax error from debug cleanup
 
 // Load header and footer components
 
@@ -416,11 +416,6 @@ function initializeHamburgerMenu() {
     const hamburgerMenu = document.getElementById('hamburger-menu');
     const navLinks = document.getElementById('nav-links');
     const mobileCloseBtn = document.getElementById('mobile-close-btn');
-    
-        hamburgerMenu: !!hamburgerMenu,
-        navLinks: !!navLinks,
-        mobileCloseBtn: !!mobileCloseBtn
-    });
     
     if (!hamburgerMenu || !navLinks) {
         return;
