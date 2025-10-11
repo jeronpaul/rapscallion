@@ -1,4 +1,4 @@
-// components.js v129 - Fixed syntax error from debug cleanup
+// components.js v130 - Force cache bust to ensure clean version loads
 
 // Load header and footer components
 
