@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.3.9 - Fix hero h1 wrapping with CSS override at end of file */
+/* Rapscallion Styles v1.4.0 - Hero h1 wrapping fix - production ready */
 
 /* Hero content alignment - matches stories section for perfect alignment */
 .hero-content {
@@ -3250,8 +3250,6 @@ img {
 @media (min-width: 769px) {
     .hero h1 {
         white-space: nowrap;
-        border: 3px solid red !important;
-        background-color: yellow !important;
     }
 }
 
