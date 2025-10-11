@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.3.7 - Fix homepage hero text wrapping - responsive */
+/* Rapscallion Styles v1.3.8 - Standard hero h1 wrapping fix for all pages */
 
 /* Hero content alignment - matches stories section for perfect alignment */
 .hero-content {
@@ -305,9 +305,15 @@ h1 {
     hyphens: none;
 }
 
-/* Homepage hero h1 - prevent wrapping on larger screens, allow wrapping on mobile */
+/* Hero h1 responsive sizing to prevent awkward wrapping */
+.hero h1 {
+    line-height: 1.1;
+    word-spacing: -0.05em;
+}
+
+/* Prevent awkward wrapping on larger screens for all hero sections */
 @media (min-width: 769px) {
-    body:not(.content-page) .hero h1 {
+    .hero h1 {
         white-space: nowrap;
     }
 }
