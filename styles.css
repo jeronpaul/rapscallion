@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.3.8 - Standard hero h1 wrapping fix for all pages */
+/* Rapscallion Styles v1.3.9 - Fix hero h1 wrapping with CSS override at end of file */
 
 /* Hero content alignment - matches stories section for perfect alignment */
 .hero-content {
@@ -3245,4 +3245,11 @@ img {
 }
 
 /* Lazy loading optimization - removed opacity hiding that was breaking image display */
+
+/* FINAL OVERRIDE: Ensure hero h1 titles don't wrap on larger screens */
+@media (min-width: 769px) {
+    .hero h1 {
+        white-space: nowrap;
+    }
+}
 
