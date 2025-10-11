@@ -1,8 +1,8 @@
-/* Rapscallion Styles v1.4.1 - Better hero h1 text wrapping behavior */
+/* Rapscallion Styles v1.4.2 - Hero section alignment and text wrapping - production ready */
 
-/* Hero content alignment - matches stories section for perfect alignment */
+/* Hero content alignment - matches article content for perfect alignment */
 .hero-content {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 0 2rem;
 }
@@ -3246,10 +3246,12 @@ img {
 
 /* Lazy loading optimization - removed opacity hiding that was breaking image display */
 
-/* Better text wrapping for hero h1 titles */
+/* Better text wrapping for hero h1 titles - align with content below */
 .hero h1 {
+    max-width: 800px;
     word-break: normal;
     overflow-wrap: break-word;
     hyphens: none;
+    white-space: normal;
 }
 
