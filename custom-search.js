@@ -1,7 +1,9 @@
 // Custom Search Implementation for Rapscallion v2.0 - Production ready (debug logging removed)
 // Using Pagefind API with custom styling
 
-class RapscallionSearch {
+// Prevent duplicate class declaration
+if (typeof window.RapscallionSearch === 'undefined') {
+    window.RapscallionSearch = class RapscallionSearch {
     constructor() {
         this.pagefind = null;
         this.isOpen = false;
@@ -531,6 +533,7 @@ class RapscallionSearch {
             }
         }, 500); // Increased timeout to ensure highlighting is complete
     }
+    };
 }
 
 // Initialize custom search when DOM is ready
