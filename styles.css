@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.4.2 - Hero section alignment and text wrapping - production ready */
+/* Rapscallion Styles v1.4.3 - Homepage hero text no-wrap on desktop */
 
 /* Hero content alignment - matches article content for perfect alignment */
 .hero-content {
@@ -3253,5 +3253,12 @@ img {
     overflow-wrap: break-word;
     hyphens: none;
     white-space: normal;
+}
+
+/* Homepage specific: prevent wrapping on desktop, allow on mobile */
+@media (min-width: 769px) {
+    body:not(.content-page) .hero h1 {
+        white-space: nowrap;
+    }
 }
 
