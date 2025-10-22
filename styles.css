@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.4.7 - Fix header wrapping with more specific selectors */
+/* Rapscallion Styles v1.4.8 - Fix header wrapping with higher CSS specificity */
 
 /* Hero content alignment - matches article content for perfect alignment */
 .hero-content {
@@ -3280,7 +3280,8 @@ main .hero h1 {
 }
 
 /* Override homepage rule for content pages - more specific selector */
-main .hero h1 {
+body main .hero h1 {
     white-space: normal;
+    border: 3px solid red !important; /* DEBUG: Red border for hero h1 */
 }
 
