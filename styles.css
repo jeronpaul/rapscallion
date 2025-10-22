@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.4.3 - Homepage hero text no-wrap on desktop */
+/* Rapscallion Styles v1.4.4 - Add consistent article link styling */
 
 /* Hero content alignment - matches article content for perfect alignment */
 .hero-content {
@@ -2314,6 +2314,19 @@ mark[data-pagefind-match],
     margin-bottom: var(--spacing-xs);
     color: #444;
     font-size: 1.1rem;
+}
+
+/* Article content link styling */
+.article-body a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.article-body a:hover {
+    color: #B8955A;
+    text-decoration: underline;
 }
 
 @media (max-width: 768px) {
