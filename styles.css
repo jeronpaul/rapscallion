@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.4.4 - Add consistent article link styling */
+/* Rapscallion Styles v1.4.5 - Fix header wrapping consistency across all pages */
 
 /* Hero content alignment - matches article content for perfect alignment */
 .hero-content {
@@ -311,12 +311,7 @@ h1 {
     word-spacing: -0.05em;
 }
 
-/* Prevent awkward wrapping on larger screens for all hero sections */
-@media (min-width: 769px) {
-    .hero h1 {
-        white-space: nowrap;
-    }
-}
+/* Removed conflicting white-space rule - now handled by specific rules below */
 
 h1 strong {
     font-weight: 600;
@@ -3273,5 +3268,13 @@ img {
     body:not(.content-page) .hero h1 {
         white-space: nowrap;
     }
+}
+
+/* Content pages: ensure natural wrapping for long titles */
+.content-page .hero h1,
+.article-content .hero h1 {
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
 }
 
