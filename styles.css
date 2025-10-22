@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.4.5 - Fix header wrapping consistency across all pages */
+/* Rapscallion Styles v1.4.7 - Fix header wrapping with more specific selectors */
 
 /* Hero content alignment - matches article content for perfect alignment */
 .hero-content {
@@ -3272,9 +3272,15 @@ img {
 
 /* Content pages: ensure natural wrapping for long titles */
 .content-page .hero h1,
-.article-content .hero h1 {
+.article-content .hero h1,
+main .hero h1 {
     white-space: normal;
     word-break: normal;
     overflow-wrap: break-word;
+}
+
+/* Override homepage rule for content pages - more specific selector */
+main .hero h1 {
+    white-space: normal;
 }
 
