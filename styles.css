@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.5.0 - Restructure content pages for perfect header/body alignment */
+/* Rapscallion Styles v1.5.1 - Fix alignment on all main pages with unified structure */
 
 /* Article header - now part of the same container as article body for perfect alignment */
 .article-header {
@@ -40,6 +40,72 @@
     height: 1px;
     background-color: #E0E0E0;
     margin-top: 1rem;
+}
+
+/* Page header - unified header styling for all main pages */
+.page-header {
+    margin-bottom: 3rem;
+    padding-top: 2rem;
+}
+
+.page-header h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    word-break: normal;
+    overflow-wrap: break-word;
+    hyphens: none;
+    white-space: normal;
+}
+
+.page-header .intro-text {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.page-header .source-text {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    font-style: italic;
+    margin-bottom: 0;
+}
+
+/* Mobile responsiveness for page headers */
+@media (max-width: 768px) {
+    .page-header {
+        margin-bottom: 2rem;
+        padding-top: 1.5rem;
+    }
+    
+    .page-header h1 {
+        font-size: var(--font-size-3xl);
+        margin-bottom: 1rem;
+    }
+    
+    .page-header .intro-text {
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header {
+        margin-bottom: 1.5rem;
+        padding-top: 1rem;
+    }
+    
+    .page-header h1 {
+        font-size: var(--font-size-2xl);
+        margin-bottom: 0.75rem;
+    }
+    
+    .page-header .intro-text {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
 }
 :root {
     --primary-color: #111111;
