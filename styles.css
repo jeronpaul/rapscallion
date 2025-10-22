@@ -1,10 +1,11 @@
-/* Rapscallion Styles v1.4.8 - Fix header wrapping with higher CSS specificity */
+/* Rapscallion Styles v1.4.9 - DEBUG: Remove width constraints to test wrapping */
 
 /* Hero content alignment - matches article content for perfect alignment */
 .hero-content {
-    max-width: 800px;
+    max-width: none !important; /* DEBUG: Remove width constraint */
     margin: 0 auto;
     padding: 0 2rem;
+    border: 3px solid blue !important; /* DEBUG: Blue border for hero-content */
 }
 :root {
     --primary-color: #111111;
@@ -3281,7 +3282,12 @@ main .hero h1 {
 
 /* Override homepage rule for content pages - more specific selector */
 body main .hero h1 {
-    white-space: normal;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    hyphens: none !important;
+    max-width: none !important;
+    overflow: visible !important;
     border: 3px solid red !important; /* DEBUG: Red border for hero h1 */
 }
 
