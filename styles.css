@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.5.7 - DEBUG: Remove width constraints from homepage hero-content */
+/* Rapscallion Styles v1.5.8 - DEBUG: Center homepage hero text */
 
 /* Article header - now part of the same container as article body for perfect alignment */
 .article-header {
@@ -3377,6 +3377,7 @@ body.homepage .hero-content {
     max-width: none !important;
     width: 100% !important;
     padding: 0 !important;
+    text-align: center !important;
     border: 3px solid blue !important; /* DEBUG: Blue border for homepage hero-content */
 }
 
