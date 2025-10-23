@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.5.5 - Clean homepage alignment fix with specific class */
+/* Rapscallion Styles v1.5.6 - DEBUG: Fix homepage alignment with !important override */
 
 /* Article header - now part of the same container as article body for perfect alignment */
 .article-header {
@@ -3366,10 +3366,15 @@ img {
 
 /* Homepage specific: prevent wrapping on desktop, allow on mobile */
 body.homepage .hero h1 {
-    max-width: none;
-    white-space: nowrap;
-    word-break: normal;
-    overflow-wrap: normal;
+    max-width: none !important;
+    white-space: nowrap !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    border: 3px solid red !important; /* DEBUG: Red border for homepage h1 */
+}
+
+body.homepage .hero-content {
+    border: 3px solid blue !important; /* DEBUG: Blue border for homepage hero-content */
 }
 
 @media (max-width: 768px) {
