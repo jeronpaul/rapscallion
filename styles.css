@@ -1,4 +1,4 @@
-/* Rapscallion Styles v1.5.4 - Fix homepage "Angel capital for the audacious" alignment */
+/* Rapscallion Styles v1.5.5 - Clean homepage alignment fix with specific class */
 
 /* Article header - now part of the same container as article body for perfect alignment */
 .article-header {
@@ -3365,24 +3365,15 @@ img {
 }
 
 /* Homepage specific: prevent wrapping on desktop, allow on mobile */
-@media (min-width: 769px) {
-    body:not(.content-page) .hero h1 {
-        white-space: nowrap !important;
-        max-width: none !important;
-        word-break: normal !important;
-        overflow-wrap: normal !important;
-    }
-}
-
-/* Additional homepage specificity to ensure it overrides general rules */
-body.index-page .hero h1,
-body:not(.content-page) .hero h1 {
+body.homepage .hero h1 {
     max-width: none;
     white-space: nowrap;
+    word-break: normal;
+    overflow-wrap: normal;
 }
 
 @media (max-width: 768px) {
-    body:not(.content-page) .hero h1 {
+    body.homepage .hero h1 {
         white-space: normal;
     }
 }
