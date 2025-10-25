@@ -33,14 +33,7 @@
     font-weight: 500;
 }
 
-.article-header .article-meta::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 1px;
-    background-color: #E0E0E0;
-    margin-top: 1rem;
-}
+/* Removed article-meta divider line */
 
 /* Page header - unified header styling for all main pages */
 .page-header {
@@ -383,13 +376,12 @@ main {
 
 /* Hero Section */
 .hero {
-    min-height: calc(40vh - 40px);
+    min-height: 30vh;
     display: flex;
     align-items: center;
-    padding: calc(var(--spacing-unit) * 0.25);
+    justify-content: center;
+    padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 0.25);
     background-color: var(--bg-color);
-    padding-top: calc(var(--spacing-unit) * 3);
-    padding-bottom: 1rem;
 }
 
 /* .hero-content rule moved above for proper alignment */
@@ -440,12 +432,16 @@ h1 strong {
 .intro-text {
     font-size: clamp(1.25rem, 2.5vw, 1.75rem);
     color: var(--secondary-color);
-    max-width: 800px;
     line-height: 1.5;
     margin-bottom: 1.5rem;
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: none;
+}
+
+/* Content pages need max-width constraint */
+.content-section .intro-text {
+    max-width: 800px;
 }
 
 .intro-text em {
@@ -454,14 +450,10 @@ h1 strong {
     font-weight: 500;
 }
 
-.about-content {
-    padding: calc(var(--spacing-unit) * 3) var(--spacing-unit);
-    background-color: #F8F8F8;
-}
+/* Legacy about page classes - now using unified content-section and content-wrapper */
 
 .content-block {
     margin-bottom: calc(var(--spacing-unit) * 4);
-    max-width: 800px;
     display: grid;
     grid-template-columns: 1fr;
     gap: calc(var(--spacing-unit) * 2);
@@ -593,12 +585,7 @@ h2 {
     font-size: 1.2rem;
 }
 
-/* Companies Page */
-
-.companies-grid {
-    padding: calc(var(--spacing-unit) * 4) var(--spacing-unit);
-    background-color: #F8F8F8;
-}
+/* Companies Page - Legacy class, now using grid-section */
 
 .company-tiles {
     display: grid;
@@ -1056,7 +1043,8 @@ footer {
 
     
     .hero {
-        padding: calc(var(--spacing-unit) * 2);
+        min-height: 25vh;
+        padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 2);
     }
 
     .about, .contact {
@@ -1202,10 +1190,7 @@ footer {
     margin-bottom: calc(var(--spacing-unit) * 2);
 }
 
-.team-grid {
-    padding: calc(var(--spacing-unit) * 4) var(--spacing-unit);
-    background-color: #F8F8F8;
-}
+/* Legacy team-grid class, now using grid-section */
 
 /* ===== TEAM TILES - SIMPLE WORKING VERSION ===== */
 .team-tiles {
@@ -1372,9 +1357,7 @@ footer {
         padding: calc(var(--spacing-unit) * 3) var(--spacing-unit) calc(var(--spacing-unit) * 2);
     }
 
-    .team-grid {
-        padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
-    }
+    /* Legacy team-grid mobile styles removed */
 }
 
 /* Profile Page Styles */
@@ -1439,15 +1422,6 @@ footer {
 }
 
 /* ===== STANDARDIZED QUOTE BOX COMPONENT ===== */
-.profile-quote-box {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
-    height: 700px;
-    display: flex;
-    flex-direction: column;
-}
 
 /* Tablet responsive adjustments */
 @media (max-width: 1024px) {
@@ -1515,18 +1489,6 @@ footer {
     display: block;
 }
 
-.quote-text {
-    background: white;
-    padding: calc(var(--spacing-unit) * 2);
-    flex: 1;
-    min-height: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    overflow-y: auto;
-}
 
 .quote-text blockquote {
     /* Responsive font scaling with fluid text display - consistent with index page */
@@ -1642,15 +1604,6 @@ footer {
     grid-column: 2;
 }
 
-.profile-quote {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    color: white;
-    padding: calc(var(--spacing-unit) * 2);
-    border-radius: var(--border-radius);
-    text-align: center;
-    position: sticky;
-    top: calc(var(--spacing-unit) * 2);
-}
 
 .profile-quote blockquote {
     font-size: 1.3rem;
@@ -1719,13 +1672,6 @@ footer {
     }
 }
 
-.profile-section {
-    background: white;
-    padding: calc(var(--spacing-unit) * 2);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    margin-bottom: calc(var(--spacing-unit) * 2);
-}
 
 .profile-section.full-width {
     grid-column: 1 / -1;
@@ -1889,11 +1835,12 @@ footer {
     }
 }
 
-/* Simplified Profile Layout */
-.profile-container {
-    padding: var(--spacing-sm) 0;
+/* Legacy profile-container class, now using content-section */
+
+.profile-content {
     max-width: 800px;
     margin: 0 auto;
+    line-height: 1.7;
 }
 
 .profile-header-simple {
@@ -1972,11 +1919,36 @@ footer {
 }
 
 .quote-section {
-    background: white;
-    padding: calc(var(--spacing-unit) * 2);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     text-align: left;
+}
+
+/* ===== UNIFIED TEMPLATE SYSTEM ===== */
+
+/* Content Template - for articles, profiles, about pages */
+.content-section {
+    padding: calc(var(--spacing-unit) * 2.5) var(--spacing-unit) calc(var(--spacing-unit) * 3) var(--spacing-unit);
+    background-color: white;
+}
+
+.content-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Grid Template - for team, portfolio, stories pages */
+.grid-section {
+    padding: calc(var(--spacing-unit) * 1.25) var(--spacing-unit) calc(var(--spacing-unit) * 3) var(--spacing-unit);
+    background-color: white;
+}
+
+.grid-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Legacy support - keep existing classes working */
+.profile-content {
+    background: white;
 }
 
 .quote-image-simple {
@@ -2038,9 +2010,7 @@ footer {
 }
 
 @media (max-width: 480px) {
-    .profile-container {
-        padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
-    }
+    /* Legacy profile-container mobile styles removed */
     
     .profile-header-simple {
         margin-bottom: 1rem;
@@ -2508,24 +2478,22 @@ mark[data-pagefind-match],
     transition: transform 0.3s ease;
 }
 
-/* Long-form article styles - Standardized spacing */
+/* Legacy article classes - now using content-section and content-wrapper */
+
+/* Fix content page spacing to prevent crowding under navigation */
 .article-content {
-    padding: var(--spacing-sm) 0;
+    padding-top: calc(var(--spacing-unit) * 4);
 }
 
 .long-form-article {
-    max-width: 800px;
-    margin: 0 auto;
-    line-height: 1.7;
-    text-align: left;
-    padding: 0 var(--spacing-sm);
+    padding-top: 0;
 }
 
 .article-meta {
     display: flex;
     gap: var(--spacing-md);
-    margin: var(--spacing-lg) 0 var(--spacing-md) 0;
-    padding-bottom: var(--spacing-lg);
+    margin: var(--spacing-sm) 0 var(--spacing-sm) 0;
+    padding-bottom: var(--spacing-sm);
     border-bottom: 1px solid #e5e5e5;
     text-align: left;
     justify-content: flex-start;
@@ -2589,13 +2557,7 @@ mark[data-pagefind-match],
 }
 
 @media (max-width: 768px) {
-    .article-content {
-        padding: var(--spacing-sm) 0;
-    }
-    
-    .long-form-article {
-        padding: 0 var(--spacing-sm); /* Match hero-content padding */
-    }
+    /* Legacy article mobile styles removed */
     
     .article-meta {
         flex-direction: column;
@@ -2683,13 +2645,7 @@ mark[data-pagefind-match],
         gap: calc(var(--spacing-unit) * 1.5);
     }
     
-    .team-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
-    
-    .companies-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
+    /* Legacy grid mobile styles removed */
 }
 
 @media (max-width: 768px) {
@@ -2699,6 +2655,7 @@ mark[data-pagefind-match],
     }
     
     .hero {
+        min-height: 20vh;
         padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
     }
     
@@ -2716,13 +2673,7 @@ mark[data-pagefind-match],
         gap: calc(var(--spacing-unit) * 1.5);
     }
     
-    .team-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .companies-grid {
-        grid-template-columns: 1fr;
-    }
+    /* Legacy grid mobile styles removed */
     
     .principle-card {
         padding: calc(var(--spacing-unit) * 1.5);
@@ -3330,17 +3281,10 @@ mark {
     }
 }
 
-/* ===== STORIES SECTION ===== */
-.stories-section {
-    padding: 4rem 0;
-    background: var(--bg-color);
-}
+/* Legacy stories-section class, now using grid-section */
 
-/* Reduce stories section padding on mobile */
+/* Legacy stories-section mobile styles removed */
 @media (max-width: 768px) {
-    .stories-section {
-        padding: 0.75rem 0;
-    }
     
     .hero {
         padding: 1.25rem 0;
@@ -3357,9 +3301,7 @@ mark {
 }
 
 @media (max-width: 480px) {
-    .stories-section {
-        padding: 0.5rem 0;
-    }
+    /* Legacy stories-section mobile styles removed */
     
     .hero {
         padding: 1rem 0;
