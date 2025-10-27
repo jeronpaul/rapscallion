@@ -1103,9 +1103,9 @@ footer {
 
 .principles-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: calc(var(--spacing-unit) * 2);
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -2641,7 +2641,7 @@ mark[data-pagefind-match],
     }
     
     .principles-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: calc(var(--spacing-unit) * 1.5);
     }
     
