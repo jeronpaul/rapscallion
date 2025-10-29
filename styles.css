@@ -1257,8 +1257,18 @@ footer {
     height: 150px;
     border-radius: 12px;
     object-fit: cover;
-    object-position: top center;
+    object-position: center center;
     margin-bottom: 1rem;
+}
+
+/* Jeron's image - keep at top center */
+.team-image[alt="Jeron Paul"] {
+    object-position: top center;
+}
+
+/* Tanner's image - move downward to show both faces */
+.team-image[alt="Tanner Lacey"] {
+    object-position: center 100%;
 }
 
 /* Team content */
