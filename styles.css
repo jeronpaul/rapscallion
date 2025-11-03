@@ -1096,11 +1096,6 @@ footer {
     text-decoration: underline;
 }
 
-.content-section {
-    padding: calc(var(--spacing-unit) * 4) var(--spacing-unit);
-    background-color: #F8F8F8;
-}
-
 .principles-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1168,10 +1163,6 @@ footer {
 
     .principle-card {
         padding: calc(var(--spacing-unit) * 1.5);
-    }
-
-    .content-section {
-        padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
     }
 
     .cta-section {
@@ -2488,16 +2479,7 @@ mark[data-pagefind-match],
     transition: transform 0.3s ease;
 }
 
-/* Legacy article classes - now using content-section and content-wrapper */
-
-/* Fix content page spacing to prevent crowding under navigation */
-.article-content {
-    padding-top: calc(var(--spacing-unit) * 4);
-}
-
-.long-form-article {
-    padding-top: 0;
-}
+/* Legacy article classes removed - all pages now use content-section and content-wrapper */
 
 .article-meta {
     display: flex;
@@ -3502,7 +3484,7 @@ body.homepage .hero-content {
 
 /* Content pages: ensure natural wrapping for long titles */
 .content-page .hero h1,
-.article-content .hero h1,
+.content-section .hero h1,
 main .hero h1 {
     white-space: normal;
     word-break: normal;
