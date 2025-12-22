@@ -2091,6 +2091,27 @@ footer {
 }
 
 /* Responsive design for main blocks */
+@media (min-width: 1025px) {
+    /* Laptop/Desktop: Ensure proper aspect ratio for wider blocks */
+    .title-center,
+    .title-bottom,
+    .quotation {
+        min-height: 500px;
+        max-height: 650px;
+        height: auto;
+    }
+    
+    /* Ensure images maintain proper aspect ratio on wider screens */
+    .title-center > img,
+    .title-bottom > img,
+    .quotation > img {
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+        height: 100%;
+    }
+}
+
 @media (max-width: 1024px) {
     .main-grid {
         grid-template-columns: repeat(2, 1fr);
