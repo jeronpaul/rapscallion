@@ -2835,6 +2835,29 @@ mark[data-pagefind-match],
     .quotation.shakespeare-quote > div cite {
         font-size: clamp(0.9rem, 1.8vw, 1.2rem);
     }
+    
+    /* Goethe and Keats quotes: maximize font size without scrolling */
+    .quotation:not(.shakespeare-quote) > div blockquote {
+        font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+        line-height: 1.4;
+        max-height: none;
+        overflow: visible;
+    }
+    
+    .quotation:not(.shakespeare-quote) > div cite {
+        font-size: clamp(0.95rem, 2vw, 1.25rem);
+    }
+    
+    /* Emperor of Ice Cream: increase font size significantly - override inline style */
+    .title-bottom > div h3[style*="font-size"] {
+        font-size: clamp(2.2rem, 5.5vw, 3rem) !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Also increase all title-bottom h3s on desktop */
+    .title-bottom > div h3 {
+        font-size: clamp(2.0rem, 5vw, 2.8rem);
+    }
 }
 
 /* ===== SEARCH ICON ===== */
