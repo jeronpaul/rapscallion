@@ -2826,6 +2826,17 @@ mark[data-pagefind-match],
     }
 }
 
+/* Desktop/Laptop: Increase Shakespeare quote font size */
+@media (min-width: 1025px) {
+    .quotation.shakespeare-quote > div blockquote {
+        font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    }
+    
+    .quotation.shakespeare-quote > div cite {
+        font-size: clamp(1.0rem, 2vw, 1.3rem);
+    }
+}
+
 /* ===== SEARCH ICON ===== */
 .search-icon {
     background: transparent !important;
