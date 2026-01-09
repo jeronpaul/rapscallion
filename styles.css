@@ -2838,14 +2838,14 @@ mark[data-pagefind-match],
     
     /* Goethe and Keats quotes: maximize font size without scrolling */
     .quotation:not(.shakespeare-quote) > div blockquote {
-        font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+        font-size: clamp(0.95rem, 2vw, 1.25rem);
         line-height: 1.4;
         max-height: none;
         overflow: visible;
     }
     
     .quotation:not(.shakespeare-quote) > div cite {
-        font-size: clamp(0.95rem, 2vw, 1.25rem);
+        font-size: clamp(0.85rem, 1.8vw, 1.1rem);
     }
     
     /* Emperor of Ice Cream: increase font size significantly - override inline style */
