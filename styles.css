@@ -658,6 +658,13 @@ h2 {
     border-radius: 8px;
 }
 
+/* Centralize wordmark is very light; needs contrast on white tiles */
+.company-logo img[src*="centralize-logo"] {
+    background-color: #0f1419;
+    padding: 10px 16px;
+    border-radius: 8px;
+}
+
 /* Shakespeare quote specific styling */
 .quotation.shakespeare-quote > div blockquote {
     font-size: clamp(0.8rem, 2vw, 1.0rem);
