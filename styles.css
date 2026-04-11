@@ -651,6 +651,13 @@ h2 {
     border-radius: 4px;
 }
 
+/* Kosmos Labs logo wordmark is light-on-dark in source SVG */
+.company-logo img[src*="kosmos-logo"] {
+    background-color: #0d1117;
+    padding: 10px 14px;
+    border-radius: 8px;
+}
+
 /* Shakespeare quote specific styling */
 .quotation.shakespeare-quote > div blockquote {
     font-size: clamp(0.8rem, 2vw, 1.0rem);
